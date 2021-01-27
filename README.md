@@ -3,7 +3,7 @@
 ### Our Product
 
 \<Synopsis for proposed project\>
-	
+
 ### Team Matrix
 
 Member | Skills | Personal Traits | Desired Growth | Weaknesses | Any cool things you made | Three fun facts
@@ -17,13 +17,7 @@ Member | Skills | Personal Traits | Desired Growth | Weaknesses | Any cool thing
 
 ### Contacts
 
-Member | Email 
---- | --- | ---
-Sam Gorman | sgorman@stanford.edu 
-Brian Zeng | bzeng313@stanford.edu 
-Kento Perera | kperera1@stanford.edu  
-JP Reilly | jpreilly@stanford.edu 
-Tim Sah | tsah@stanford.edu
+\{ sgorman, bzeng313, kperera1, jpreilly, tsah \} @stanford.edu 
 
 We currently communicate through iMessage, but please email one of us your number so we can add you to the group chat. 
 
