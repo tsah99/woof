@@ -1,0 +1,2 @@
+Hi CS194 teaching team! I'm JP Reilly, a senior majoring in Computer Science. I have experience building web apps (full-stack) and with AI & infrastructure.
+I'm excited to take this course because I love working with teams and am looking forward to building something fun from scratch.
