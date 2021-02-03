@@ -1,10 +1,8 @@
-# Team 9: \<insert team logo here\> \<insert team name here\> 
+# Team 9: \<insert team logo here\> Woof 
 
 ### Our Product
 
-Idea 1. We propose \<insert team name here (Dinder? Doogle? Woofer?)\>, a Tinder for dogs. Millions of dog owners often have trouble finding playdates for their canine companions. Want your dog to play with another dog of a specific size, age, breed, temper, etc.? Our app will allow you to find your dog's ideal friend based on your preferences. 
-
-Idea 2. We propose \<insert team name here\>, a new game to entertain everybody during these pandemic times. 
+We propose Woof, a Tinder for dogs. Millions of dog owners often have trouble finding playdates for their canine companions. Want your dog to play with another dog of a specific size, age, breed, temper, etc.? Our app will allow you to find your dog's ideal friend based on your preferences. 
 
 ### Team Matrix
 
