@@ -8,15 +8,30 @@ Make sure your node verson is up to date by running
 ```
 node -v
 ```
-To upgrade your node version, run
+To upgrade your node version, run the following to install node globally.
 ```
 npm install -g n
 ```
-to install node globally and
+Then to update node to the most recent stable version run:
 ```
 sudo n stable
 ```
-to update node to the most recent stable version.
 
 ### expo
-We use expo to run our app. To install expo
+We use expo to run our app. To install expo, run
+```
+npm install --global expo-cli
+```
+
+### npm
+In the woof-app directory, be sure to run
+```
+npm install
+```
+to install all necessesary dependencies
+
+## Run the app
+To run the app, execute the following when inside of the woof-app directory:
+```
+npm run ios
+```
