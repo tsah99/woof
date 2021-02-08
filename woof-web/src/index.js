@@ -3,6 +3,14 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import firebase from 'firebase/app';
+import firebaseConfig from './firebaseConfig';
+
+// Initialize Firebase
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
+console.log(firebase.apps.length ? 'Firebase is connected!' : 'Firebase is not connected!');
 
 ReactDOM.render(
   <React.StrictMode>
