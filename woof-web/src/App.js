@@ -1,23 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import CourseVideo from "./components/courseVideo/CourseVideo.js";
+import CommentSubmissionForm from "./components/commentSubmissionForm/CommentSubmissionForm.js";
+import CommentLog from "./components/commentLog/CommentLog.js";
+import "./App.css";
+
+let testComments = [
+  {
+    owner: "tsah",
+    text: "This video is super helpful",
+    time_posted: "posted 1 min ago",
+  },
+  {
+    owner: "brian",
+    text: "what is the machine learning",
+    time_posted: "posted 5 min ago",
+  },
+  {
+    owner: "sam",
+    text: "dogecoin pull out now",
+    time_posted: "posted 1 hr ago",
+  },
+];
 
 function App() {
+  let [seconds, updateSeconds] = useState(0);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <CourseVideo
+        updateSeconds={updateSeconds}
+        url="https://www.youtube.com/watch?v=KSeVfHphNlQ"
+      />
+      <CommentSubmissionForm seconds={seconds} />
+      <CommentLog comments={testComments} />
     </div>
   );
 }

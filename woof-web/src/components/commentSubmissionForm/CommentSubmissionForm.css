@@ -1,0 +1,16 @@
+.CommentSubmissionForm {
+  margin-bottom: 14px;
+}
+input.comment-field {
+  background-color: #484848;
+  border-color: #2ef2ff;
+  color: white;
+}
+
+input.timestamp-field {
+  background-color: #484848;
+  border-color: #2ef2ff;
+  width: 55px;
+  text-align: center;
+  color: white;
+}

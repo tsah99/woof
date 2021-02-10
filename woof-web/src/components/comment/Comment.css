@@ -1,0 +1,18 @@
+.Comment {
+}
+
+h4.comment-owner {
+  color: white;
+  margin: 0;
+  text-align: left;
+}
+
+p.comment-text {
+  text-align: left;
+  color: white;
+}
+
+p.time-posted {
+  text-align: left;
+  color: grey;
+}
