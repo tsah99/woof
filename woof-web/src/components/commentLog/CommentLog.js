@@ -1,12 +1,15 @@
 import Comment from "../comment/Comment.js";
+import { useCollectionData } from "react-firebase-hooks/firestore";
 import "./CommentLog.css";
 
 function CommentLog(props) {
+  const firestore = props.firebase.firestore();
+  const commentsRef = firestore.collection("comments");
+  const [comments] = useCollectionData(commentsRef, { idField: "id" });
+  console.log(comments);
   return (
     <div className="CommentLog">
-      {props.comments.map((comment) => (
-        <Comment comment={comment} />
-      ))}
+      {comments ? comments.map((comment) => <Comment comment={comment} />) : []}
     </div>
   );
 }
