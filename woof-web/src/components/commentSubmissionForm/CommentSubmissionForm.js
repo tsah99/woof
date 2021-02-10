@@ -20,10 +20,14 @@ function CommentSubmissionForm(props) {
       >
         <input className="comment-field" placeholder="write a comment..." />
         <input
+          className="post-comment-button"
+          type="submit"
+          value="comment at"
+        />
+        <input
           className="timestamp-field"
           placeholder={convertSecondsToTimestamp(parseInt(props.seconds))}
         />
-        <input type="submit" value="post" />
       </form>
     </div>
   );

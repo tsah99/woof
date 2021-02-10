@@ -2,6 +2,7 @@ import { useState } from "react";
 import CourseVideo from "./components/courseVideo/CourseVideo.js";
 import CommentSubmissionForm from "./components/commentSubmissionForm/CommentSubmissionForm.js";
 import CommentLog from "./components/commentLog/CommentLog.js";
+import ReactionBar from "./components/reactionBar/ReactionBar.js";
 import "./App.css";
 
 let testComments = [
@@ -30,6 +31,7 @@ function App() {
         updateSeconds={updateSeconds}
         url="https://www.youtube.com/watch?v=KSeVfHphNlQ"
       />
+      <ReactionBar />
       <CommentSubmissionForm seconds={seconds} />
       <CommentLog comments={testComments} />
     </div>
