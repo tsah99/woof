@@ -1,0 +1,19 @@
+.LiveChatCommentForm {
+  margin-bottom: 14px;
+}
+input.chat-field {
+  background-color: #484848;
+  border: 2px solid#46ff2e;
+  color: white;
+  overflow: hidden;
+  outline: none;
+}
+
+
+input.send-chat-button {
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
+  background-color: #46ff2e;
+  border: 2px solid #46ff2e;
+}

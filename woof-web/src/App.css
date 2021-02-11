@@ -1,4 +1,11 @@
 .App {
   background-color: black;
   margin-left: 5%;
+  margin-right: 5%;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 }
