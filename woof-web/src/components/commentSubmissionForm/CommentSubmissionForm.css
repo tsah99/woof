@@ -1,0 +1,29 @@
+.CommentSubmissionForm {
+  margin-bottom: 14px;
+}
+input.comment-field {
+  background-color: #484848;
+  border: 2px solid#2ef2ff;
+  color: white;
+  overflow: hidden;
+  outline: none;
+}
+
+input.timestamp-field {
+  background-color: #484848;
+  border: 2px solid#2ef2ff;
+  width: 55px;
+  text-align: center;
+  color: white;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  outline: none;
+}
+
+input.post-comment-button {
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
+  background-color: #2ef2ff;
+  border: 2px solid #2ef2ff;
+}

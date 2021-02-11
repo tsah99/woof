@@ -1,11 +1,11 @@
 const firebaseConfig = {
-  apiKey: "AIzaSyDUMgKQhDiHyxjbvFdT57AbjUWFlLhyVcU",
-  authDomain: "woof-48adb.firebaseapp.com",
-  projectId: "woof-48adb",
-  storageBucket: "woof-48adb.appspot.com",
-  messagingSenderId: "554573390090",
-  appId: "1:554573390090:web:ad126cbbea2c3efc951af3",
-  measurementId: "G-92ZHSQ0LSX"
+  apiKey: "AIzaSyDyzUqFFGNCrFqNGgzoyybHfzEKxR8dbTI",
+  authDomain: "woof-95250.firebaseapp.com",
+  projectId: "woof-95250",
+  storageBucket: "woof-95250.appspot.com",
+  messagingSenderId: "343609887148",
+  appId: "1:343609887148:web:4697b62d3fceb525a1d209",
+  measurementId: "G-WFVV46BGQ0",
 };
 
 export default firebaseConfig;
