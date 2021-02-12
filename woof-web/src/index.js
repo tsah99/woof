@@ -5,6 +5,10 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import firebase from "firebase/app";
 import firebaseConfig from "./firebaseConfig";
+import "firebase/firestore";
+import "firebase/auth";
+import { AuthProvider } from "./contexts/AuthContext";
+import { BrowserRouter as Router } from "react-router-dom";
 
 // Initialize Firebase
 if (!firebase.apps.length) {
@@ -16,7 +20,11 @@ console.log(
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Router>
+      <AuthProvider>
+        <App />
+      </AuthProvider>
+    </Router>
   </React.StrictMode>,
   document.getElementById("root")
 );
@@ -25,3 +33,8 @@ ReactDOM.render(
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
+
+// enable hot module replacement
+if (module.hot) {
+  module.hot.accept();
+}

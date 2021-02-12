@@ -1,3 +1,4 @@
+import React from "react";
 import Comment from "../comment/Comment.js";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import "./CommentLog.css";
