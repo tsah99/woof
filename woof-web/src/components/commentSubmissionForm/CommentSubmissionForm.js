@@ -14,21 +14,20 @@ import "./CommentSubmissionForm.css";
  *            the "comment at" button
  * @param firebase is a handle on the Firebase API
  */
-async function submitComment(event, firebase) {
+async function submitComment(event, videoId, firebase) {
   event.preventDefault();
 
   const firestore = firebase.firestore();
-  const commentsRef = firestore.collection("comments");
+  const commentsRef = firestore
+    .collection("videos")
+    .doc(videoId)
+    .collection("comments");
+
   let comment = event.target[0].value;
 
   await commentsRef.add({
-    video_id: "test_video_id",
-    comment: comment,
-    num_upvotes: 0,
-    num_downvotes: 1,
-    time_posted: firebase.firestore.FieldValue.serverTimestamp(),
+    text: comment,
     username: "sam",
-    vid_timestamp_secs: 42,
   });
 
   event.target[0].value = "";
@@ -49,6 +48,7 @@ function convertSecondsToTimestamp(seconds) {
  *
  * @param props is an object that has the properties
  *    firebase - a reference to the firebase API
+ *    videoId - the videoId of the current YouTube video
  *    seconds - the current number of seconds the video being played is at
  */
 function CommentSubmissionForm(props) {
@@ -58,7 +58,9 @@ function CommentSubmissionForm(props) {
         className="comment-submission-form"
         noValidate
         autoComplete="off"
-        onSubmit={(event) => submitComment(event, props.firebase)}
+        onSubmit={(event) =>
+          submitComment(event, props.videoId, props.firebase)
+        }
       >
         <input className="comment-field" placeholder="write a comment..." />
         <input

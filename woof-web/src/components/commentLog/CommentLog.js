@@ -8,12 +8,16 @@ import "./CommentLog.css";
  * on the web page for the current video.
  * @param props is an object that contains these properties
  *    firebase - a handle on the Firebase API
+ *    videoId - id of the YouTube video for which we should get comments from
  */
 function CommentLog(props) {
   const firestore = props.firebase.firestore();
-  const commentsRef = firestore.collection("comments");
-  const [comments] = useCollectionData(commentsRef, { idField: "id" });
+  const commentsRef = firestore
+    .collection("videos")
+    .doc(props.videoId)
+    .collection("comments");
 
+  let [comments] = useCollectionData(commentsRef, { idField: "id" });
   return (
     <div className="CommentLog">
       {comments ? comments.map((comment) => <Comment comment={comment} />) : []}

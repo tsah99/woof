@@ -11,7 +11,7 @@ const imgLink =
  * @param props is an object that contains these properties
  *    comment - an object that contains these properties
  *       username - a string containing the comment owner's username
- *       comment - a string containing the comment's text
+ *       text - a string containing the comment's text
  */
 function Comment(props) {
   return (
@@ -22,7 +22,7 @@ function Comment(props) {
         </Grid>
         <Grid justifyContent="left" item xs zeroMinWidth>
           <h4 className="comment-owner">{props.comment.username}</h4>
-          <p className="comment-text">{props.comment.comment}</p>
+          <p className="comment-text">{props.comment.text}</p>
         </Grid>
       </Grid>
     </div>
