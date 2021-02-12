@@ -1,17 +1,21 @@
-import Comment from "../comment/Comment.js";
+import LiveChatMessage from "../liveChatMessage/LiveChatMessage.js";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import "./LiveChat.css";
 
-function CommentLog(props) {
+function LiveChat(props) {
   const firestore = props.firebase.firestore();
-  const commentsRef = firestore.collection("comments");
-  const [comments] = useCollectionData(commentsRef, { idField: "id" });
-  console.log(comments);
+  const messagesRef = firestore.collection("liveChat");
+  const [liveChat] = useCollectionData(messagesRef, { idField: "id" });
+  console.log(liveChat);
   return (
-    <div className="CommentLog">
-      {comments ? comments.map((comment) => <Comment comment={comment} />) : []}
+    <div className="LiveChat">
+      {liveChat
+        ? liveChat.map((liveChatMessage) => (
+            <LiveChatMessage liveChatMessage={liveChatMessage} />
+          ))
+        : []}
     </div>
   );
 }
 
-export default CommentLog;
+export default LiveChat;

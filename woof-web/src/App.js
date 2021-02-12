@@ -2,7 +2,7 @@ import CourseVideo from "./components/courseVideo/CourseVideo.js";
 import CommentSubmissionForm from "./components/commentSubmissionForm/CommentSubmissionForm.js";
 import CommentLog from "./components/commentLog/CommentLog.js";
 import ReactionBar from "./components/reactionBar/ReactionBar.js";
-import LiveChatCommentForm from "./components/liveChatCommentForm/LiveChatCommentForm.js";
+import LiveChatMessageForm from "./components/liveChatMessageForm/LiveChatMessageForm.js";
 import LiveChat from "./components/liveChat/LiveChat.js";
 import firebase from "firebase/app";
 import firebaseConfig from "./firebaseConfig.js";
@@ -34,7 +34,8 @@ function App() {
           <CommentLog firebase={firebase} />
         </div>
         <div className="liveChat">
-          <LiveChatCommentForm />
+          <p className="liveChatTitle"> Live Chat </p>
+          <LiveChatMessageForm firebase={firebase} />
           <LiveChat firebase={firebase} />
         </div>
       </div>
