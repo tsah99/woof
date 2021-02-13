@@ -1,5 +1,7 @@
 .ReactionBar {
   color: white;
+  text-align: center;
+  background-color: #383737;
 }
 
 button.confused-react {

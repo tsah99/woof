@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import AuthContext from "./contexts/AuthContext";
-import SignIn from "./pages/SignIn";
-import Lecture from "./pages/Lecture";
-import LandingPage from "./pages/LandingPage";
+import SignIn from "./pages/signIn/SignIn";
+import Lecture from "./pages/lecture/Lecture";
+import LandingPage from "./pages/landingPage/LandingPage";
 
 function AuthenticatedRoute({ component: C, ...rest }) {
   const authApi = useContext(AuthContext);
