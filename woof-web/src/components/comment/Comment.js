@@ -30,6 +30,14 @@ function timeSince(seconds) {
   return Math.floor(secondsSince) + " seconds ago";
 }
 
+/**
+ * Converts seconds into the format "HH:MM:SS" and returns it.
+ * @param seconds
+ */
+function convertSecondsToTimestringFormat(seconds) {
+  return new Date(seconds * 1000).toISOString().substr(11, 8);
+}
+
 function renderComment(comment) {
   return (
     <Grid justifyContent="left" item xs zeroMinWidth>
@@ -117,6 +125,20 @@ function Comment(props) {
               <input className="subcomment-field" placeholder="reply..." />
             </form>
           </div>
+        </Grid>
+        <Grid
+          onClick={() =>
+            props.player.current.seekTo(props.comment.video_timestamp_in_secs)
+          }
+          className="video_timestamp"
+          justifyContent="left"
+          item
+          xs
+          zeroMinWidth
+        >
+          {convertSecondsToTimestringFormat(
+            props.comment.video_timestamp_in_secs
+          )}
         </Grid>
       </Grid>
     </div>

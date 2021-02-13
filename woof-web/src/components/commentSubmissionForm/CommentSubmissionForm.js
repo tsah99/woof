@@ -2,6 +2,28 @@ import React from "react";
 import "./CommentSubmissionForm.css";
 
 /**
+ * Converts seconds into the format "HH:MM:SS" and returns it.
+ * @param seconds
+ */
+function convertSecondsToTimestringFormat(seconds) {
+  return new Date(seconds * 1000).toISOString().substr(11, 8);
+}
+
+/**
+ *
+ */
+function convertTimestringFormatToSeconds(timestring) {
+  let hms = timestring.split(":"); // split it at the colons
+
+  let seconds = 0;
+  for (let i = hms.length - 1; i >= 0; --i) {
+    seconds += 60 ** (hms.length - i - 1) * hms[i];
+  }
+
+  return seconds;
+}
+
+/**
  * The handler that's called when a user submits a comment.
  * Makes a call to the Firebase API and posts a comment to
  * Firestore database.
@@ -18,6 +40,7 @@ async function submitComment(event, videoId, firebase) {
   event.preventDefault();
 
   let comment = event.target[0].value;
+  let video_timestamp = event.target[2].value;
 
   if (comment.length === 0) return;
 
@@ -31,18 +54,11 @@ async function submitComment(event, videoId, firebase) {
     text: comment,
     username: "sam",
     time_posted: firebase.firestore.Timestamp.now(),
+    video_timestamp_in_secs: convertTimestringFormatToSeconds(video_timestamp),
   });
 
   event.target[0].value = "";
   event.target[2].value = "";
-}
-
-/**
- * Converts seconds into the format "HH:MM:SS" and returns it.
- * @param seconds
- */
-function convertSecondsToTimestamp(seconds) {
-  return new Date(seconds * 1000).toISOString().substr(11, 8);
 }
 
 /**
@@ -55,6 +71,10 @@ function convertSecondsToTimestamp(seconds) {
  *    seconds - the current number of seconds the video being played is at
  */
 function CommentSubmissionForm(props) {
+  convertTimestringFormatToSeconds(
+    convertSecondsToTimestringFormat(parseInt(props.seconds))
+  );
+
   return (
     <div className="CommentSubmissionForm">
       <form
@@ -73,7 +93,9 @@ function CommentSubmissionForm(props) {
         />
         <input
           className="timestamp-field"
-          placeholder={convertSecondsToTimestamp(parseInt(props.seconds))}
+          placeholder={convertSecondsToTimestringFormat(
+            parseInt(props.seconds)
+          )}
         />
       </form>
     </div>

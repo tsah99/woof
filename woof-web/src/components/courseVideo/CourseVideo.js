@@ -1,6 +1,6 @@
 import React from "react";
-import { useRef } from "react";
 import ReactPlayer from "react-player";
+import { useRef } from "react";
 import "./CourseVideo.css";
 
 /**
@@ -13,7 +13,9 @@ import "./CourseVideo.css";
  *                    state
  */
 function CourseVideo(props) {
-  const player = useRef(null);
+  let player = useRef(null);
+
+  props.updatePlayer(player);
   return (
     <div className="CourseVideo">
       <ReactPlayer

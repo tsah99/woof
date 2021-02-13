@@ -1,29 +1,37 @@
 .Comment {
+  padding-bottom: 2px;
+  font-size: 12px;
 }
 
 .SubComments {
-  padding-top: 10px;
+  padding-top: 2px;
   padding-left: 20px;
-  padding-bottom: 20px;
+  padding-bottom: 2px;
+}
+
+form.subcomment-submission-form {
+  padding-top: 2px;
 }
 
 h4.comment-owner {
   color: white;
   margin: 0;
   text-align: left;
-  font-size: 14px;
 }
 
 p.comment-text {
   margin: 0;
   text-align: left;
   color: grey;
-  font-size: 14px;
 }
 
 p.time-posted {
   text-align: left;
   color: grey;
-  font-size: 12px;
+  font-size: 10px;
   margin: 0;
+}
+
+.video_timestamp {
+  color: #2d3edc;
 }

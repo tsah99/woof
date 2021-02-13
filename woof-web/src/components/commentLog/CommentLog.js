@@ -31,6 +31,7 @@ function CommentLog(props) {
               comment={comment}
               videoId={props.videoId}
               firebase={props.firebase}
+              player={props.player}
             />
           ))
         : []}
