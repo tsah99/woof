@@ -25,7 +25,15 @@ function CommentLog(props) {
   );
   return (
     <div className="CommentLog">
-      {comments ? comments.map((comment) => <Comment comment={comment} />) : []}
+      {comments
+        ? comments.map((comment) => (
+            <Comment
+              comment={comment}
+              videoId={props.videoId}
+              firebase={props.firebase}
+            />
+          ))
+        : []}
     </div>
   );
 }
