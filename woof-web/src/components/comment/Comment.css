@@ -8,11 +8,15 @@ h4.comment-owner {
 }
 
 p.comment-text {
+  margin: 0;
   text-align: left;
-  color: white;
+  color: grey;
+  font-size: 14px;
 }
 
 p.time-posted {
   text-align: left;
   color: grey;
+  font-size: 12px;
+  margin: 0;
 }

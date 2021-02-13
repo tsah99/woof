@@ -17,7 +17,12 @@ function CommentLog(props) {
     .doc(props.videoId)
     .collection("comments");
 
-  let [comments] = useCollectionData(commentsRef, { idField: "id" });
+  let [comments] = useCollectionData(
+    commentsRef.orderBy("time_posted", "desc"),
+    {
+      idField: "id",
+    }
+  );
   return (
     <div className="CommentLog">
       {comments ? comments.map((comment) => <Comment comment={comment} />) : []}

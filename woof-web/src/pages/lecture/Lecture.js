@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import CourseVideo from "../components/courseVideo/CourseVideo.js";
-import CommentSubmissionForm from "../components/commentSubmissionForm/CommentSubmissionForm.js";
-import CommentLog from "../components/commentLog/CommentLog.js";
-import ReactionBar from "../components/reactionBar/ReactionBar.js";
+import CourseVideo from "../../components/courseVideo/CourseVideo.js";
+import CommentSubmissionForm from "../../components/commentSubmissionForm/CommentSubmissionForm.js";
+import CommentLog from "../../components/commentLog/CommentLog.js";
+import ReactionBar from "../../components/reactionBar/ReactionBar.js";
 import firebase from "firebase/app";
-
+import "./Lecture.css";
 /**
  * Given a YouTube URL, returns the video id. For example, given
  * the id "https://www.youtube.com/watch?v=KSeVfHphNlQ", this
@@ -34,12 +34,12 @@ function getVideoId(url) {
 function Lecture({ props }) {
   let [seconds, updateSeconds] = useState(0);
   let [youtubeURL, updateYoutubeURL] = useState(
-    "https://www.youtube.com/watch?v=KSeVfHphNlQ"
+    "https://www.youtube.com/watch?v=bfyI9yl3qfE&t=312s"
   );
   let videoId = getVideoId(youtubeURL);
 
   return (
-    <>
+    <div className="Lecture">
       <CourseVideo updateSeconds={updateSeconds} url={youtubeURL} />
       <ReactionBar />
       <CommentSubmissionForm
@@ -48,7 +48,7 @@ function Lecture({ props }) {
         seconds={seconds}
       />
       <CommentLog firebase={firebase} videoId={videoId} />
-    </>
+    </div>
   );
 }
 

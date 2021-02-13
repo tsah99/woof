@@ -17,17 +17,20 @@ import "./CommentSubmissionForm.css";
 async function submitComment(event, videoId, firebase) {
   event.preventDefault();
 
+  let comment = event.target[0].value;
+
+  if (comment.length === 0) return;
+
   const firestore = firebase.firestore();
   const commentsRef = firestore
     .collection("videos")
     .doc(videoId)
     .collection("comments");
 
-  let comment = event.target[0].value;
-
   await commentsRef.add({
     text: comment,
     username: "sam",
+    time_posted: firebase.firestore.Timestamp.now(),
   });
 
   event.target[0].value = "";

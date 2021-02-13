@@ -1,5 +1,7 @@
 .CommentSubmissionForm {
   margin-bottom: 14px;
+  background-color: #2c2c2c;
+  padding: 10px;
 }
 input.comment-field {
   background-color: #484848;
