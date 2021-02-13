@@ -1,4 +1,23 @@
 .App {
   background-color: black;
   margin-left: 5%;
+  margin-right: 5%;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.liveChatTitle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  color: #34be22;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  text-align: center;
 }
