@@ -3,6 +3,9 @@ import CourseVideo from "../../components/courseVideo/CourseVideo.js";
 import CommentSubmissionForm from "../../components/commentSubmissionForm/CommentSubmissionForm.js";
 import CommentLog from "../../components/commentLog/CommentLog.js";
 import ReactionBar from "../../components/reactionBar/ReactionBar.js";
+import LiveChatMessageForm from "../../components/liveChatMessageForm/LiveChatMessageForm.js";
+import LiveChat from "../../components/liveChat/LiveChat.js";
+
 import firebase from "firebase/app";
 import "./Lecture.css";
 /**
@@ -29,7 +32,7 @@ function getVideoId(url) {
  * This component houses the lecture watching page of our app.
  *
  * It maintains the state
- *  seconds - the current number of seconds the video has played
+ *  seconds - the current number of seconds the video has played
  */
 function Lecture({ props }) {
   let [seconds, updateSeconds] = useState(0);
@@ -40,14 +43,36 @@ function Lecture({ props }) {
 
   return (
     <div className="Lecture">
-      <CourseVideo updateSeconds={updateSeconds} url={youtubeURL} />
-      <ReactionBar />
-      <CommentSubmissionForm
-        firebase={firebase}
-        videoId={videoId}
-        seconds={seconds}
-      />
-      <CommentLog firebase={firebase} videoId={videoId} />
+            
+      <div className="row">
+                
+        <div>
+                    
+          <CourseVideo updateSeconds={updateSeconds} url={youtubeURL} />
+                    
+          <ReactionBar />
+                    
+          <CommentSubmissionForm
+            firebase={firebase}
+            videoId={videoId}
+            seconds={seconds}
+          />
+                    
+          <CommentLog firebase={firebase} videoId={videoId} />
+                  
+        </div>
+                
+        <div className="liveChat">
+                    <p className="liveChatTitle"> Live Chat </p>
+                    
+          <LiveChatMessageForm firebase={firebase} videoId={videoId} />
+                    
+          <LiveChat firebase={firebase} videoId={videoId} />
+                  
+        </div>
+              
+      </div>
+          
     </div>
   );
 }
