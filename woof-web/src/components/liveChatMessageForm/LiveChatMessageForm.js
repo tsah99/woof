@@ -1,15 +1,21 @@
+import React from "react";
 import "./LiveChatMessageForm.css";
 
-async function sendMessage(event, firebase) {
+async function sendMessage(event, videoId, firebase) {
   event.preventDefault();
 
+  let liveChatMessage = event.target[0].value;
+  if (liveChatMessage.length === 0) return;
+
   const firestore = firebase.firestore();
-  const messagesRef = firestore.collection("liveChat");
-  let LiveChatMessage = event.target[0].value;
+  const messagesRef = firestore
+    .collection("videos")
+    .doc(videoId)
+    .collection("liveChat");
 
   await messagesRef.add({
-    text: LiveChatMessage,
-    time: firebase.firestore.FieldValue.serverTimestamp(),
+    text: liveChatMessage,
+    time: firebase.firestore.Timestamp.now(),
     username: "kento",
   });
 
@@ -23,7 +29,7 @@ function LiveChatMessageForm(props) {
         className="liveChat-message-form"
         noValidate
         autoComplete="off"
-        onSubmit={(event) => sendMessage(event, props.firebase)}
+        onSubmit={(event) => sendMessage(event, props.videoId, props.firebase)}
       >
         <input className="chat-field" placeholder="chat in live..." />
         <input className="send-chat-button" type="submit" value="send" />

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import CourseVideo from "./components/courseVideo/CourseVideo.js";
 import CommentSubmissionForm from "./components/commentSubmissionForm/CommentSubmissionForm.js";
 import CommentLog from "./components/commentLog/CommentLog.js";
@@ -10,17 +9,15 @@ import firebaseConfig from "./firebaseConfig.js";
 import { useState } from "react";
 import "firebase/firestore";
 import "firebase/auth";
-=======
 import React from "react";
 import Routes from "./Routes";
 import { withRouter } from "react-router-dom";
->>>>>>> afaf77112e5b4b8274af1c90333d8a9aa6dcb1e8
 import "./App.css";
 
 function App() {
+  let [seconds, updateSeconds] = useState(0);
   return (
     <div className="App">
-<<<<<<< HEAD
       <div className="row">
         <div>
           <CourseVideo
@@ -37,9 +34,7 @@ function App() {
           <LiveChat firebase={firebase} />
         </div>
       </div>
-=======
       <Routes />
->>>>>>> afaf77112e5b4b8274af1c90333d8a9aa6dcb1e8
     </div>
   );
 }
