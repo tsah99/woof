@@ -40,6 +40,30 @@ function renderComment(comment) {
   );
 }
 
+async function submitSubComment(event, commentId, videoId, firebase) {
+  event.preventDefault();
+
+  let comment = event.target[0].value;
+
+  if (comment.length === 0) return;
+
+  const firestore = firebase.firestore();
+  const subCommentsRef = firestore
+    .collection("videos")
+    .doc(videoId)
+    .collection("comments")
+    .doc(commentId)
+    .collection("subComments");
+
+  await subCommentsRef.add({
+    text: comment,
+    username: "brian",
+    time_posted: firebase.firestore.Timestamp.now(),
+  });
+
+  event.target[0].value = "";
+}
+
 /**
  * This component renders a single comment and should be used as a
  * child component to CommentLog.
@@ -55,10 +79,10 @@ function Comment(props) {
     .doc(props.videoId)
     .collection("comments")
     .doc(props.comment.id)
-    .collection("sub_comments");
+    .collection("subComments");
 
   let [subComments] = useCollectionData(
-    subCommentsRef.orderBy("time_posted", "desc"),
+    subCommentsRef.orderBy("time_posted", "asc"),
     {
       idField: "id",
     }
@@ -73,14 +97,25 @@ function Comment(props) {
           <p className="time-posted">
             {timeSince(props.comment.time_posted.seconds)}
           </p>
-          <div className="SubComment">
-            <Grid container wrap="nowrap" spacing={2}>
-              <Grid justifyContent="right" item xs zeroMinWidth>
-                {subComments
-                  ? subComments.map((subComment) => renderComment(subComment))
-                  : []}
-              </Grid>
-            </Grid>
+          <div className="SubComments">
+            {subComments
+              ? subComments.map((subComment) => renderComment(subComment))
+              : []}
+            <form
+              className="subcomment-submission-form"
+              noValidate
+              autoComplete="off"
+              onSubmit={(event) =>
+                submitSubComment(
+                  event,
+                  props.comment.id,
+                  props.videoId,
+                  props.firebase
+                )
+              }
+            >
+              <input className="subcomment-field" placeholder="reply..." />
+            </form>
           </div>
         </Grid>
       </Grid>

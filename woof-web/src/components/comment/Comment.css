@@ -1,10 +1,17 @@
 .Comment {
 }
 
+.SubComments {
+  padding-top: 10px;
+  padding-left: 20px;
+  padding-bottom: 20px;
+}
+
 h4.comment-owner {
   color: white;
   margin: 0;
   text-align: left;
+  font-size: 14px;
 }
 
 p.comment-text {
