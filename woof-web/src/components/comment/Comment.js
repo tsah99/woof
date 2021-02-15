@@ -3,6 +3,70 @@ import { Grid } from "@material-ui/core";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import "./Comment.css";
 
+/**
+ * Converts a timestring into seconds and returns it.
+ *
+ * @param timestring - a string of the format HH:MM:SS, H:MM:SS, MM:SS,
+ *                     or M:SS
+ */
+function convertTimestringFormatToSeconds(timestring) {
+  let hms = timestring.split(":"); // split it at the colons
+
+  let seconds = 0;
+  for (let i = hms.length - 1; i >= 0; --i) {
+    seconds += 60 ** (hms.length - i - 1) * hms[i];
+  }
+
+  return seconds;
+}
+
+/**
+ * Given a comment, finds all timestamp strings in the comment
+ * text and links them such that clicking on the timestamp will
+ * change the playerhead on the current video to that timestamp.
+ *
+ * For example, in the comment "3:33 was helpful for learning
+ * regression and 33:22 was helpful for learning parameter tuning",
+ * clicking on 3:33 or 33:22 should change the video's player head
+ * to 3:33 and 33:22 respectively
+ *
+ * @param comment - a comment object as explained in the Comment component
+ * @param player - a handle on the current video's player
+ */
+function linkTimestampsInComment(comment, player) {
+  let timestampReg = new RegExp(
+    /([0-9]?[0-9]:[0-5][0-9]:[0-5][0-9])|([0-5]?[0-9]:[0-5][0-9])/
+  );
+
+  let parts = comment.text.split(timestampReg);
+
+  for (let i = 0; i < parts.length; ++i) {
+    let timestampStr = parts[i];
+    if (timestampStr !== undefined && timestampReg.test(timestampStr)) {
+      parts[i] = (
+        <span
+          onClick={() =>
+            player.current.seekTo(
+              convertTimestringFormatToSeconds(timestampStr)
+            )
+          }
+          style={{ cursor: "pointer", color: "#2d3edc" }}
+          className="match"
+          key={i}
+        >
+          {parts[i]}
+        </span>
+      );
+    }
+  }
+  return <div>{parts}</div>;
+}
+
+/**
+ * Converts a UNIX timestamp seconds into a "... time ago" format.
+ *
+ * @param seconds - UNIX timestamp seconds
+ */
 function timeSince(seconds) {
   var secondsSince = Math.floor((new Date() - new Date(seconds * 1000)) / 1000);
 
@@ -31,23 +95,28 @@ function timeSince(seconds) {
 }
 
 /**
- * Converts seconds into the format "HH:MM:SS" and returns it.
- * @param seconds
+ * Renders a singular sub-comment.
+ * @param comment - a comment object, as explained in Comment component
+ * @param player - a handle on the current video's player
  */
-function convertSecondsToTimestringFormat(seconds) {
-  return new Date(seconds * 1000).toISOString().substr(11, 8);
-}
-
-function renderComment(comment) {
+function renderComment(comment, player) {
   return (
     <Grid justifyContent="left" item xs zeroMinWidth>
       <h4 className="comment-owner">{comment.username}</h4>
-      <p className="comment-text">{comment.text}</p>
+      <p className="comment-text">{linkTimestampsInComment(comment, player)}</p>
       <p className="time-posted">{timeSince(comment.time_posted.seconds)}</p>
     </Grid>
   );
 }
 
+/**
+ * The handler which submits a sub-comment.
+ *
+ * @param event - a handle on the on enter event
+ * @param commentId - the parent comment's id
+ * @param videoId - the current video's id
+ * @param firebase - a handle on the Firebase API
+ */
 async function submitSubComment(event, commentId, videoId, firebase) {
   event.preventDefault();
 
@@ -76,9 +145,14 @@ async function submitSubComment(event, commentId, videoId, firebase) {
  * This component renders a single comment and should be used as a
  * child component to CommentLog.
  * @param props is an object that contains these properties
- *    comment - an object that contains these properties
- *       username - a string containing the comment owner's username
- *       text - a string containing the comment's text
+ *      comment - an object that contains these properties
+ *        username - a string containing the comment owner's username
+ *        text - a string containing the comment's text
+ *        time_posted - an object containing these properties
+ *          seconds - time posted in UNIX timestamp seconds
+ *      firebase - a handle on the Firebase API
+ *      videoId - a string containing the current video's id
+ *      player - a handle on the player for the current video
  */
 function Comment(props) {
   const firestore = props.firebase.firestore();
@@ -101,13 +175,17 @@ function Comment(props) {
       <Grid container wrap="nowrap" spacing={2}>
         <Grid justifyContent="left" item xs zeroMinWidth>
           <h4 className="comment-owner">{props.comment.username}</h4>
-          <p className="comment-text">{props.comment.text}</p>
+          <p className="comment-text">
+            {linkTimestampsInComment(props.comment, props.player)}
+          </p>
           <p className="time-posted">
             {timeSince(props.comment.time_posted.seconds)}
           </p>
           <div className="SubComments">
             {subComments
-              ? subComments.map((subComment) => renderComment(subComment))
+              ? subComments.map((subComment) =>
+                  renderComment(subComment, props.player)
+                )
               : []}
             <form
               className="subcomment-submission-form"
@@ -125,20 +203,6 @@ function Comment(props) {
               <input className="subcomment-field" placeholder="reply..." />
             </form>
           </div>
-        </Grid>
-        <Grid
-          onClick={() =>
-            props.player.current.seekTo(props.comment.video_timestamp_in_secs)
-          }
-          className="video_timestamp"
-          justifyContent="left"
-          item
-          xs
-          zeroMinWidth
-        >
-          {convertSecondsToTimestringFormat(
-            props.comment.video_timestamp_in_secs
-          )}
         </Grid>
       </Grid>
     </div>

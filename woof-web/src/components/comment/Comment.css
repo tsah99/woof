@@ -19,10 +19,21 @@ h4.comment-owner {
   text-align: left;
 }
 
+input.subcomment-field {
+  background-color: #484848;
+  border: 2px solid#2ef2ff;
+  color: white;
+  overflow: hidden;
+  outline: none;
+  font-size: 12px;
+}
+
 p.comment-text {
   margin: 0;
   text-align: left;
   color: grey;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 p.time-posted {

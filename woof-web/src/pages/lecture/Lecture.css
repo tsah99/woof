@@ -1,6 +1,7 @@
 .Lecture {
   display: table;
 }
+
 .row {
   display: flex;
   justify-content: space-between;

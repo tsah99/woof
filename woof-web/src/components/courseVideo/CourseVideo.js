@@ -1,6 +1,6 @@
 import React from "react";
 import ReactPlayer from "react-player";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import "./CourseVideo.css";
 
 /**
@@ -8,22 +8,17 @@ import "./CourseVideo.css";
  * the web app.
  * @param props is an object with the properties
  *    url - a string that is the link to a youtube video
- *    updateSeconds - a react hook from the parent component, which
- *                    updates the parent's current playedSeconds
- *                    state
+ *    updatePlayer - a react hook from the parent component, which
+ *                    updates the parent's player handle
  */
 function CourseVideo(props) {
   let player = useRef(null);
-
-  props.updatePlayer(player);
+  useEffect(() => {
+    props.updatePlayer(player);
+  });
   return (
     <div className="CourseVideo">
-      <ReactPlayer
-        controls
-        url={props.url}
-        ref={player}
-        onProgress={(progress) => props.updateSeconds(progress.playedSeconds)}
-      />
+      <ReactPlayer controls url={props.url} ref={player} />
     </div>
   );
 }
