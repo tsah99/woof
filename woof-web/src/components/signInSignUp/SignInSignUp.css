@@ -1,0 +1,32 @@
+.SignInSignUp-Container {
+  width: 700px;
+  height: 200px;
+  position: relative;
+  background-color: gray;
+  align-items: center;
+
+  margin: auto;
+  border: 5px solid gold;
+  /* justify-content: ; */
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
+.SignInSignUp-WelcomeMsg {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 30pt;
+  font-style: oblique;
+  font-weight: bold;
+}
+
+.SignInSignUp-Clickables {
+  display: flex;
+  flex-direction: row;
+}
+
+.SignInSignUp-Button:hover {
+  cursor: pointer;
+  color: red;
+  opacity: 75%;
+}

@@ -4,7 +4,7 @@ const AuthContext = React.createContext();
 
 export function AuthProvider(props) {
   // change this when auth is actually set up
-  const [user, _setUser] = useState(true);
+  const [user, _setUser] = useState();
   const setUser = useCallback(_setUser, []);
 
   const getMemoizedSetters = useMemo(() => {
