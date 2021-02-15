@@ -9,6 +9,7 @@ import "./CommentLog.css";
  * @param props is an object that contains these properties
  *    firebase - a handle on the Firebase API
  *    videoId - id of the YouTube video for which we should get comments from
+ *    player - a handle on the player for the video being played
  */
 function CommentLog(props) {
   const firestore = props.firebase.firestore();
@@ -25,7 +26,16 @@ function CommentLog(props) {
   );
   return (
     <div className="CommentLog">
-      {comments ? comments.map((comment) => <Comment comment={comment} />) : []}
+      {comments
+        ? comments.map((comment) => (
+            <Comment
+              comment={comment}
+              videoId={props.videoId}
+              firebase={props.firebase}
+              player={props.player}
+            />
+          ))
+        : []}
     </div>
   );
 }

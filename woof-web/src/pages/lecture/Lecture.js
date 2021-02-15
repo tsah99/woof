@@ -5,8 +5,9 @@ import CommentLog from "../../components/commentLog/CommentLog.js";
 import ReactionBar from "../../components/reactionBar/ReactionBar.js";
 import LiveChatMessageForm from "../../components/liveChatMessageForm/LiveChatMessageForm.js";
 import LiveChat from "../../components/liveChat/LiveChat.js";
-
 import firebase from "firebase/app";
+import { useRef } from "react";
+
 import "./Lecture.css";
 /**
  * Given a YouTube URL, returns the video id. For example, given
@@ -32,47 +33,31 @@ function getVideoId(url) {
  * This component houses the lecture watching page of our app.
  *
  * It maintains the state
- *  seconds - the current number of seconds the video has played
+ *  youtubeURL - the url of the video being played
+ *  player - a handle on the player for the video being played
  */
 function Lecture({ props }) {
-  let [seconds, updateSeconds] = useState(0);
   let [youtubeURL, updateYoutubeURL] = useState(
     "https://www.youtube.com/watch?v=bfyI9yl3qfE&t=312s"
   );
+  let [player, updatePlayer] = useState(null);
   let videoId = getVideoId(youtubeURL);
 
   return (
     <div className="Lecture">
-            
       <div className="row">
-                
         <div>
-                    
-          <CourseVideo updateSeconds={updateSeconds} url={youtubeURL} />
-                    
+          <CourseVideo updatePlayer={updatePlayer} url={youtubeURL} />
           <ReactionBar />
-                    
-          <CommentSubmissionForm
-            firebase={firebase}
-            videoId={videoId}
-            seconds={seconds}
-          />
-                    
-          <CommentLog firebase={firebase} videoId={videoId} />
-                  
+          <CommentSubmissionForm firebase={firebase} videoId={videoId} />
+          <CommentLog firebase={firebase} videoId={videoId} player={player} />
         </div>
-                
         <div className="liveChat">
-                    <p className="liveChatTitle"> Live Chat </p>
-                    
+                    <p className="liveChatTitle"> Live Chat </p>    
           <LiveChatMessageForm firebase={firebase} videoId={videoId} />
-                    
           <LiveChat firebase={firebase} videoId={videoId} />
-                  
         </div>
-              
       </div>
-          
     </div>
   );
 }

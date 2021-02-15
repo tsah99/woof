@@ -34,15 +34,6 @@ async function submitComment(event, videoId, firebase) {
   });
 
   event.target[0].value = "";
-  event.target[2].value = "";
-}
-
-/**
- * Converts seconds into the format "HH:MM:SS" and returns it.
- * @param seconds
- */
-function convertSecondsToTimestamp(seconds) {
-  return new Date(seconds * 1000).toISOString().substr(11, 8);
 }
 
 /**
@@ -66,15 +57,7 @@ function CommentSubmissionForm(props) {
         }
       >
         <input className="comment-field" placeholder="write a comment..." />
-        <input
-          className="post-comment-button"
-          type="submit"
-          value="comment at"
-        />
-        <input
-          className="timestamp-field"
-          placeholder={convertSecondsToTimestamp(parseInt(props.seconds))}
-        />
+        <input className="post-comment-button" type="submit" value="comment" />
       </form>
     </div>
   );
