@@ -1,12 +1,7 @@
 import React from "react";
-import SignInSignUp from "../components/signInSignUp/SignInSignUp.js";
 
 function LandingPage() {
-  return (
-    <>
-      <SignInSignUp />
-    </>
-  );
+  return <div>This is our landing page</div>;
 }
 
 export default LandingPage;
