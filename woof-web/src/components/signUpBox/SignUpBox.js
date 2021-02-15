@@ -1,91 +1,76 @@
 import firebase from "firebase/app";
 import "firebase/auth";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { useHistory } from "react-router-dom";
+import AuthContext from "../../contexts/AuthContext";
 import "./SignUpBox.css";
 
-/**
- * This component houses the functionality for signing up
- * new users
- */
-class SignUpBox extends React.Component {
-  constructor(props) {
-    super(props);
+function SignUpBox() {
+  const authApi = useContext(AuthContext);
+  const history = useHistory();
 
-    this.state = {
-      email: "",
-      password: "",
-    };
-  }
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  handleInputChange(inputId, event) {
-    if (inputId === "email") {
-      this.setState({ email: event.target.value });
-    }
-    if (inputId === "password") {
-      this.setState({ password: event.target.value });
-    }
-  }
+  async function signUpClick() {
+    console.log("Attempting Sign Up with:");
+    console.log("Email: ", email);
+    console.log("Password: ", password);
 
-  handleSignUpClick(event) {
-    console.log("Handling sign-up attempt");
-    console.log("Email: ", this.state.email);
-    console.log("Password: ", this.state.password);
-    console.log(event);
-    firebase
+    await firebase
       .auth()
-      .createUserWithEmailAndPassword(this.state.email, this.state.password)
-      .then((userCredential) => {
+      .createUserWithEmailAndPassword(email, password)
+      .then((response) => {
         // Signed in
-        var user = userCredential.user;
-        console.log("user: ", user);
+        authApi.setUser(response.user);
+        console.log("Current user: ", response.user);
+        history.push("/lecture");
       })
       .catch((error) => {
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        console.log("error code: ", errorCode);
-        console.log("errorMessage: ", errorMessage);
+        let errorCode = error.code;
+        let errorMessage = error.message;
+        console.log("Error with code: ", errorCode);
+        console.log("Error with message: ", errorMessage);
       });
   }
 
-  render() {
-    return (
-      <div className="SignUpBox-Container">
-        <p className="SignUpBox-WelcomeMsg">
-          Enter your email and password below to SIGN UP:
-        </p>
-        <div className="SignUpBox-InputTable">
-          <div className="SignUpBox-InputRow">
-            <label className="SignUpBox-InputCell">Email: </label>
-            <input
-              onChange={(e) => this.handleInputChange("email", e)}
-              className="SignUpBox-InputCell"
-              id="signUpBox-EmailInput"
-              type="text"
-              value={this.state.email}
-            />
-          </div>
-          <div className="SignUpBox-InputRow">
-            <label className="SignUpBox-InputCell">Password: </label>
-            <input
-              onChange={(e) => this.handleInputChange("password", e)}
-              className="SignUpBox-InputCell"
-              id="signUpBox-PasswordInput"
-              type="password"
-              value={this.state.password}
-            ></input>
-          </div>
+  return (
+    <div className="SignUpBox-Container">
+      <p className="SignUpBox-WelcomeMsg">
+        Enter your email and password below to SIGN UP:
+      </p>
+      <div className="SignUpBox-InputTable">
+        <div className="SignUpBox-InputRow">
+          <label className="SignUpBox-InputCell">Email: </label>
+          <input
+            onChange={(e) => setEmail(e.target.value)}
+            className="SignUpBox-InputCell"
+            id="signUpBox-EmailInput"
+            type="text"
+            value={email}
+          />
         </div>
         <div className="SignUpBox-InputRow">
-          <button
-            className="SignUpBox-SignUpButton"
-            onClick={(e) => this.handleSignUpClick(e)}
-          >
-            Sign Up
-          </button>
+          <label className="SignUpBox-InputCell">Password: </label>
+          <input
+            onChange={(e) => setPassword(e.target.value)}
+            className="SignUpBox-InputCell"
+            id="signUpBox-PasswordInput"
+            type="password"
+            value={password}
+          ></input>
         </div>
       </div>
-    );
-  }
+      <div className="SignUpBox-InputRow">
+        <button
+          className="SignUpBox-SignUpButton"
+          onClick={() => signUpClick()}
+        >
+          Sign Up
+        </button>
+      </div>
+    </div>
+  );
 }
 
 export default SignUpBox;
