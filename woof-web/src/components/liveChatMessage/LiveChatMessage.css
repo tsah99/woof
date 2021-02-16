@@ -13,10 +13,11 @@ p.message-text {
   text-align: left;
   color: grey;
   margin: 0;
-  border-radius: 8px;
 }
 
 p.message-time {
   text-align: left;
+  font-size: 10px;
   color: grey;
+  margin: 0;
 }

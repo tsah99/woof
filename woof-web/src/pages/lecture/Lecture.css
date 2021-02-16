@@ -1,5 +1,6 @@
 .Lecture {
   display: table;
+  margin: 50px;
 }
 
 .row {
@@ -9,7 +10,7 @@
 }
 
 .video {
-  padding: 50px;
+  margin-right: 50px;
 }
 
 .commentLogTitle {

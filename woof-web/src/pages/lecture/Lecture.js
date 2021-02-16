@@ -52,12 +52,12 @@ function Lecture({ props }) {
         </div>
         <div>
           <div className="commentLog">
-            <p className="commentLogTitle"> Comment Log </p>    
+            <p className="commentLogTitle"> Comment Log </p>
             <CommentLog firebase={firebase} videoId={videoId} player={player} />
             <CommentSubmissionForm firebase={firebase} videoId={videoId} />
           </div>
           <div className="liveChat">
-            <p className="liveChatTitle"> Live Chat </p>    
+            <p className="liveChatTitle"> Live Chat </p>
             <LiveChat firebase={firebase} videoId={videoId} player={player} />
             <LiveChatMessageForm firebase={firebase} videoId={videoId} />
           </div>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import LiveChatMessage from "../liveChatMessage/LiveChatMessage.js";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import "./LiveChat.css";
@@ -18,17 +18,19 @@ function LiveChat(props) {
     .doc(props.videoId)
     .collection("liveChat");
 
-  let [liveChat] = useCollectionData(
-    messagesRef.orderBy("time_posted", "asc"),
-    {
-      idField: "id",
-    }
-  );
+  let [liveChat] = useCollectionData(messagesRef.orderBy("time_sent", "asc"), {
+    idField: "id",
+  });
+
+  useEffect(() => {
+    let div = document.getElementsByClassName("LiveChat")[0];
+    div.scrollTop = div.scrollHeight;
+  });
 
   return (
     <div className="LiveChat">
       {liveChat
-        ? liveChat.map((liveChatMessage) => (
+        ? liveChat.map((liveChatMessage, i) => (
             <LiveChatMessage
               liveChatMessage={liveChatMessage}
               videoId={props.videoId}

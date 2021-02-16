@@ -1,5 +1,5 @@
 import React from "react";
-import { Avatar, Grid } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import "./LiveChatMessage.css";
 
 const imgLink =
@@ -119,8 +119,8 @@ function LiveChatMessage(props) {
           <p className="message-text">
             {linkTimestampsInComment(props.liveChatMessage, props.player)}
           </p>
-          <p className="time-posted">
-            {timeSince(props.liveChatMessage.time_posted.seconds)}
+          <p className="message-time">
+            {timeSince(props.liveChatMessage.time_sent.seconds)}
           </p>
         </Grid>
       </Grid>
