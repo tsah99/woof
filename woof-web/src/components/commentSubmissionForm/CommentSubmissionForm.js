@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import AuthContext from "../../contexts/AuthContext";
 import "./CommentSubmissionForm.css";
 
 /**
@@ -14,7 +15,7 @@ import "./CommentSubmissionForm.css";
  *            the "comment at" button
  * @param firebase is a handle on the Firebase API
  */
-async function submitComment(event, videoId, firebase) {
+async function submitComment(event, videoId, firebase, authApi) {
   event.preventDefault();
 
   let comment = event.target[0].value;
@@ -29,7 +30,7 @@ async function submitComment(event, videoId, firebase) {
 
   await commentsRef.add({
     text: comment,
-    username: "sam",
+    username: authApi.user.email,
     time_posted: firebase.firestore.Timestamp.now(),
   });
 
@@ -46,6 +47,8 @@ async function submitComment(event, videoId, firebase) {
  *    seconds - the current number of seconds the video being played is at
  */
 function CommentSubmissionForm(props) {
+  const authApi = useContext(AuthContext);
+
   return (
     <div className="CommentSubmissionForm">
       <form
@@ -53,7 +56,7 @@ function CommentSubmissionForm(props) {
         noValidate
         autoComplete="off"
         onSubmit={(event) =>
-          submitComment(event, props.videoId, props.firebase)
+          submitComment(event, props.videoId, props.firebase, authApi)
         }
       >
         <input className="comment-field" placeholder="write a comment..." />

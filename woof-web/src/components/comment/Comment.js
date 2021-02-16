@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Grid } from "@material-ui/core";
 import { useCollectionData } from "react-firebase-hooks/firestore";
+import AuthContext from "../../contexts/AuthContext";
 import "./Comment.css";
 
 /**
@@ -117,7 +118,7 @@ function renderComment(comment, player) {
  * @param videoId - the current video's id
  * @param firebase - a handle on the Firebase API
  */
-async function submitSubComment(event, commentId, videoId, firebase) {
+async function submitSubComment(event, commentId, videoId, firebase, authApi) {
   event.preventDefault();
 
   let comment = event.target[0].value;
@@ -125,6 +126,7 @@ async function submitSubComment(event, commentId, videoId, firebase) {
   if (comment.length === 0) return;
 
   const firestore = firebase.firestore();
+
   const subCommentsRef = firestore
     .collection("videos")
     .doc(videoId)
@@ -134,7 +136,7 @@ async function submitSubComment(event, commentId, videoId, firebase) {
 
   await subCommentsRef.add({
     text: comment,
-    username: "brian",
+    username: authApi.user.email,
     time_posted: firebase.firestore.Timestamp.now(),
   });
 
@@ -170,6 +172,8 @@ function Comment(props) {
     }
   );
 
+  const authApi = useContext(AuthContext);
+
   return (
     <div className="Comment">
       <Grid container wrap="nowrap" spacing={2}>
@@ -196,7 +200,8 @@ function Comment(props) {
                   event,
                   props.comment.id,
                   props.videoId,
-                  props.firebase
+                  props.firebase,
+                  authApi
                 )
               }
             >
