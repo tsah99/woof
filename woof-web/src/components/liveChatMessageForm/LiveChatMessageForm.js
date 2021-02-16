@@ -16,7 +16,7 @@ async function sendMessage(event, videoId, firebase, authApi) {
 
   await messagesRef.add({
     text: liveChatMessage,
-    time: firebase.firestore.Timestamp.now(),
+    time_sent: firebase.firestore.Timestamp.now(),
     username: authApi.user.email,
   });
 
