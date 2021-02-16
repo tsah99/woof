@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Comment from "../comment/Comment.js";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import "./CommentLog.css";
@@ -19,11 +19,18 @@ function CommentLog(props) {
     .collection("comments");
 
   let [comments] = useCollectionData(
-    commentsRef.orderBy("time_posted", "desc"),
+    commentsRef.orderBy("time_posted", "asc"),
     {
       idField: "id",
     }
   );
+
+  //used to scroll the view into the most recent comment
+  useEffect(() => {
+    let div = document.getElementsByClassName("CommentLog")[0];
+    div.scrollTop = div.scrollHeight;
+  });
+
   return (
     <div className="CommentLog">
       {comments

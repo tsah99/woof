@@ -1,12 +1,19 @@
 .LiveChatMessageForm {
-  margin-bottom: 14px;
+  margin-bottom: 0px;
+  background-color: #2c2c2c;
+  padding: 15px;
+  justify-content: center;
 }
+
 input.chat-field {
   background-color: #484848;
   border: 2px solid#34be22;
   color: white;
   overflow: hidden;
   outline: none;
+  width: 75%;
+  font-size: 12px;
+  border-radius: 5px;
 }
 
 input.send-chat-button {
@@ -15,4 +22,7 @@ input.send-chat-button {
   outline: none;
   background-color: #34be22;
   border: 2px solid #34be22;
+  font-size: 12px;
+  border-radius: 5px;
+  width: 20%;
 }
