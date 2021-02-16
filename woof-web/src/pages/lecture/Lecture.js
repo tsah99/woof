@@ -46,16 +46,21 @@ function Lecture({ props }) {
   return (
     <div className="Lecture">
       <div className="row">
-        <div>
+        <div className="video">
           <CourseVideo updatePlayer={updatePlayer} url={youtubeURL} />
           <ReactionBar />
-          <CommentSubmissionForm firebase={firebase} videoId={videoId} />
-          <CommentLog firebase={firebase} videoId={videoId} player={player} />
         </div>
-        <div className="liveChat">
-                    <p className="liveChatTitle"> Live Chat </p>    
-          <LiveChatMessageForm firebase={firebase} videoId={videoId} />
-          <LiveChat firebase={firebase} videoId={videoId} />
+        <div>
+          <div className="commentLog">
+            <p className="commentLogTitle"> Comment Log </p>    
+            <CommentLog firebase={firebase} videoId={videoId} player={player} />
+            <CommentSubmissionForm firebase={firebase} videoId={videoId} />
+          </div>
+          <div className="liveChat">
+            <p className="liveChatTitle"> Live Chat </p>    
+            <LiveChat firebase={firebase} videoId={videoId} player={player} />
+            <LiveChatMessageForm firebase={firebase} videoId={videoId} />
+          </div>
         </div>
       </div>
     </div>

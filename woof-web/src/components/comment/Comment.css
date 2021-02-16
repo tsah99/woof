@@ -26,6 +26,7 @@ input.subcomment-field {
   overflow: hidden;
   outline: none;
   font-size: 12px;
+  border-radius: 5px;
 }
 
 p.comment-text {

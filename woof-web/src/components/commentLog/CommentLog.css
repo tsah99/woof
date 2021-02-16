@@ -1,3 +1,6 @@
 .CommentLog {
   padding-left: 10px;
+  height: 48vh;
+  width: 60vh;
+  overflow: scroll;
 }
