@@ -1,6 +1,6 @@
 import firebase from "firebase/app";
 import "firebase/auth";
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import AuthContext from "../../contexts/AuthContext";
 import "./SignInBox.css";
@@ -42,13 +42,10 @@ function SignInBox() {
 
   async function signInGoogleClick() {
     console.log("Attempting Google Sign In");
-    firebase
+    await firebase
       .auth()
-      .getRedirectResult()
+      .signInWithPopup(provider)
       .then((result) => {
-        if (!result.user) {
-          result = firebase.auth().signInWithRedirect(provider);
-        }
         authApi.setUser(result.user);
         console.log("Current user: ", result.user);
         history.push("/lecture");
