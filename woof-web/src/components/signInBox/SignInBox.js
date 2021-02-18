@@ -5,14 +5,21 @@ import { useHistory } from "react-router-dom";
 import AuthContext from "../../contexts/AuthContext";
 import "./SignInBox.css";
 
+/**
+ * Sign in with email/password combo or with Google
+ * [Note, redirect from google sign in still needs work, currently
+ * you have to sign in with Google and then click sign in with Google button
+ * again in order to sign in]
+ */
 function SignInBox() {
   const authApi = useContext(AuthContext);
   const history = useHistory();
+  const provider = new firebase.auth.GoogleAuthProvider();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  async function signInClick() {
+  async function signInEmailClick() {
     console.log("Attempting Sign In with:");
     console.log("Email: ", email);
     console.log("Password: ", password);
@@ -20,25 +27,41 @@ function SignInBox() {
     await firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
-      .then((response) => {
+      .then((result) => {
         // Signed in
-        authApi.setUser(response.user);
-        console.log("Current user: ", response.user);
+        authApi.setUser(result.user);
+        console.log("Current user: ", result.user);
         history.push("/lecture");
       })
       .catch((error) => {
-        let errorCode = error.code;
-        let errorMessage = error.message;
-        console.log("Error with code: ", errorCode);
-        console.log("Error with message: ", errorMessage);
+        console.log("Error with code: ", error.code);
+        console.log("Error with message: ", error.message);
+        // Display the error message below in a popup
+      });
+  }
+
+  async function signInGoogleClick() {
+    console.log("Attempting Google Sign In");
+    await firebase
+      .auth()
+      .signInWithPopup(provider)
+      .then((result) => {
+        authApi.setUser(result.user);
+        console.log("Current user: ", result.user);
+        history.push("/lecture");
+      })
+      .catch((error) => {
+        console.log("Error with code: ", error.code);
+        console.log("Error with message: ", error.message);
       });
   }
 
   return (
     <div className="SignInBox-Container">
       <p className="SignInBox-WelcomeMsg">
-        Enter your email and password below to SIGN IN:
+        Sign in using one of the two methods below
       </p>
+      <div className="SignInBox-Method"> Sign in with email </div>
       <div className="SignInBox-InputTable">
         <div className="SignInBox-InputRow">
           <label className="SignInBox-InputCell">Email: </label>
@@ -64,11 +87,18 @@ function SignInBox() {
       <div className="SignInBox-InputRow">
         <button
           className="SignInBox-SignUpButton"
-          onClick={() => signInClick()}
+          onClick={() => signInEmailClick()}
         >
           Sign In
         </button>
       </div>
+      <div className="SignInBox-Method"> Sign in with Google </div>
+      <button
+        className="SignInBox-SignUpButton"
+        onClick={() => signInGoogleClick()}
+      >
+        Google Sign In
+      </button>
     </div>
   );
 }
