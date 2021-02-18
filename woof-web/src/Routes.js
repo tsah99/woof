@@ -4,6 +4,7 @@ import AuthContext from "./contexts/AuthContext";
 import SignIn from "./pages/signIn/SignIn";
 import Lecture from "./pages/lecture/Lecture";
 import LandingPage from "./pages/landingPage/LandingPage";
+import LectureDashboard from "./pages/lectureDashboard/LectureDashboard";
 
 function AuthenticatedRoute({ component: C, ...rest }) {
   const authApi = useContext(AuthContext);
@@ -23,7 +24,7 @@ function Routes({ appProps }) {
     <Switch>
       <Route path="/signin" exact component={SignIn} appProps={appProps} />
       <AuthenticatedRoute
-        path="/lecture"
+        path="/lecture/:courseId/:videoId"
         exact
         component={Lecture}
         appProps={appProps}
@@ -31,7 +32,7 @@ function Routes({ appProps }) {
       <AuthenticatedRoute
         path="/lectureDashboard"
         exact
-        component={Lecture}
+        component={LectureDashboard}
         appProps={appProps}
       />
       <Route exact component={LandingPage} appProps={appProps} />

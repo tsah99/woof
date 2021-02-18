@@ -1,8 +1,9 @@
 import React, { useContext } from "react";
 import AuthContext from "../../contexts/AuthContext";
+import firebase from "firebase/app";
 import "./LiveChatMessageForm.css";
 
-async function sendMessage(event, videoId, firebase, authApi) {
+async function sendMessage(event, courseId, videoId, authApi) {
   event.preventDefault();
 
   let liveChatMessage = event.target[0].value;
@@ -10,6 +11,8 @@ async function sendMessage(event, videoId, firebase, authApi) {
 
   const firestore = firebase.firestore();
   const messagesRef = firestore
+    .collection("classes")
+    .doc(courseId)
     .collection("videos")
     .doc(videoId)
     .collection("liveChat");
@@ -32,7 +35,7 @@ function LiveChatMessageForm(props) {
         noValidate
         autoComplete="off"
         onSubmit={(event) =>
-          sendMessage(event, props.videoId, props.firebase, authApi)
+          sendMessage(event, props.courseId, props.videoId, authApi)
         }
       >
         <input className="chat-field" placeholder="chat in live..." />

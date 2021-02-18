@@ -1,0 +1,7 @@
+.NavBar {
+  height: 50px;
+  position: sticky;
+  top: 0;
+  background-color: red;
+  border: 1px white solid;
+}
