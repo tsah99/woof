@@ -1,13 +1,13 @@
 import React from "react";
 import Routes from "./Routes";
-import NavBar from "./components/navBar/NavBar";
 import { withRouter } from "react-router-dom";
 import "./App.css";
+import Header from "./components/header/Header";
 
 function App() {
   return (
     <div className="App">
-      <NavBar />
+      <Header />
       <Routes />
     </div>
   );

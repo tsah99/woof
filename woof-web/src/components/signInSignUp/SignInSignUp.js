@@ -16,7 +16,7 @@ function SignInSignUp() {
             className="SignInSignUp-Button"
             id="signIn-button"
           >
-            Sign In
+            Sign in
           </button>
           <button
             onClick={() => setActionBox("signUp")}
