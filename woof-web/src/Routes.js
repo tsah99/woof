@@ -12,20 +12,7 @@ function AuthenticatedRoute({ component: C, ...rest }) {
     <Route
       {...rest}
       render={(props) =>
-        authApi.user ? <C {...props} /> : <Redirect to="/" />
-      }
-    />
-  );
-}
-
-function UnauthenticatedRoute({ component: C, ...rest }) {
-  const authApi = useContext(AuthContext);
-
-  return (
-    <Route
-      {...rest}
-      render={(props) =>
-        !authApi.user ? <C {...props} /> : <Redirect to="/" />
+        authApi.user ? <C {...props} /> : <Redirect to="/signin" />
       }
     />
   );
@@ -34,20 +21,20 @@ function UnauthenticatedRoute({ component: C, ...rest }) {
 function Routes({ appProps }) {
   return (
     <Switch>
-      <Route path="/" exact component={LandingPage} appProps={appProps} />
+      <Route path="/signin" exact component={SignIn} appProps={appProps} />
       <AuthenticatedRoute
         path="/lecture"
         exact
         component={Lecture}
         appProps={appProps}
       />
-      <UnauthenticatedRoute
-        path="/signin"
+      <AuthenticatedRoute
+        path="/lectureDashboard"
         exact
-        component={SignIn}
+        component={Lecture}
         appProps={appProps}
       />
-      <Route component={LandingPage} />
+      <Route exact component={LandingPage} appProps={appProps} />
     </Switch>
   );
 }
