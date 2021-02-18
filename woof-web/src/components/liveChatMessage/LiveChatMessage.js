@@ -115,13 +115,15 @@ function LiveChatMessage(props) {
     <div className="LiveChatMessage">
       <Grid container wrap="nowrap" spacing={2}>
         <Grid justifyContent="left" item xs zeroMinWidth>
-          <h4 className="message-owner">{props.liveChatMessage.username}</h4>
-          <p className="message-text">
-            {linkTimestampsInComment(props.liveChatMessage, props.player)}
-          </p>
-          <p className="message-time">
-            {timeSince(props.liveChatMessage.time_sent.seconds)}
-          </p>
+          <div className="UserAndText">
+            <h4 className="message-owner">{props.liveChatMessage.username}</h4>
+            <p className="message-text">
+              {linkTimestampsInComment(props.liveChatMessage, props.player)}
+            </p>
+            <p className="message-time">
+              {timeSince(props.liveChatMessage.time_sent.seconds)}
+            </p>
+          </div>
         </Grid>
       </Grid>
     </div>

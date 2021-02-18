@@ -1,23 +1,36 @@
 .LiveChatMessage {
-  padding-bottom: 2px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   font-size: 12px;
+}
+
+.UserAndText {
+  border-radius: 10px;
+  background-color: #449238;
+  flex-grow: 2;
+  flex-shrink: 2;
+  flex-basis: 2;
+  float: left;
+  padding: 5px;
 }
 
 h4.message-owner {
   color: white;
   margin: 0;
   text-align: left;
+  padding-top: 5px;
 }
 
 p.message-text {
   text-align: left;
-  color: grey;
+  color: rgb(255, 255, 255);
   margin: 0;
+  font-size: 16px;
 }
 
 p.message-time {
   text-align: left;
   font-size: 10px;
-  color: grey;
+  color: white;
   margin: 0;
 }
