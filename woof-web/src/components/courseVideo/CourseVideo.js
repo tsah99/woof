@@ -20,7 +20,8 @@ function CourseVideo(props) {
 
   return (
     <div className="CourseVideo">
-      <ReactPlayer controls url={props.url} ref={player} />
+      <ReactPlayer controls url={props.videoData.url} ref={player} />
+      {props.videoData.title}
     </div>
   );
 }

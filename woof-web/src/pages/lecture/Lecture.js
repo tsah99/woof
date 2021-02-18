@@ -39,7 +39,7 @@ function Lecture({ props }) {
     <div className="Lecture">
       <div className="row">
         <div className="video">
-          <CourseVideo updatePlayer={updatePlayer} url={videoData.url} />
+          <CourseVideo updatePlayer={updatePlayer} videoData={videoData} />
           <ReactionBar />
         </div>
         <div>
