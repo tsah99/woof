@@ -12,3 +12,13 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+@font-face {
+  font-family: MisterPixel;
+  src: url("./fonts/MisterPixelRegular.otf") format("opentype");
+}
+
+@font-face {
+  font-family: MisterPixelTools;
+  src: url("./fonts/MisterPixelTools.otf") format("opentype");
+}
