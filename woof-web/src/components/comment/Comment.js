@@ -155,7 +155,6 @@ async function submitSubComment(event, commentId, courseId, videoId, authApi) {
  *        text - a string containing the comment's text
  *        time_posted - an object containing these properties
  *          seconds - time posted in UNIX timestamp seconds
- *      firebase - a handle on the Firebase API
  *      videoId - a string containing the current video's id
  *      player - a handle on the player for the current video
  */

@@ -20,15 +20,15 @@ function LectureDashboard() {
 
   const [userData] = useDocumentData(userRef);
 
+  if (!userData) {
+    return <div></div>;
+  }
+
   return (
-    <div>
-      {userData
-        ? userData.classes.map((courseId) => (
-            <div>
-              <CourseCarousel courseId={courseId}></CourseCarousel>
-            </div>
-          ))
-        : []}
+    <div className="LectureDashboard">
+      {userData.classes.map((courseId) => (
+        <CourseCarousel courseId={courseId}></CourseCarousel>
+      ))}
     </div>
   );
 }

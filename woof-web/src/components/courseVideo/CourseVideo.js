@@ -6,10 +6,13 @@ import "./CourseVideo.css";
 /**
  * This component houses the current video being displayed on
  * the web app.
- * @param props is an object with the properties
- *    videoId - the id of the video being played
- *    updatePlayer - a react hook from the parent component, which
- *                    updates the parent's player handle
+ * @param props is an object that contains any properties that
+ * ReactPlayer might take (see react-player documentation) and
+ * it also contains
+ *    videoData - information about the video to be played
+ *    updatePlayer - [optional] a react hook from the parent component,
+ *                   which updates the parent's player handle
+ *
  */
 function CourseVideo(props) {
   let player = useRef(null);

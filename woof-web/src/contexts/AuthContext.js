@@ -17,11 +17,17 @@ export function AuthProvider(props) {
     };
   }, []);
 
+  //when page loads, firebase automatically checks
+  //if user is logged in. if so, onAuthStateChange
+  //callback is called
   firebase.auth().onAuthStateChanged((user) => {
     setUser(user);
     setPending(false);
   });
 
+  //ensures that AuthContext.Provider doesn't
+  //render any children until it affirms that
+  //user is logged in or not
   if (pending) {
     return <>Loading...</>;
   }

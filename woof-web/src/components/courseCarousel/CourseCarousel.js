@@ -4,7 +4,6 @@ import {
   useDocumentData,
 } from "react-firebase-hooks/firestore";
 import Carousel from "react-elastic-carousel";
-import ReactPlayer from "react-player";
 import "firebase/auth";
 import CourseVideo from "../courseVideo/CourseVideo";
 import { useHistory } from "react-router-dom";
@@ -18,9 +17,8 @@ import "./CourseCarousel.css";
  *
  */
 function CourseCarousel(props) {
-  /** Used to dynamically control how many lectures should be
-   * displayed in the carousel when window resized.
-   */
+  // used to dynamically control how many lectures should be
+  // displayed in the carousel when window resized.
   const breakPoints = [
     { width: 1, itemsToShow: 1 },
     { width: 550, itemsToShow: 2 },
@@ -46,7 +44,6 @@ function CourseCarousel(props) {
     return <div></div>;
   }
 
-  console.log(classData.course_title);
   return (
     <div className="CourseCarousel">
       {classData.course_code + " " + classData.course_title}

@@ -14,8 +14,11 @@ import "./Lecture.css";
 /**
  * This component houses the lecture watching page of our app.
  *
+ * Note, this component grabs a courseId and videoId from the
+ * url parameters. Hence, this component only works when
+ * the url is of the format /lecture/:courseId/:videoId
+ *
  * It maintains the state
- *  youtubeURL - the url of the video being played
  *  player - a handle on the player for the video being played
  */
 function Lecture({ props }) {
@@ -35,11 +38,16 @@ function Lecture({ props }) {
   if (!videoData) {
     return <div> </div>;
   }
+
   return (
     <div className="Lecture">
       <div className="row">
         <div className="video">
-          <CourseVideo updatePlayer={updatePlayer} videoData={videoData} />
+          <CourseVideo
+            controls={true}
+            updatePlayer={updatePlayer}
+            videoData={videoData}
+          />
           <ReactionBar />
         </div>
         <div>
