@@ -19,7 +19,7 @@ function AuthHeader() {
 
   function logOut() {
     authApi.setUser();
-    history.push("/login");
+    history.push("/signin");
   }
 
   return (
