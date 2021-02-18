@@ -2,6 +2,8 @@ import React, { useContext } from "react";
 import { Grid } from "@material-ui/core";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import AuthContext from "../../contexts/AuthContext";
+import firebase from "firebase/app";
+
 import "./Comment.css";
 
 /**
@@ -116,9 +118,8 @@ function renderComment(comment, player) {
  * @param event - a handle on the on enter event
  * @param commentId - the parent comment's id
  * @param videoId - the current video's id
- * @param firebase - a handle on the Firebase API
  */
-async function submitSubComment(event, commentId, videoId, firebase, authApi) {
+async function submitSubComment(event, commentId, courseId, videoId, authApi) {
   event.preventDefault();
 
   let comment = event.target[0].value;
@@ -128,6 +129,8 @@ async function submitSubComment(event, commentId, videoId, firebase, authApi) {
   const firestore = firebase.firestore();
 
   const subCommentsRef = firestore
+    .collection("classes")
+    .doc(courseId)
     .collection("videos")
     .doc(videoId)
     .collection("comments")
@@ -152,13 +155,14 @@ async function submitSubComment(event, commentId, videoId, firebase, authApi) {
  *        text - a string containing the comment's text
  *        time_posted - an object containing these properties
  *          seconds - time posted in UNIX timestamp seconds
- *      firebase - a handle on the Firebase API
  *      videoId - a string containing the current video's id
  *      player - a handle on the player for the current video
  */
 function Comment(props) {
-  const firestore = props.firebase.firestore();
+  const firestore = firebase.firestore();
   const subCommentsRef = firestore
+    .collection("classes")
+    .doc(props.courseId)
     .collection("videos")
     .doc(props.videoId)
     .collection("comments")
@@ -199,8 +203,8 @@ function Comment(props) {
                 submitSubComment(
                   event,
                   props.comment.id,
+                  props.courseId,
                   props.videoId,
-                  props.firebase,
                   authApi
                 )
               }
