@@ -1,0 +1,10 @@
+.CourseCarousel {
+  color: white;
+  padding: 30px;
+  border-top: 1px grey solid;
+  border-bottom: 1px grey solid;
+}
+
+.rec.rec-dot {
+  background-color: grey;
+}

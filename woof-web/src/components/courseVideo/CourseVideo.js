@@ -1,7 +1,6 @@
 import React from "react";
 import ReactPlayer from "react-player";
 import { useRef, useEffect } from "react";
-import { useDocumentData } from "react-firebase-hooks/firestore";
 import "./CourseVideo.css";
 
 /**
@@ -15,12 +14,19 @@ import "./CourseVideo.css";
 function CourseVideo(props) {
   let player = useRef(null);
   useEffect(() => {
-    props.updatePlayer(player);
+    if (props.updatePlayer) {
+      props.updatePlayer(player);
+    }
   });
 
   return (
     <div className="CourseVideo">
-      <ReactPlayer controls url={props.videoData.url} ref={player} />
+      <ReactPlayer
+        style={{ margin: "auto" }}
+        {...props}
+        url={props.videoData.url}
+        ref={player}
+      />
       {props.videoData.title}
     </div>
   );
