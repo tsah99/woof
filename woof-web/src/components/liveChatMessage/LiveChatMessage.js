@@ -2,9 +2,6 @@ import React from "react";
 import { Grid } from "@material-ui/core";
 import "./LiveChatMessage.css";
 
-const imgLink =
-  "https://media-exp1.licdn.com/dms/image/C5603AQF4-QPAgjUAkA/profile-displayphoto-shrink_400_400/0/1580369272770?e=1618444800&v=beta&t=mgZHbnyCFTN2iY1-huTWITyFHe2u4xr19yh6N0NboPE";
-
 /**
  * Converts a timestring into seconds and returns it.
  *

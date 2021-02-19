@@ -31,7 +31,7 @@ function SignInBox() {
         // Signed in
         authApi.setUser(result.user);
         console.log("Current user: ", result.user);
-        history.push("/lecture");
+        history.push("/lectureDashboard");
       })
       .catch((error) => {
         console.log("Error with code: ", error.code);
@@ -48,7 +48,7 @@ function SignInBox() {
       .then((result) => {
         authApi.setUser(result.user);
         console.log("Current user: ", result.user);
-        history.push("/lecture");
+        history.push("/lectureDashboard");
       })
       .catch((error) => {
         console.log("Error with code: ", error.code);
