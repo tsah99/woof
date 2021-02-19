@@ -33,7 +33,7 @@ function CourseCarousel(props) {
 
   const videosRef = classRef
     .collection("videos")
-    .orderBy("time_uploaded", "asc");
+    .orderBy("time_uploaded", "desc");
 
   const [classData] = useDocumentData(classRef, { idField: "courseId" });
   const [videosData] = useCollectionData(videosRef, { idField: "videoId" });
@@ -51,25 +51,23 @@ function CourseCarousel(props) {
         breakPoints={breakPoints}
         style={{ height: "200px", textAlign: "center" }}
       >
-        {videosData
-          ? videosData.map((videoData) => (
-              <div
-                style={{ textAlign: "center" }}
-                onClick={() =>
-                  history.push(
-                    "/lecture/" + classData.courseId + "/" + videoData.videoId
-                  )
-                }
-              >
-                <CourseVideo
-                  width="150px"
-                  height="150px"
-                  light={true}
-                  videoData={videoData}
-                ></CourseVideo>
-              </div>
-            ))
-          : []}
+        {videosData.map((videoData) => (
+          <div
+            style={{ textAlign: "center" }}
+            onClick={() =>
+              history.push(
+                "/lecture/" + classData.courseId + "/" + videoData.videoId
+              )
+            }
+          >
+            <CourseVideo
+              width="150px"
+              height="150px"
+              light={true}
+              videoData={videoData}
+            ></CourseVideo>
+          </div>
+        ))}
       </Carousel>
     </div>
   );

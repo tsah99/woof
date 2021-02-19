@@ -9,12 +9,22 @@ import LectureDashboard from "./pages/lectureDashboard/LectureDashboard";
 function AuthenticatedRoute({ component: C, ...rest }) {
   const authApi = useContext(AuthContext);
 
+  console.log("HELLO");
+  console.log(rest.path);
   return (
     <Route
       {...rest}
-      render={(props) =>
-        authApi.user ? <C {...props} /> : <Redirect to="/signin" />
-      }
+      render={(props) => {
+        if (rest.path === "/signin") {
+          return !authApi.user ? (
+            <SignIn {...props} />
+          ) : (
+            <Redirect to="/lectureDashboard" />
+          );
+        } else {
+          return authApi.user ? <C {...props} /> : <Redirect to="/signin" />;
+        }
+      }}
     />
   );
 }
@@ -22,7 +32,12 @@ function AuthenticatedRoute({ component: C, ...rest }) {
 function Routes({ appProps }) {
   return (
     <Switch>
-      <Route path="/signin" exact component={SignIn} appProps={appProps} />
+      <AuthenticatedRoute
+        path="/signin"
+        exact
+        component={SignIn}
+        appProps={appProps}
+      />
       <AuthenticatedRoute
         path="/lecture/:courseId/:videoId"
         exact
