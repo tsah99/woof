@@ -30,7 +30,7 @@ function CourseVideo(props) {
         url={props.videoData.url}
         ref={player}
       />
-      {props.videoData.title}
+      <div style={{ width: props.width }}>{props.videoData.title}</div>
     </div>
   );
 }

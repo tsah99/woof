@@ -14,8 +14,12 @@ import "react-confirm-alert/src/react-confirm-alert.css";
 import "./CourseCarousel.css";
 
 /**
+ * Handler that removes a person's class.
  *
- *
+ * @param classData is an object that contains information about
+ *                  the class being removed. See usage in function.
+ * @param authApi is a handle on the auth api which contains info
+ *                about the logged in user
  */
 function removeClass(classData, authApi) {
   const currUserRef = firebase
@@ -59,7 +63,6 @@ function removeClass(classData, authApi) {
  * a nice Carousel format.
  * @param props is an object that has the properties
  *    courseId - the id of the course
- *
  */
 function CourseCarousel(props) {
   // used to dynamically control how many lectures should be
@@ -93,15 +96,16 @@ function CourseCarousel(props) {
 
   return (
     <div className="CourseCarousel">
-      <span className="course-name">
-        {classData.course_code + " " + classData.course_title}
-      </span>
-      <span
-        className="remove-class-button"
-        onClick={() => removeClass(classData, authApi)}
-      >
-        X
-      </span>
+      <div className="row">
+        <span>{classData.course_code + " " + classData.course_title}</span>
+        <span
+          className="remove-class-button"
+          onClick={() => removeClass(classData, authApi)}
+        >
+          X
+        </span>
+      </div>
+
       <Carousel
         breakPoints={breakPoints}
         style={{ height: "200px", textAlign: "center" }}
@@ -116,8 +120,8 @@ function CourseCarousel(props) {
             }
           >
             <CourseVideo
-              width="150px"
-              height="150px"
+              width="250px"
+              height="125px"
               light={true}
               videoData={videoData}
             ></CourseVideo>

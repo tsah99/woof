@@ -8,10 +8,24 @@ import {
   useCollectionData,
   useDocumentData,
 } from "react-firebase-hooks/firestore";
+import "./ClassSearchDropdown.css";
 
+//maximum number of classes that can be joined
+//TODO: we should eventually limit the number of classes
+//      via the backend.
 const MAX_CLASSES = 6;
 
-function confirmAddClass(values, currUserRef, classId) {
+/**
+ * Generates a confirmation dialogue box to ask the user if they
+ * really want to add a class.
+ *
+ * @param value is the value that was selected via the dropdown
+ * @param currUserRef a firestore reference to the current user which
+ *                    is used to update the user's list of classes on
+ *                    firestore
+ * @param classId is the id of the class to be added
+ */
+function confirmAddClass(value, currUserRef, classId) {
   confirmAlert({
     title: "You are about to join a class",
     message: (
@@ -19,7 +33,7 @@ function confirmAddClass(values, currUserRef, classId) {
         Are you sure you want to{" "}
         <b>
           add
-          {" " + values[0].label + " "}
+          {" " + value.label + " "}
         </b>
         to your list of classes?
       </>
@@ -40,9 +54,13 @@ function confirmAddClass(values, currUserRef, classId) {
   });
 }
 
+/**
+ * Generates a confirmation dialogue box telling the user that they're
+ * enrolled in too many classes.
+ */
 function confirmEnrolledInTooManyClasses() {
   confirmAlert({
-    title: "You fool, why are you doing this...",
+    title: "But like, why though?",
     message: (
       <>
         For your own good, we will not let enroll in more than {MAX_CLASSES}{" "}
@@ -57,10 +75,15 @@ function confirmEnrolledInTooManyClasses() {
   });
 }
 
-function confirmAlreadyEnrolledInClass(values) {
+/**
+ * Generates a confirmation dialogue box that tells the user they're already
+ * enrolled in a class.
+ * @param value
+ */
+function confirmAlreadyEnrolledInClass(value) {
   confirmAlert({
     title: "You're already in this class.",
-    message: <>You are already enrolled in {" " + values[0].label}.</>,
+    message: <>You are already enrolled in {" " + value.label}.</>,
     buttons: [
       {
         label: "Ok",
@@ -69,20 +92,42 @@ function confirmAlreadyEnrolledInClass(values) {
   });
 }
 
-function onSelect(values, currUserRef, currUserData) {
-  let classId = values[0].classId;
+/**
+ * Handler for when the user selects a class to add.
+ *
+ * @param value is the value selected via the dropdownn
+ * @param currUserRef is a firestore reference to the current user
+ * @param currUserData is an object containing the current user's data
+ */
+function onSelect(value, currUserRef, currUserData) {
+  let classId = value.classId;
 
   if (currUserData.classes.includes(classId)) {
-    confirmAlreadyEnrolledInClass(values);
+    confirmAlreadyEnrolledInClass(value);
   } else if (currUserData.classes.length >= MAX_CLASSES) {
     confirmEnrolledInTooManyClasses();
   } else {
-    confirmAddClass(values, currUserRef, classId);
+    confirmAddClass(value, currUserRef, classId);
   }
 }
 
+/**
+ * This component displays a dropdown search for students to search for
+ * and add classes.
+ *
+ * TODO: Ideally, search should be done via the backend. We should NOT be
+ *       downloading the entire list of classes and then doing search from
+ *       the frontend as we are now. For now, this is ok since our list of
+ *       classes is small.
+ *
+ * It maintains the state
+ *    selected - acts as a key to the Select component, which is updated
+ *               to a random value every time a user selects a class.
+ *               this is a hack so the Select component rerenders with
+ *               an empty selection input after selection.
+ */
 function ClassSearchDropdown() {
-  let [selected, updateSelected] = useState([]);
+  let [selected, updateSelected] = useState();
 
   const classesRef = firebase
     .firestore()
@@ -112,14 +157,16 @@ function ClassSearchDropdown() {
   });
 
   return (
-    <div style={{ backgroundColor: "white" }}>
+    <div>
       <Select
         key={selected}
         values={[]}
         onChange={(values) => {
           //a hack so that selection doesn't stay in search field once selected
           updateSelected(Math.random());
-          onSelect(values, currUserRef, currUserData);
+          //values is always length 1 b/c values is always reset to [] after
+          //selection
+          onSelect(values[0], currUserRef, currUserData);
         }}
         placeholder="add a class..."
         options={courseOptions}
