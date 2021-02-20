@@ -5,6 +5,7 @@ import SignIn from "./pages/signIn/SignIn";
 import Lecture from "./pages/lecture/Lecture";
 import LandingPage from "./pages/landingPage/LandingPage";
 import LectureDashboard from "./pages/lectureDashboard/LectureDashboard";
+import NotAvailablePage from "./pages/notAvailablePage/NotAvailablePage";
 
 function AuthenticatedRoute({ component: C, ...rest }) {
   const authApi = useContext(AuthContext);
@@ -48,7 +49,7 @@ function Routes({ appProps }) {
         component={LectureDashboard}
         appProps={appProps}
       />
-      <Route exact component={LandingPage} appProps={appProps} />
+      <Route exact component={NotAvailablePage} appProps={appProps} />
     </Switch>
   );
 }
