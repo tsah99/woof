@@ -1,8 +1,18 @@
 .Comment {
+  padding-top: 10px;
   padding-bottom: 2px;
   font-size: 12px;
 }
 
+.commentBorder {
+  border-radius: 10px;
+  background-color: #168088;
+  flex-grow: 2;
+  flex-shrink: 2;
+  flex-basis: 2;
+  float: left;
+  padding: 5px;
+}
 .SubComments {
   padding-top: 2px;
   padding-left: 20px;
@@ -14,9 +24,10 @@ form.subcomment-submission-form {
 }
 
 h4.comment-owner {
-  color: white;
+  color: rgb(215, 215, 215);
   margin: 0;
   text-align: left;
+  margin: 1px;
 }
 
 input.subcomment-field {
@@ -32,14 +43,15 @@ input.subcomment-field {
 p.comment-text {
   margin: 0;
   text-align: left;
-  color: grey;
+  color: rgb(255, 255, 255);
   overflow-wrap: break-word;
   word-wrap: break-word;
+  font-size: 14px;
 }
 
 p.time-posted {
   text-align: left;
-  color: grey;
+  color: rgb(215, 215, 215);
   font-size: 10px;
   margin: 0;
 }

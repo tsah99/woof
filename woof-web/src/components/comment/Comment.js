@@ -76,25 +76,49 @@ function timeSince(seconds) {
   var interval = secondsSince / 31536000;
 
   if (interval > 1) {
-    return Math.floor(interval) + " years ago";
+    if (Math.floor(interval) == 1) {
+      return Math.floor(interval) + " year ago";
+    } else {
+      return Math.floor(interval) + " years ago";
+    }
   }
   interval = secondsSince / 2592000;
   if (interval > 1) {
-    return Math.floor(interval) + " months ago";
+    if (Math.floor(interval) == 1) {
+      return Math.floor(interval) + " month ago";
+    } else {
+      return Math.floor(interval) + " months ago";
+    }
   }
   interval = secondsSince / 86400;
   if (interval > 1) {
-    return Math.floor(interval) + " days ago";
+    if (Math.floor(interval) == 1) {
+      return Math.floor(interval) + " day ago";
+    } else {
+      return Math.floor(interval) + " days ago";
+    }
   }
   interval = secondsSince / 3600;
   if (interval > 1) {
-    return Math.floor(interval) + " hours ago";
+    if (Math.floor(interval) == 1) {
+      return Math.floor(interval) + " hour ago";
+    } else {
+      return Math.floor(interval) + " hours ago";
+    }
   }
   interval = secondsSince / 60;
   if (interval > 1) {
-    return Math.floor(interval) + " minutes ago";
+    if (Math.floor(interval) == 1) {
+      return Math.floor(interval) + " minute ago";
+    } else {
+      return Math.floor(interval) + " minutes ago";
+    }
   }
-  return Math.floor(secondsSince) + " seconds ago";
+  if (Math.floor(interval) == 1) {
+    return Math.floor(secondsSince) + " second ago";
+  } else {
+    return Math.floor(secondsSince) + " seconds ago";
+  }
 }
 
 /**
@@ -183,34 +207,37 @@ function Comment(props) {
       <Grid container wrap="nowrap" spacing={2}>
         <Grid justifyContent="left" item xs zeroMinWidth>
           <h4 className="comment-owner">{props.comment.username}</h4>
-          <p className="comment-text">
-            {linkTimestampsInComment(props.comment, props.player)}
-          </p>
-          <p className="time-posted">
-            {timeSince(props.comment.time_posted.seconds)}
-          </p>
-          <div className="SubComments">
-            {subComments
-              ? subComments.map((subComment) =>
-                  renderComment(subComment, props.player)
-                )
-              : []}
-            <form
-              className="subcomment-submission-form"
-              noValidate
-              autoComplete="off"
-              onSubmit={(event) =>
-                submitSubComment(
-                  event,
-                  props.comment.id,
-                  props.courseId,
-                  props.videoId,
-                  authApi
-                )
-              }
-            >
-              <input className="subcomment-field" placeholder="reply..." />
-            </form>
+          <div className="commentBorder">
+            <p className="comment-text">
+              {linkTimestampsInComment(props.comment, props.player)}
+            </p>
+
+            <p className="time-posted">
+              {timeSince(props.comment.time_posted.seconds)}
+            </p>
+            <div className="SubComments">
+              {subComments
+                ? subComments.map((subComment) =>
+                    renderComment(subComment, props.player)
+                  )
+                : []}
+              <form
+                className="subcomment-submission-form"
+                noValidate
+                autoComplete="off"
+                onSubmit={(event) =>
+                  submitSubComment(
+                    event,
+                    props.comment.id,
+                    props.courseId,
+                    props.videoId,
+                    authApi
+                  )
+                }
+              >
+                <input className="subcomment-field" placeholder="reply..." />
+              </form>
+            </div>
           </div>
         </Grid>
       </Grid>
