@@ -49,6 +49,7 @@ function Routes({ appProps }) {
         component={LectureDashboard}
         appProps={appProps}
       />
+      <Route exact path="/" component={LandingPage} appProps={appProps} />
       <Route exact component={NotAvailablePage} appProps={appProps} />
     </Switch>
   );
