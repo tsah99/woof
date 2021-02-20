@@ -6,8 +6,53 @@ import {
 import Carousel from "react-elastic-carousel";
 import "firebase/auth";
 import CourseVideo from "../courseVideo/CourseVideo";
+import AuthContext from "../../contexts/AuthContext";
+import { useContext } from "react";
+import { confirmAlert } from "react-confirm-alert";
 import { useHistory } from "react-router-dom";
+import "react-confirm-alert/src/react-confirm-alert.css";
 import "./CourseCarousel.css";
+
+/**
+ *
+ *
+ */
+function removeClass(classData, authApi) {
+  const currUserRef = firebase
+    .firestore()
+    .collection("users")
+    .doc(authApi.user.uid);
+
+  confirmAlert({
+    title: "You are about to leave a class",
+    message: (
+      <>
+        Are you sure you want to{" "}
+        <b>
+          {" "}
+          remove
+          {" " + classData.course_code + " " + classData.course_title}
+        </b>{" "}
+        from your list of classes?
+      </>
+    ),
+    buttons: [
+      {
+        label: "Yes",
+        onClick: () =>
+          currUserRef.update({
+            classes: firebase.firestore.FieldValue.arrayRemove(
+              classData.courseId
+            ),
+          }),
+      },
+      {
+        label: "No",
+        onClick: () => {},
+      },
+    ],
+  });
+}
 
 /**
  * Displays all lecture videos for a particular course in
@@ -40,13 +85,23 @@ function CourseCarousel(props) {
 
   const history = useHistory();
 
+  const authApi = useContext(AuthContext);
+
   if (!classData || !videosData) {
     return <div></div>;
   }
 
   return (
     <div className="CourseCarousel">
-      {classData.course_code + " " + classData.course_title}
+      <span className="course-name">
+        {classData.course_code + " " + classData.course_title}
+      </span>
+      <span
+        className="remove-class-button"
+        onClick={() => removeClass(classData, authApi)}
+      >
+        X
+      </span>
       <Carousel
         breakPoints={breakPoints}
         style={{ height: "200px", textAlign: "center" }}

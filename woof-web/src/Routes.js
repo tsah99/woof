@@ -9,8 +9,6 @@ import LectureDashboard from "./pages/lectureDashboard/LectureDashboard";
 function AuthenticatedRoute({ component: C, ...rest }) {
   const authApi = useContext(AuthContext);
 
-  console.log("HELLO");
-  console.log(rest.path);
   return (
     <Route
       {...rest}

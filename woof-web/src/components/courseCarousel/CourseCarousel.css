@@ -8,3 +8,16 @@
 .rec.rec-dot {
   background-color: grey;
 }
+
+/* "float: left;" keeps the course name on the left */
+.course-name {
+  float: left;
+}
+
+/* "display: block; text-align: right;" keeps the 
+remove class button on the right */
+.remove-class-button {
+  display: block;
+  text-align: right;
+  cursor: pointer;
+}
