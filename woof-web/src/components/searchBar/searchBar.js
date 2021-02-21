@@ -30,14 +30,16 @@ const searchClient = algoliasearch(
 
 // const CustomStateResults = connectStateResults(StateResults);
 
-const Results = connectStateResults(({ searchState }) =>
+const Results = connectStateResults(({ searchState, searchResults }) =>
   searchState && searchState.query ? (
     <React.Fragment>
-      <div>Searching for query {searchState.query}</div>
+      <div className="SearchState">
+        {searchResults.nbHits} Results for {searchState.query}
+      </div>
       <Hits hitComponent={Hit} />
     </React.Fragment>
   ) : (
-    <div>No query</div>
+    <div className="SearchState"></div>
   )
 );
 
