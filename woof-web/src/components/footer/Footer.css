@@ -1,0 +1,14 @@
+.emoji {
+  font-family: MisterPixelTools;
+}
+
+.footer {
+  /* font-size: 45px; */
+  color: #ff00b8;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  cursor: pointer;
+}
