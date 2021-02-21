@@ -35,6 +35,7 @@ function Lecture({ props }) {
 
   const [videoData] = useDocumentData(videoRef);
 
+  // check if data exists before rendering
   if (!videoData) {
     return <div> </div>;
   }

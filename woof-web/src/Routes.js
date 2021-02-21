@@ -7,6 +7,15 @@ import LandingPage from "./pages/landingPage/LandingPage";
 import LectureDashboard from "./pages/lectureDashboard/LectureDashboard";
 import NotAvailablePage from "./pages/notAvailablePage/NotAvailablePage";
 
+/**
+ * Authenticated route
+ *
+ * Handles the auth portion of accessing a page
+ * By wrapping a component or page in an Authenticated route, you are ensuring that a user must
+ * be logged in to access
+ *
+ * @param component - the component or page being accessed
+ */
 function AuthenticatedRoute({ component: C, ...rest }) {
   const authApi = useContext(AuthContext);
 
@@ -28,6 +37,12 @@ function AuthenticatedRoute({ component: C, ...rest }) {
   );
 }
 
+/**
+ * Handles switching between different routes of our app
+ *
+ * Every time you add a new page, make sure to add it below or else it will
+ * not be accesible by our app
+ */
 function Routes({ appProps }) {
   return (
     <Switch>

@@ -4,6 +4,11 @@ import "./Header.css";
 import firebase from "firebase/app";
 import AuthContext from "../../contexts/AuthContext";
 
+/**
+ * Non auth header
+ *
+ * only shown when there is no user logged in
+ */
 function NonAuthHeader() {
   const history = useHistory();
   function logIn() {
@@ -20,6 +25,11 @@ function NonAuthHeader() {
   );
 }
 
+/**
+ * Auth Header
+ *
+ * only shown when a user is logged in
+ */
 function AuthHeader() {
   const authApi = useContext(AuthContext);
   const history = useHistory();
@@ -43,6 +53,9 @@ function AuthHeader() {
   );
 }
 
+/**
+ * Global header for Woof
+ */
 function Header() {
   const authApi = useContext(AuthContext);
 

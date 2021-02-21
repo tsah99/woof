@@ -3,6 +3,11 @@ import "./SignInSignUp.css";
 import SignInBox from "../signInBox/SignInBox.js";
 import SignUpBox from "../signUpBox/SignUpBox.js";
 
+/**
+ * Sign in + Sign up component
+ *
+ * Handles switching between the sign in and sign up functions
+ */
 function SignInSignUp() {
   const [actionBox, setActionBox] = useState();
 
