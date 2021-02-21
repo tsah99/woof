@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 import Comment from "../comment/Comment.js";
+// import SearchBar from "../searchBar/searchBar.js";
+import { InstantSearch, SearchBox, Hits } from 'react-instantsearch-dom';
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import "./CommentLog.css";
 import firebase from "firebase/app";
@@ -35,6 +37,11 @@ function CommentLog(props) {
 
   return (
     <div className="CommentLog">
+      {/* <SearchBar></SearchBar> */}
+      <InstantSearch searchClient={searchClient} indexName="demo_ecommerce">
+        <SearchBox />
+        <Hits />
+    </InstantSearch>
       {comments
         ? comments.map((comment) => (
             <Comment
