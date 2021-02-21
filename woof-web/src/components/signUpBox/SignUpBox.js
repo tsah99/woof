@@ -5,6 +5,12 @@ import { useHistory } from "react-router-dom";
 import AuthContext from "../../contexts/AuthContext";
 import "./SignUpBox.css";
 
+/**
+ * Sign up box
+ *
+ * contains the logic and components for the user sign up flow
+ * connects with firebase to auth users
+ */
 function SignUpBox() {
   const authApi = useContext(AuthContext);
   const history = useHistory();
@@ -13,9 +19,9 @@ function SignUpBox() {
   const [password, setPassword] = useState("");
 
   async function signUpClick() {
-    console.log("Attempting Sign Up with:");
-    console.log("Email: ", email);
-    console.log("Password: ", password);
+    // console.log("Attempting Sign Up with:");
+    // console.log("Email: ", email);
+    // console.log("Password: ", password);
 
     await firebase
       .auth()

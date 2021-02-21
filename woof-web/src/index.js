@@ -14,6 +14,8 @@ import { BrowserRouter as Router } from "react-router-dom";
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
+
+// VITAL: this must print "Firebase is connected!" for our application to function.
 console.log(
   firebase.apps.length ? "Firebase is connected!" : "Firebase is not connected!"
 );

@@ -4,6 +4,8 @@ import "./ReactionBar.css";
 /**
  * This component houses the "makes sense" and "confused"
  * reaction bar.
+ *
+ * Currently is not stored in anything other than local state
  */
 function ReactionBar() {
   let [numMakesSense, updateNumMakesSense] = useState(0);
