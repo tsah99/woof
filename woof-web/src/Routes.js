@@ -5,6 +5,7 @@ import SignIn from "./pages/signIn/SignIn";
 import Lecture from "./pages/lecture/Lecture";
 import LandingPage from "./pages/landingPage/LandingPage";
 import LectureDashboard from "./pages/lectureDashboard/LectureDashboard";
+import NotAvailablePage from "./pages/notAvailablePage/NotAvailablePage";
 
 function AuthenticatedRoute({ component: C, ...rest }) {
   const authApi = useContext(AuthContext);
@@ -12,9 +13,17 @@ function AuthenticatedRoute({ component: C, ...rest }) {
   return (
     <Route
       {...rest}
-      render={(props) =>
-        authApi.user ? <C {...props} /> : <Redirect to="/signin" />
-      }
+      render={(props) => {
+        if (rest.path === "/signin") {
+          return !authApi.user ? (
+            <SignIn {...props} />
+          ) : (
+            <Redirect to="/lectureDashboard" />
+          );
+        } else {
+          return authApi.user ? <C {...props} /> : <Redirect to="/signin" />;
+        }
+      }}
     />
   );
 }
@@ -22,7 +31,12 @@ function AuthenticatedRoute({ component: C, ...rest }) {
 function Routes({ appProps }) {
   return (
     <Switch>
-      <Route path="/signin" exact component={SignIn} appProps={appProps} />
+      <AuthenticatedRoute
+        path="/signin"
+        exact
+        component={SignIn}
+        appProps={appProps}
+      />
       <AuthenticatedRoute
         path="/lecture/:courseId/:videoId"
         exact
@@ -35,7 +49,8 @@ function Routes({ appProps }) {
         component={LectureDashboard}
         appProps={appProps}
       />
-      <Route exact component={LandingPage} appProps={appProps} />
+      <Route exact path="/" component={LandingPage} appProps={appProps} />
+      <Route exact component={NotAvailablePage} appProps={appProps} />
     </Switch>
   );
 }
