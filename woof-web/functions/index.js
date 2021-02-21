@@ -38,10 +38,10 @@ const index = client.initIndex('woof');
 // exports.onCommentCreated = functions.firestore.document('classes/{classesId}/videos/{videosId}/comments/{commentsId}').onCreate((snap, context) => {
 //     // Get the note document
 //     const comment = snap.data();
-  
+
 //     // Add an 'objectID' field which Algolia requires
 //     comment.objectID = context.params.commentId;
-  
+
 //     // Write to the algolia index
 //     const index = client.initIndex(ALGOLIA_INDEX_NAME);
 //     return index.saveObject(comment);
@@ -50,8 +50,8 @@ const index = client.initIndex('woof');
 //   var client = algoliasearch(ALGOLIA_APP_ID, ALGOLIA_SEARCH_KEY);
 //   var index = client.initIndex('notes');
 
-  // Perform an Algolia search:
-  // https://www.algolia.com/doc/api-reference/api-methods/search/
+// Perform an Algolia search:
+// https://www.algolia.com/doc/api-reference/api-methods/search/
 // return index
 //     .search({
 //       query
@@ -62,7 +62,7 @@ const index = client.initIndex('woof');
 //       console.log(responses.hits);
 //     });
 
-  
+
 // Updates the search index when new blog entries are created or updated.
 // exports.indexentry = functions.database.ref('classes/{classesId}/videos/{videosId}/comments/{commentsId}').onCreate(
 //     async (data, context) => {
@@ -75,7 +75,7 @@ const index = client.initIndex('woof');
 //       await index.saveObject(firebaseObject);
 //       return data.after.ref.parent.child('last_index_timestamp').set(Date.parse(context.timestamp));
 //     });
-    
+
 // //Loading initial chats data
 // exports.addChatsFirestoreDataToAlgolia = functions.https.onRequest((req, res) => {
 //     var chatArray = [];
@@ -102,10 +102,9 @@ const index = client.initIndex('woof');
 //   })
 //  })
 
- exports.addToIndex = functions.firestore.document('classes/{classesId}/videos/{videosId}/comments/{commentsId}')
+exports.addToIndex = functions.firestore.document('classes/{classesId}/videos/{videosId}/comments/{commentsId}')
 
     .onCreate(snapshot => {
-
         const data = snapshot.data();
         const objectID = snapshot.id;
 
@@ -113,7 +112,7 @@ const index = client.initIndex('woof');
 
     });
 
-    exports.updateIndex = functions.firestore.document('classes/{classesId}/videos/{videosId}/comments/{commentsId}')
+exports.updateIndex = functions.firestore.document('classes/{classesId}/videos/{videosId}/comments/{commentsId}')
 
     .onUpdate((change) => {
         const newData = change.after.data();
