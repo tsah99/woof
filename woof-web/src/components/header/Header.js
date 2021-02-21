@@ -9,9 +9,17 @@ function NonAuthHeader() {
   function logIn() {
     history.push("/signin");
   }
+
+  function goHome() {
+    history.push("/");
+  }
+
   return (
     <div className="header">
       <div className="logo">WOOF</div>
+      <div className="home" onClick={goHome}>
+        HOME
+      </div>
       <div className="symbols">123450124254112345012425411234501242541</div>
       <div className="sign-in-out" onClick={logIn}>
         SIGN IN
@@ -30,9 +38,25 @@ function AuthHeader() {
     history.push("/signin");
   }
 
+  function goHome() {
+    history.push("/");
+  }
+
+  function goLectureDashboard() {
+    history.push("/lectureDashboard");
+  }
+
   return (
     <div className="header">
       <div className="logo">WOOF</div>
+      <div className="left-side">
+        <div className="home" onClick={goHome}>
+          HOME
+        </div>
+        <div className="home" onClick={goLectureDashboard}>
+          DASHBOARD
+        </div>
+      </div>
       <div className="right-side">
         <div className="symbols-auth">T</div>
         <div className="sign-in-out" onClick={logOut}>

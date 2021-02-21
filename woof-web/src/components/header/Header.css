@@ -18,7 +18,9 @@
   margin-bottom: 25px;
 }
 
-.sign-in-out {
+.sign-in-out,
+.home,
+.dashboard {
   font-size: 18px;
   font-style: normal;
   font-weight: 700;
@@ -26,6 +28,13 @@
   letter-spacing: 0em;
   text-align: left;
   cursor: pointer;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.home,
+.dashboard {
+  padding-left: 20px;
 }
 
 .symbols-auth {
@@ -52,5 +61,9 @@
 .right-side {
   display: flex;
   flex-direction: row;
-  align-items: center;
+}
+
+.left-side {
+  display: flex;
+  margin-right: auto;
 }
