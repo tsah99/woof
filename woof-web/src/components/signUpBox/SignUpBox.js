@@ -24,7 +24,7 @@ function SignUpBox() {
         // Signed in
         authApi.setUser(response.user);
         console.log("Current user: ", response.user);
-        history.push("/lecture");
+        history.push("/lectureDashboard");
       })
       .catch((error) => {
         let errorCode = error.code;
