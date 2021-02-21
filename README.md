@@ -2,7 +2,7 @@
 
 ### Our Product
 
-We propose Woof, a Tinder for dogs. Millions of dog owners often have trouble finding playdates for their canine companions. Want your dog to play with another dog of a specific size, age, breed, temper, etc.? Our app will allow you to find your dog's ideal friend based on your preferences. 
+Woof is the next generation of online learning. We are committed to making the online lecture experience more engaging, collabroative, social, and fun for students everywhere. 
 
 ### Team Matrix
 
