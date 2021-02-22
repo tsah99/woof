@@ -7,7 +7,7 @@ const AuthContext = React.createContext();
 /**
  * Auth Context
  *
- * The following trackswhcih user is currently logged in (if any)
+ * The following tracks which user is currently logged in (if any)
  * so that this user's info can be accessed from any point in our application
  *
  * To access in a page/component, do:

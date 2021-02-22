@@ -29,6 +29,12 @@ function SignUpBox() {
       .then((response) => {
         // Signed in
         authApi.setUser(response.user);
+        firebase.firestore().collection("users").doc(authApi.user.uid).set({
+          classes: [],
+          email: email,
+          username: email,
+        });
+        console.log("Email: ", email);
         console.log("Current user: ", response.user);
         history.push("/lectureDashboard");
       })
@@ -38,6 +44,14 @@ function SignUpBox() {
         console.log("Error with code: ", errorCode);
         console.log("Error with message: ", errorMessage);
       });
+
+    /*
+    await firebase.firestore().collection("users").add({
+      classes: [],
+      email: authApi.user.email,
+      username: authApi.user.email,
+    });
+    */
   }
 
   return (

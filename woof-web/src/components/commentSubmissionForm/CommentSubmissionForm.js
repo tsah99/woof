@@ -20,7 +20,7 @@ async function submitComment(event, courseId, videoId, authApi) {
 
   let comment = event.target[0].value;
 
-  if (comment.length === 0) return;
+  if (comment.length === 0 || comment.trim().length === 0) return;
 
   const firestore = firebase.firestore();
   const commentsRef = firestore
