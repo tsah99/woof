@@ -34,6 +34,8 @@ async function submitComment(event, courseId, videoId, authApi) {
     text: comment,
     username: authApi.user.email,
     time_posted: firebase.firestore.Timestamp.now(),
+    videoId: videoId,
+    courseId: courseId,
   });
 
   event.target[0].value = "";

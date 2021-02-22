@@ -44,7 +44,7 @@ function CommentLog(props) {
 
   return (
     <div className="CommentLog">
-      <SearchBar></SearchBar>
+      <SearchBar videoId={props.videoId}></SearchBar>
       {/* <InstantSearch searchClient={searchClient} indexName="woof">
         <SearchBox />
         <Hits />

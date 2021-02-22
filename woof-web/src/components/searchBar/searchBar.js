@@ -34,7 +34,8 @@ const Results = connectStateResults(({ searchState, searchResults }) =>
   searchState && searchState.query ? (
     <React.Fragment>
       <div className="SearchState">
-        {searchResults.nbHits} Results for {searchState.query}
+        {/* {searchResults.nbHits} Results for {searchState.query} */}
+        Results for {searchState.query}
       </div>
       <Hits hitComponent={Hit} />
     </React.Fragment>
@@ -49,13 +50,32 @@ const Hit = ({ hit }) => (
   //   </p>
 );
 
-const SearchBar = () => (
-  <InstantSearch searchClient={searchClient} indexName="woof">
-    <SearchBox />
-    {/* <CustomStateResults> */}
-    <Results></Results>
-    {/* <Hits hitComponent={Hit} /> */}
-    {/* </CustomStateResults> */}
-  </InstantSearch>
-);
+// const SearchBar = (videoId) => (
+//   <InstantSearch searchClient={searchClient} indexName={videoId}>
+//     <SearchBox />
+//     {/* <CustomStateResults> */}
+//     <Results></Results>
+//     {/* <Hits hitComponent={Hit} /> */}
+//     {/* </CustomStateResults> */}
+//   </InstantSearch>
+// );
+// export default SearchBar;
+
+function SearchBar(props) {
+  //   console.log("this is video id");
+  //   console.log(videoId);
+  console.log("this is props");
+  console.log(props);
+
+  return (
+    <InstantSearch searchClient={searchClient} indexName={props.videoId}>
+      <SearchBox />
+      {/* <CustomStateResults> */}
+      <Results></Results>
+      {/* <Hits hitComponent={Hit} /> */}
+      {/* </CustomStateResults> */}
+    </InstantSearch>
+  );
+}
+
 export default SearchBar;

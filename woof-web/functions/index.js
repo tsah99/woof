@@ -1,37 +1,31 @@
-
 // // Import all needed modules.
 // import * as functions from 'firebase-functions';
 // import * as admin from 'firebase-admin';
 // import * as algoliasearch from 'algoliasearch';
 
-
-const functions = require('firebase-functions');
+const functions = require("firebase-functions");
 
 // The Firebase Admin SDK to access Firestore.
-const admin = require('firebase-admin');
+const admin = require("firebase-admin");
 // admin.initializeApp(functions.config().firebase);
 // Set up Firestore.
 admin.initializeApp();
 
-
-
 // Authenticate to Algolia Database.
 // TODO: Make sure you configure the `algolia.app_id` and `algolia.api_key` Google Cloud environment variables.
-const algoliasearch = require('algoliasearch').default;
+const algoliasearch = require("algoliasearch").default;
 // const client = algoliasearch(functions.config().algolia.app_id, functions.config().algolia.api_key);
 
 // const ALGOLIA_ID = functions.config().algolia.app_id;
 // const ALGOLIA_ADMIN_KEY = functions.config().algolia.api_key;
-const ALGOLIA_ID = 'SVXVZO2ZW8'
-const ALGOLIA_ADMIN_KEY = 'c547904adb2ef2029e9824b310b9890b'
+const ALGOLIA_ID = "SVXVZO2ZW8";
+const ALGOLIA_ADMIN_KEY = "c547904adb2ef2029e9824b310b9890b";
 // const ALGOLIA_SEARCH_KEY = functions.config().algolia.search_key;
-const ALGOLIA_INDEX_NAME = 'woof';
+const ALGOLIA_INDEX_NAME = "woof";
 const client = algoliasearch(ALGOLIA_ID, ALGOLIA_ADMIN_KEY);
-const index = client.initIndex('woof');
+const index = client.initIndex("woof");
 
 // Import all needed modules.
-
-
 
 // Name fo the algolia index for Blog posts content.
 
@@ -61,7 +55,6 @@ const index = client.initIndex('woof');
 //       // https://www.algolia.com/doc/api-reference/api-methods/search/#response-format
 //       console.log(responses.hits);
 //     });
-
 
 // Updates the search index when new blog entries are created or updated.
 // exports.indexentry = functions.database.ref('classes/{classesId}/videos/{videosId}/comments/{commentsId}').onCreate(
@@ -102,24 +95,30 @@ const index = client.initIndex('woof');
 //   })
 //  })
 
-exports.addToIndex = functions.firestore.document('classes/{classesId}/videos/{videosId}/comments/{commentsId}')
+exports.addToIndex = functions.firestore
+  .document("classes/{classesId}/videos/{videosId}/comments/{commentsId}")
 
-    .onCreate(snapshot => {
-        const data = snapshot.data();
-        const objectID = snapshot.id;
+  .onCreate((snapshot) => {
+    functions.logger.log(snapshot);
 
-        return index.saveObject({ ...data, objectID });
+    const data = snapshot.data();
+    const objectID = snapshot.id;
+    const indexId = data.videoId;
+    const index = client.initIndex(indexId);
+    return index.saveObject({ ...data, objectID });
+  });
 
-    });
+exports.updateIndex = functions.firestore
+  .document("classes/{classesId}/videos/{videosId}/comments/{commentsId}")
 
-exports.updateIndex = functions.firestore.document('classes/{classesId}/videos/{videosId}/comments/{commentsId}')
+  .onUpdate((change) => {
+    const newData = change.after.data();
+    const objectID = change.after.id;
+    const indexId = newData.videoId;
+    const index = client.initIndex(indexId);
 
-    .onUpdate((change) => {
-        const newData = change.after.data();
-        const objectID = change.after.id;
-        return index.saveObject({ ...newData, objectID });
-    });
-
+    return index.saveObject({ ...newData, objectID });
+  });
 
 // // Starts a search query whenever a query is requested (by adding one to the `/search/queries`
 // // element. Search results are then written under `/search/results`.
