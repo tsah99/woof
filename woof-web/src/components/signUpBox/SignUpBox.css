@@ -27,6 +27,7 @@
 
 .SignUpBox-InputRow {
   display: table-row;
+  margin: 5px 0 5px 0;
 }
 
 .SignUpBox-InputCell {

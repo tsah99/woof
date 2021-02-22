@@ -1,6 +1,7 @@
 import firebase from "firebase/app";
 import "firebase/auth";
 import React, { useState, useContext } from "react";
+// import Modal from "react-modal";
 import { useHistory } from "react-router-dom";
 import AuthContext from "../../contexts/AuthContext";
 import "./SignInBox.css";
@@ -18,6 +19,7 @@ function SignInBox() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  // const [loginFailed, setLoginFailed] = useState(false);
 
   async function signInEmailClick() {
     console.log("Attempting Sign In with:");
@@ -37,6 +39,7 @@ function SignInBox() {
         console.log("Error with code: ", error.code);
         console.log("Error with message: ", error.message);
         // Display the error message below in a popup
+        // setLoginFailed(!loginFailed);
       });
   }
 
@@ -99,6 +102,19 @@ function SignInBox() {
       >
         Google Sign In
       </button>
+      {/* {loginFailed ? (
+        <Modal show={loginFailed} onHide={setLoginFailed}>
+          <Modal.Title>{"Sign In Error"}</Modal.Title>
+          <Modal.Body>
+            {
+              "The login credentials you entered were invalid. Try again, or sign up with a new account."
+            }
+          </Modal.Body>
+          {console.log("yes")}
+        </Modal>
+      ) : (
+        <div></div>
+      )} */}
     </div>
   );
 }
