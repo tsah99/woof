@@ -30,10 +30,10 @@ function SignInBox() {
     await firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
-      .then((result) => {
+      .then((response) => {
         // Signed in
-        authApi.setUser(result.user);
-        console.log("Current user: ", result.user);
+        authApi.setUser(response.user);
+        console.log("Current user: ", response.user);
         history.push("/lectureDashboard");
       })
       .catch((error) => {
@@ -49,9 +49,24 @@ function SignInBox() {
     await firebase
       .auth()
       .signInWithPopup(provider)
-      .then((result) => {
-        authApi.setUser(result.user);
-        console.log("Current user: ", result.user);
+      .then((response) => {
+        // If user has not signed in with Google before, add their uid info and email to firestore collection
+        if (
+          !firebase.firestore().collection("users").doc(response.user.uid).get()
+            .exists
+        ) {
+          console.log(
+            `Adding ${response.user.email} to firestore with uid ${response.user.uid}...`
+          );
+          firebase.firestore().collection("users").doc(response.user.uid).set({
+            classes: [],
+            email: response.user.email,
+            username: response.user.email,
+          });
+        }
+        // Set user to authApi and route to lecture dashboard page
+        authApi.setUser(response.user);
+        console.log("Current user: ", response.user);
         history.push("/lectureDashboard");
       })
       .catch((error) => {

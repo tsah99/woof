@@ -27,14 +27,14 @@ function SignUpBox() {
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then((response) => {
-        // Signed in
-        authApi.setUser(response.user);
-        // Add to firebase collection
+        // Signed up, add new user to firestore collection, and sign the user in
         firebase.firestore().collection("users").doc(response.user.uid).set({
           classes: [],
           email: email,
           username: email,
         });
+        // Set user to authApi and route to lecture dashboard page
+        authApi.setUser(response.user);
         console.log("Current user: ", response.user);
         history.push("/lectureDashboard");
       })
