@@ -21,9 +21,13 @@ const algoliasearch = require("algoliasearch").default;
 const ALGOLIA_ID = "SVXVZO2ZW8";
 const ALGOLIA_ADMIN_KEY = "c547904adb2ef2029e9824b310b9890b";
 // const ALGOLIA_SEARCH_KEY = functions.config().algolia.search_key;
+<<<<<<< HEAD
 const ALGOLIA_INDEX_NAME = "woof";
 const client = algoliasearch(ALGOLIA_ID, ALGOLIA_ADMIN_KEY);
 const index = client.initIndex("woof");
+=======
+const client = algoliasearch(ALGOLIA_ID, ALGOLIA_ADMIN_KEY);
+>>>>>>> 64900f2eb9700732fad5d5c3ea2a2c75788babe0
 
 // Import all needed modules.
 
@@ -95,22 +99,31 @@ const index = client.initIndex("woof");
 //   })
 //  })
 
-exports.addToIndex = functions.firestore
+exports.addToCommentIndex = functions.firestore
   .document("classes/{classesId}/videos/{videosId}/comments/{commentsId}")
 
   .onCreate((snapshot) => {
     const data = snapshot.data();
     const objectID = snapshot.id;
 
+    const courseId = snapshot.ref.parent.parent.parent.parent.id;
+    const videoId = snapshot.ref.parent.parent.id;
+    const indexId = "classes:" + courseId + ":videos:" + videoId + ":comments";
+    const index = client.initIndex(indexId);
     return index.saveObject({ ...data, objectID });
   });
 
-exports.updateIndex = functions.firestore
+exports.updateCommentIndex = functions.firestore
   .document("classes/{classesId}/videos/{videosId}/comments/{commentsId}")
 
   .onUpdate((change) => {
     const newData = change.after.data();
     const objectID = change.after.id;
+    const courseId = change.after.ref.parent.parent.parent.parent.id;
+    const videoId = change.after.ref.parent.parent.id;
+    const indexId = "classes:" + courseId + ":videos:" + videoId + ":comments";
+    const index = client.initIndex(indexId);
+
     return index.saveObject({ ...newData, objectID });
   });
 
