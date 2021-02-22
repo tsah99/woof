@@ -1,15 +1,14 @@
 .Lecture {
-  display: table;
 }
 
 .row {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
-  width: 100%;
 }
 
-.video {
-  margin-right: 50px;
+.commentLogAndLiveChat {
+  width: 40%;
 }
 
 .commentLogTitle {
