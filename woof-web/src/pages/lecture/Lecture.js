@@ -35,6 +35,7 @@ function Lecture({ props }) {
 
   const [videoData] = useDocumentData(videoRef);
 
+  // check if data exists before rendering
   if (!videoData) {
     return <div> </div>;
   }
@@ -50,7 +51,7 @@ function Lecture({ props }) {
           />
           <ReactionBar />
         </div>
-        <div>
+        <div className="commentLogAndLiveChat">
           <div className="commentLog">
             <p className="commentLogTitle"> Comment Log </p>
             <CommentLog courseId={courseId} videoId={videoId} player={player} />

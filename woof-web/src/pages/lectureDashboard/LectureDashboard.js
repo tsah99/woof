@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import AuthContext from "../../contexts/AuthContext";
 import CourseCarousel from "../../components/courseCarousel/CourseCarousel";
+import ClassSearchDropdown from "../../components/classSearchDropdown/ClassSearchDropdown";
 import firebase from "firebase/app";
 import { useDocumentData } from "react-firebase-hooks/firestore";
 
@@ -26,7 +27,10 @@ function LectureDashboard() {
 
   return (
     <div className="LectureDashboard">
-      {userData.classes.map((courseId) => (
+      <ClassSearchDropdown></ClassSearchDropdown>
+      {/* the reverse()'s purpose is subtle here. it's 
+      so that recently added classes appear first */}
+      {userData.classes.reverse().map((courseId) => (
         <CourseCarousel courseId={courseId}></CourseCarousel>
       ))}
     </div>

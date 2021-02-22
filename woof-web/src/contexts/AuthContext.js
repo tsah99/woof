@@ -1,9 +1,18 @@
-import React, { useCallback, useMemo, useState, useEffect } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import firebase from "firebase/app";
 import "firebase/auth";
 
 const AuthContext = React.createContext();
 
+/**
+ * Auth Context
+ *
+ * The following trackswhcih user is currently logged in (if any)
+ * so that this user's info can be accessed from any point in our application
+ *
+ * To access in a page/component, do:
+ * const authApi = useContext(AuthContext);
+ */
 export function AuthProvider(props) {
   // change this when auth is actually set up
   const [user, _setUser] = useState();
