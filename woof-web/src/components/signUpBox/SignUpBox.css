@@ -1,20 +1,23 @@
 .SignUpBox-Container {
-  width: 700px;
+  width: 50%;
   height: 400px;
   position: relative;
-  background-color: gray;
+  background-color: transparent;
   align-items: center;
 
   margin: auto;
-  border: 5px solid gold;
-  /* justify-content: ; */
+  color: #ff00b8;
+  border-bottom: 5px dashed #ff00b8;
+  border-left: 5px dashed #ff00b8;
+  border-right: 5px dashed #ff00b8;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   flex-shrink: 0;
 }
 
 .SignUpBox-WelcomeMsg {
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family: MisterPixel;
   font-size: 20pt;
   font-style: oblique;
   font-weight: bold;
@@ -35,11 +38,14 @@
 }
 
 .SignUpBox-SignUpButton {
-  color: black;
+  font-family: MisterPixel;
+  display: inline-block;
+  background-color: #ff00b8;
+  margin: 5px 0 8px 0;
 }
 
 .SignUpBox-SignUpButton:hover {
-  color: red;
+  color: white;
   opacity: 75%;
   cursor: pointer;
 }

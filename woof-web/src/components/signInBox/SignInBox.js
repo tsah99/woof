@@ -4,6 +4,7 @@ import React, { useState, useContext } from "react";
 // import Modal from "react-modal";
 import { useHistory } from "react-router-dom";
 import AuthContext from "../../contexts/AuthContext";
+// import firebase from "firebase/app";
 import "./SignInBox.css";
 
 /**
@@ -89,7 +90,7 @@ function SignInBox() {
       </div>
       <div className="SignInBox-InputRow">
         <button
-          className="SignInBox-SignUpButton"
+          className="SignInBox-SignInButton"
           onClick={() => signInEmailClick()}
         >
           Sign In
@@ -97,7 +98,7 @@ function SignInBox() {
       </div>
       <div className="SignInBox-Method"> Sign in with Google </div>
       <button
-        className="SignInBox-SignUpButton"
+        className="SignInBox-SignInButton"
         onClick={() => signInGoogleClick()}
       >
         Google Sign In

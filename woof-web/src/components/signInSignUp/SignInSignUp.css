@@ -7,16 +7,16 @@
 
   margin: auto;
   border: 5px dashed #ff00b8;
-  -webkit-animation: rotate 12s linear infinite;
   font-family: MisterPixel;
   display: flex;
   flex-direction: column;
+  justify-content: space-evenly;
   flex-shrink: 0;
 }
 
 .SignInSignUp-WelcomeMsg {
   font-size: 36px;
-  margin: 5% auto;
+  margin: 20px auto auto auto;
   color: #ff00b8;
   font-style: normal;
   font-weight: 700;
@@ -26,7 +26,7 @@
 .SignInSignUp-Clickables {
   display: flex;
   width: inherit;
-  margin: 10px 0;
+  margin: 20px 0;
   flex-direction: row;
   justify-content: space-between;
 }

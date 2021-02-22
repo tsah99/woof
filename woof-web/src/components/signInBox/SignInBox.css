@@ -12,6 +12,7 @@
   border-right: 5px dashed #ff00b8;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   flex-shrink: 0;
 }
 
@@ -21,6 +22,7 @@
   font-style: oblique;
   font-weight: bold;
   text-align: center;
+  margin: 0 auto 10px auto;
 }
 
 .SignInBox-Method {
@@ -42,13 +44,14 @@
   display: table-cell;
 }
 
-.SignInBox-SignUpButton {
+.SignInBox-SignInButton {
   font-family: MisterPixel;
   display: inline-block;
   background-color: #ff00b8;
+  margin: 5px 0 8px 0;
 }
 
-.SignInBox-SignUpButton:hover {
+.SignInBox-SignInButton:hover {
   color: white;
   opacity: 75%;
   cursor: pointer;

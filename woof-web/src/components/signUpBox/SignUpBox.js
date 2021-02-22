@@ -29,6 +29,12 @@ function SignUpBox() {
       .then((response) => {
         // Signed in
         authApi.setUser(response.user);
+        // Add to firebase collection
+        firebase.firestore().collection("users").doc(response.user.uid).set({
+          classes: [],
+          email: email,
+          username: email,
+        });
         console.log("Current user: ", response.user);
         history.push("/lectureDashboard");
       })
