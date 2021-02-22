@@ -1,11 +1,9 @@
 import React, { useEffect } from "react";
 import Comment from "../comment/Comment.js";
 import SearchBar from "../searchBar/searchBar.js";
-import { InstantSearch, SearchBox, Hits } from "react-instantsearch-dom";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import "./CommentLog.css";
 import firebase from "firebase/app";
-import algoliasearch from "algoliasearch/lite";
 
 /**
  * This component renders a list of comments to be displayed
@@ -14,12 +12,6 @@ import algoliasearch from "algoliasearch/lite";
  *    videoId - id of the YouTube video for which we should get comments from
  *    player - a handle on the player for the video being played
  */
-
-const searchClient = algoliasearch(
-  "SVXVZO2ZW8",
-  "9b17a4ec23a796d3bf7496e73fd930be"
-);
-
 function CommentLog(props) {
   const firestore = firebase.firestore();
   const commentsRef = firestore
@@ -44,7 +36,7 @@ function CommentLog(props) {
 
   return (
     <div className="CommentLog">
-      <SearchBar videoId={props.videoId}></SearchBar>
+      <SearchBar courseId={props.courseId} videoId={props.videoId}></SearchBar>
       {/* <InstantSearch searchClient={searchClient} indexName="woof">
         <SearchBox />
         <Hits />
