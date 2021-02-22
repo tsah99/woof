@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import algoliasearch from "algoliasearch/lite";
 import "./searchBar.css";
 import { connectStateResults } from "react-instantsearch-dom";
@@ -9,6 +9,7 @@ import {
   Hits,
   Highlight,
 } from "react-instantsearch-dom";
+
 const searchClient = algoliasearch(
   "SVXVZO2ZW8",
   "9b17a4ec23a796d3bf7496e73fd930be"
@@ -34,7 +35,9 @@ const Results = connectStateResults(({ searchState, searchResults }) =>
   searchState && searchState.query ? (
     <React.Fragment>
       <div className="SearchState">
-        {searchResults.nbHits} Results for {searchState.query}
+        {searchResults ? searchResults.nbHits : 0} Results for
+        {" " + searchState.query}
+        {/* Results for {searchState.query} */}
       </div>
       <Hits hitComponent={Hit} />
     </React.Fragment>
@@ -49,13 +52,32 @@ const Hit = ({ hit }) => (
   //   </p>
 );
 
-const SearchBar = () => (
-  <InstantSearch searchClient={searchClient} indexName="woof">
-    <SearchBox />
-    {/* <CustomStateResults> */}
-    <Results></Results>
-    {/* <Hits hitComponent={Hit} /> */}
-    {/* </CustomStateResults> */}
-  </InstantSearch>
-);
+// const SearchBar = (videoId) => (
+//   <InstantSearch searchClient={searchClient} indexName={videoId}>
+//     <SearchBox />
+//     {/* <CustomStateResults> */}
+//     <Results></Results>
+//     {/* <Hits hitComponent={Hit} /> */}
+//     {/* </CustomStateResults> */}
+//   </InstantSearch>
+// );
+// export default SearchBar;
+
+function SearchBar(props) {
+  return (
+    <InstantSearch
+      searchClient={searchClient}
+      indexName={
+        "classes:" + props.courseId + ":videos:" + props.videoId + ":comments"
+      }
+    >
+      <SearchBox />
+      {/* <CustomStateResults> */}
+      <Results></Results>
+      {/* <Hits hitComponent={Hit} /> */}
+      {/* </CustomStateResults> */}
+    </InstantSearch>
+  );
+}
+
 export default SearchBar;
