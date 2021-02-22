@@ -29,7 +29,8 @@ function SignUpBox() {
       .then((response) => {
         // Signed in
         authApi.setUser(response.user);
-        firebase.firestore().collection("users").doc(authApi.user.uid).set({
+        console.log(response.user.uid);
+        firebase.firestore().collection("users").doc(response.user.uid).set({
           classes: [],
           email: email,
           username: email,
