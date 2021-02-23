@@ -1,32 +1,44 @@
 .SignInSignUp-Container {
-  width: 700px;
-  height: 200px;
+  width: 50%;
+  height: 25%;
   position: relative;
-  background-color: gray;
+  background-color: transparent;
   align-items: center;
 
   margin: auto;
-  border: 5px solid gold;
-  /* justify-content: ; */
+  border: 5px dashed #ff00b8;
+  font-family: MisterPixel;
   display: flex;
   flex-direction: column;
+  justify-content: space-evenly;
   flex-shrink: 0;
 }
 
 .SignInSignUp-WelcomeMsg {
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-  font-size: 30pt;
-  font-style: oblique;
-  font-weight: bold;
+  font-size: 36px;
+  margin: 20px auto auto auto;
+  color: #ff00b8;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 0em;
 }
 
 .SignInSignUp-Clickables {
   display: flex;
+  width: inherit;
+  margin: 20px 0;
   flex-direction: row;
+  justify-content: space-between;
+}
+
+.SignInSignUp-Button {
+  font-family: MisterPixel;
+  display: inline-block;
+  background-color: #ff00b8;
 }
 
 .SignInSignUp-Button:hover {
   cursor: pointer;
-  color: red;
+  color: white;
   opacity: 75%;
 }
