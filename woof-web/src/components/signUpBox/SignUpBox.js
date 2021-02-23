@@ -20,10 +20,6 @@ function SignUpBox() {
   const [password, setPassword] = useState("");
 
   async function signUpClick() {
-    // console.log("Attempting Sign Up with:");
-    // console.log("Email: ", email);
-    // console.log("Password: ", password);
-
     await firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
@@ -36,7 +32,6 @@ function SignUpBox() {
         });
         // Set user to authApi and route to lecture dashboard page
         authApi.setUser(response.user);
-        console.log("Current user: ", response.user);
         history.push("/lectureDashboard");
       })
       .catch((error) => {
@@ -49,10 +44,6 @@ function SignUpBox() {
             },
           ],
         });
-        // let errorCode = error.code;
-        // let errorMessage = error.message;
-        // console.log("Error with code: ", errorCode);
-        // console.log("Error with message: ", errorMessage);
       });
   }
 

@@ -21,17 +21,12 @@ function SignInBox() {
   const [password, setPassword] = useState("");
 
   async function signInEmailClick() {
-    console.log("Attempting Sign In with:");
-    console.log("Email: ", email);
-    console.log("Password: ", password);
-
     await firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then((response) => {
         // Signed in
         authApi.setUser(response.user);
-        console.log("Current user: ", response.user);
         history.push("/lectureDashboard");
       })
       .catch((error) => {
@@ -44,8 +39,6 @@ function SignInBox() {
             },
           ],
         });
-        // console.log("Error with code: ", error.code);
-        // console.log("Error with message: ", error.message);
       });
   }
 
@@ -62,9 +55,6 @@ function SignInBox() {
           .doc(response.user.uid);
         usersRef.get().then((docSnapshot) => {
           if (!docSnapshot.exists) {
-            console.log(
-              `Adding ${response.user.email} to firestore with uid ${response.user.uid}...`
-            );
             firebase
               .firestore()
               .collection("users")
@@ -79,7 +69,6 @@ function SignInBox() {
 
         // Set user to authApi and route to lecture dashboard page
         authApi.setUser(response.user);
-        console.log("Current user: ", response.user);
         history.push("/lectureDashboard");
       })
       .catch((error) => {
@@ -92,8 +81,6 @@ function SignInBox() {
             },
           ],
         });
-        // console.log("Error with code: ", error.code);
-        // console.log("Error with message: ", error.message);
       });
   }
 
@@ -140,19 +127,6 @@ function SignInBox() {
       >
         Google Sign In
       </button>
-      {/* {loginFailed ? (
-        <Modal show={loginFailed} onHide={setLoginFailed}>
-          <Modal.Title>{"Sign In Error"}</Modal.Title>
-          <Modal.Body>
-            {
-              "The login credentials you entered were invalid. Try again, or sign up with a new account."
-            }
-          </Modal.Body>
-          {console.log("yes")}
-        </Modal>
-      ) : (
-        <div></div>
-      )} */}
     </div>
   );
 }
