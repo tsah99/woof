@@ -114,7 +114,7 @@ function timeSince(seconds) {
       return Math.floor(interval) + " minutes ago";
     }
   }
-  if (Math.floor(interval) == 1) {
+  if (Math.floor(secondsSince) == 1) {
     return Math.floor(secondsSince) + " second ago";
   } else {
     return Math.floor(secondsSince) + " seconds ago";
