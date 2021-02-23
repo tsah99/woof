@@ -1,6 +1,7 @@
 import firebase from "firebase/app";
 import "firebase/auth";
 import React, { useState, useContext } from "react";
+import { confirmAlert } from "react-confirm-alert";
 import { useHistory } from "react-router-dom";
 import AuthContext from "../../contexts/AuthContext";
 import "./SignInBox.css";
@@ -20,23 +21,24 @@ function SignInBox() {
   const [password, setPassword] = useState("");
 
   async function signInEmailClick() {
-    console.log("Attempting Sign In with:");
-    console.log("Email: ", email);
-    console.log("Password: ", password);
-
     await firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
-      .then((result) => {
+      .then((response) => {
         // Signed in
-        authApi.setUser(result.user);
-        console.log("Current user: ", result.user);
+        authApi.setUser(response.user);
         history.push("/lectureDashboard");
       })
       .catch((error) => {
-        console.log("Error with code: ", error.code);
-        console.log("Error with message: ", error.message);
-        // Display the error message below in a popup
+        confirmAlert({
+          title: "Error with sign in attempt!",
+          message: <>{error.message}</>,
+          buttons: [
+            {
+              label: "Ok",
+            },
+          ],
+        });
       });
   }
 
@@ -45,14 +47,40 @@ function SignInBox() {
     await firebase
       .auth()
       .signInWithPopup(provider)
-      .then((result) => {
-        authApi.setUser(result.user);
-        console.log("Current user: ", result.user);
+      .then((response) => {
+        // If user has not signed in with Google before, add their uid info and email to firestore collection
+        const usersRef = firebase
+          .firestore()
+          .collection("users")
+          .doc(response.user.uid);
+        usersRef.get().then((docSnapshot) => {
+          if (!docSnapshot.exists) {
+            firebase
+              .firestore()
+              .collection("users")
+              .doc(response.user.uid)
+              .set({
+                classes: [],
+                email: response.user.email,
+                username: response.user.email,
+              });
+          }
+        });
+
+        // Set user to authApi and route to lecture dashboard page
+        authApi.setUser(response.user);
         history.push("/lectureDashboard");
       })
       .catch((error) => {
-        console.log("Error with code: ", error.code);
-        console.log("Error with message: ", error.message);
+        confirmAlert({
+          title: "Error with sign in attempt!",
+          message: <>{error.message}</>,
+          buttons: [
+            {
+              label: "Ok",
+            },
+          ],
+        });
       });
   }
 
@@ -86,7 +114,7 @@ function SignInBox() {
       </div>
       <div className="SignInBox-InputRow">
         <button
-          className="SignInBox-SignUpButton"
+          className="SignInBox-SignInButton"
           onClick={() => signInEmailClick()}
         >
           Sign In
@@ -94,7 +122,7 @@ function SignInBox() {
       </div>
       <div className="SignInBox-Method"> Sign in with Google </div>
       <button
-        className="SignInBox-SignUpButton"
+        className="SignInBox-SignInButton"
         onClick={() => signInGoogleClick()}
       >
         Google Sign In
