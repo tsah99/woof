@@ -1,4 +1,4 @@
-# Team 9: \<insert team logo here\> Woof 
+# Team 9:  <img src="./team_details/woof-logo.png" alt="logo" width="100"/>
 
 ### Our Product
 
