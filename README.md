@@ -1,4 +1,4 @@
-# Team 9:  ![alt text](./team_details/woof-logo.png?raw=true "Team Logo") Woof 
+# Team 9:  <img src="./team_details/woof-logo.png" alt="logo" width="100"/>
 
 ### Our Product
 
