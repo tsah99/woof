@@ -1,4 +1,4 @@
-# Team 9: \<insert team logo here\> Woof 
+# Team 9:  ![alt text](./team_details/woof-logo.png?raw=true"Team Logo") Woof 
 
 ### Our Product
 
