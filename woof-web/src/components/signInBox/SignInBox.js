@@ -1,10 +1,9 @@
 import firebase from "firebase/app";
 import "firebase/auth";
 import React, { useState, useContext } from "react";
-// import Modal from "react-modal";
+import { confirmAlert } from "react-confirm-alert";
 import { useHistory } from "react-router-dom";
 import AuthContext from "../../contexts/AuthContext";
-// import firebase from "firebase/app";
 import "./SignInBox.css";
 
 /**
@@ -20,7 +19,6 @@ function SignInBox() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const [loginFailed, setLoginFailed] = useState(false);
 
   async function signInEmailClick() {
     console.log("Attempting Sign In with:");
@@ -37,10 +35,17 @@ function SignInBox() {
         history.push("/lectureDashboard");
       })
       .catch((error) => {
-        console.log("Error with code: ", error.code);
-        console.log("Error with message: ", error.message);
-        // Display the error message below in a popup
-        // setLoginFailed(!loginFailed);
+        confirmAlert({
+          title: "Error with sign in attempt!",
+          message: <>{error.message}</>,
+          buttons: [
+            {
+              label: "Ok",
+            },
+          ],
+        });
+        // console.log("Error with code: ", error.code);
+        // console.log("Error with message: ", error.message);
       });
   }
 
@@ -51,27 +56,44 @@ function SignInBox() {
       .signInWithPopup(provider)
       .then((response) => {
         // If user has not signed in with Google before, add their uid info and email to firestore collection
-        if (
-          !firebase.firestore().collection("users").doc(response.user.uid).get()
-            .exists
-        ) {
-          console.log(
-            `Adding ${response.user.email} to firestore with uid ${response.user.uid}...`
-          );
-          firebase.firestore().collection("users").doc(response.user.uid).set({
-            classes: [],
-            email: response.user.email,
-            username: response.user.email,
-          });
-        }
+        const usersRef = firebase
+          .firestore()
+          .collection("users")
+          .doc(response.user.uid);
+        usersRef.get().then((docSnapshot) => {
+          if (!docSnapshot.exists) {
+            console.log(
+              `Adding ${response.user.email} to firestore with uid ${response.user.uid}...`
+            );
+            firebase
+              .firestore()
+              .collection("users")
+              .doc(response.user.uid)
+              .set({
+                classes: [],
+                email: response.user.email,
+                username: response.user.email,
+              });
+          }
+        });
+
         // Set user to authApi and route to lecture dashboard page
         authApi.setUser(response.user);
         console.log("Current user: ", response.user);
         history.push("/lectureDashboard");
       })
       .catch((error) => {
-        console.log("Error with code: ", error.code);
-        console.log("Error with message: ", error.message);
+        confirmAlert({
+          title: "Error with sign in attempt!",
+          message: <>{error.message}</>,
+          buttons: [
+            {
+              label: "Ok",
+            },
+          ],
+        });
+        // console.log("Error with code: ", error.code);
+        // console.log("Error with message: ", error.message);
       });
   }
 

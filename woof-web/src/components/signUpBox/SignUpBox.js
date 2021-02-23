@@ -4,6 +4,7 @@ import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import AuthContext from "../../contexts/AuthContext";
 import "./SignUpBox.css";
+import { confirmAlert } from "react-confirm-alert";
 
 /**
  * Sign up box
@@ -39,10 +40,19 @@ function SignUpBox() {
         history.push("/lectureDashboard");
       })
       .catch((error) => {
-        let errorCode = error.code;
-        let errorMessage = error.message;
-        console.log("Error with code: ", errorCode);
-        console.log("Error with message: ", errorMessage);
+        confirmAlert({
+          title: "Error with sign in attempt!",
+          message: <>{error.message}</>,
+          buttons: [
+            {
+              label: "Ok",
+            },
+          ],
+        });
+        // let errorCode = error.code;
+        // let errorMessage = error.message;
+        // console.log("Error with code: ", errorCode);
+        // console.log("Error with message: ", errorMessage);
       });
   }
 
