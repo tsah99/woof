@@ -7,7 +7,8 @@ async function sendMessage(event, courseId, videoId, authApi) {
   event.preventDefault();
 
   let liveChatMessage = event.target[0].value;
-  if (liveChatMessage.length === 0) return;
+  if (liveChatMessage.length === 0 || liveChatMessage.trim().length === 0)
+    return;
 
   const firestore = firebase.firestore();
   const messagesRef = firestore

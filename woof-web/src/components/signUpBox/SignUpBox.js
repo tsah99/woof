@@ -45,6 +45,14 @@ function SignUpBox() {
           ],
         });
       });
+
+    /*
+    await firebase.firestore().collection("users").add({
+      classes: [],
+      email: authApi.user.email,
+      username: authApi.user.email,
+    });
+    */
   }
 
   return (
