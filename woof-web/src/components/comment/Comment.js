@@ -128,7 +128,7 @@ function timeSince(seconds) {
  */
 function renderComment(comment, player) {
   return (
-    <Grid justifyContent="left" item xs zeroMinWidth>
+    <Grid justifyContent="left" item xs zeroMinWidth key={comment.id}>
       <h4 className="comment-owner">{comment.username}</h4>
       <p className="comment-text">{linkTimestampsInComment(comment, player)}</p>
       <p className="time-posted">{timeSince(comment.time_posted.seconds)}</p>

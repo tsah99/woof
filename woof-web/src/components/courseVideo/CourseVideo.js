@@ -1,7 +1,8 @@
 import React from "react";
 import ReactPlayer from "react-player";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useContext } from "react";
 import "./CourseVideo.css";
+import LectureContext from "../../contexts/LectureContext";
 
 /**
  * This component houses the current video being displayed on
@@ -15,8 +16,10 @@ import "./CourseVideo.css";
  *
  */
 function CourseVideo(props) {
+  const lectureApi = useContext(LectureContext);
   let player = useRef(null);
   useEffect(() => {
+    lectureApi.setCurrentRef(player);
     if (props.updatePlayer) {
       props.updatePlayer(player);
     }
