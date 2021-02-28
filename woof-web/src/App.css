@@ -1,6 +1,13 @@
-.App {
+.App-dark {
   background-color: black;
-  margin-left: 5%;
-  margin-right: 5%;
+  padding-left: 5%;
+  padding-right: 5%;
+  font-family: MisterPixel;
+}
+
+.App-light {
+  background-color: thistle;
+  padding-left: 5%;
+  padding-right: 5%;
   font-family: MisterPixel;
 }

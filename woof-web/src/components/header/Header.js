@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import "./Header.css";
 import firebase from "firebase/app";
 import AuthContext from "../../contexts/AuthContext";
+import SystemContext from "../../contexts/SystemContext";
 
 /**
  * Non auth header
@@ -10,6 +11,8 @@ import AuthContext from "../../contexts/AuthContext";
  * only shown when there is no user logged in
  */
 function NonAuthHeader() {
+  const systemApi = useContext(SystemContext);
+
   const history = useHistory();
   function logIn() {
     history.push("/signin");
@@ -29,6 +32,12 @@ function NonAuthHeader() {
       <div className="sign-in-out" onClick={logIn}>
         SIGN IN
       </div>
+      <div
+        className="symbols-lightdark-nonauth"
+        onClick={() => systemApi.setDarkMode(!systemApi.darkMode)}
+      >
+        {systemApi.darkMode ? "K" : "X"}
+      </div>
     </div>
   );
 }
@@ -40,6 +49,7 @@ function NonAuthHeader() {
  */
 function AuthHeader() {
   const authApi = useContext(AuthContext);
+  const systemApi = useContext(SystemContext);
   const history = useHistory();
 
   function logOut() {
@@ -71,6 +81,12 @@ function AuthHeader() {
         <div className="symbols-auth">T</div>
         <div className="sign-in-out" onClick={logOut}>
           LOG OUT
+        </div>
+        <div
+          className="symbols-lightdark-auth"
+          onClick={() => systemApi.setDarkMode(!systemApi.darkMode)}
+        >
+          {systemApi.darkMode ? "K" : "X"}
         </div>
       </div>
     </div>

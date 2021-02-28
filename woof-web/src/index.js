@@ -8,6 +8,7 @@ import firebaseConfig from "./firebaseConfig";
 import "firebase/firestore";
 import "firebase/auth";
 import { AuthProvider } from "./contexts/AuthContext";
+import { SystemProvider } from "./contexts/SystemContext";
 import { BrowserRouter as Router } from "react-router-dom";
 
 // Initialize Firebase
@@ -24,7 +25,9 @@ ReactDOM.render(
   <React.StrictMode>
     <Router>
       <AuthProvider>
-        <App />
+        <SystemProvider>
+          <App />
+        </SystemProvider>
       </AuthProvider>
     </Router>
   </React.StrictMode>,
