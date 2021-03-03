@@ -146,6 +146,7 @@ function renderComment(comment, player) {
 async function submitSubComment(event, commentId, courseId, videoId, authApi) {
   event.preventDefault();
 
+  // Add the subcomment to firestore
   let comment = event.target[0].value;
 
   if (comment.length === 0) return;
@@ -161,12 +162,39 @@ async function submitSubComment(event, commentId, courseId, videoId, authApi) {
     .doc(commentId)
     .collection("subComments");
 
+  const time_posted = firebase.firestore.Timestamp.now();
+
   await subCommentsRef.add({
     text: comment,
     username: authApi.user.email,
-    time_posted: firebase.firestore.Timestamp.now(),
+    time_posted: time_posted,
   });
 
+  // Add the subcomment (comment reply) to parent comment owner's "notifications" firestore collection
+  const parentCommentRef = firestore
+    .collection("classes")
+    .doc(courseId)
+    .collection("videos")
+    .doc(videoId)
+    .collection("comments")
+    .doc(commentId);
+  const parentCommentInfo = await parentCommentRef.get();
+  const parentCommentId = parentCommentInfo.data().user_id;
+
+  const notifsRef = firestore
+    .collection("users")
+    .doc(parentCommentId)
+    .collection("notifications");
+
+  await notifsRef.add({
+    comment_reply: comment,
+    comment_reply_uid: authApi.user.uid,
+    courseId: courseId,
+    videoId: videoId,
+    time_replied: time_posted,
+  });
+
+  // Reset target value to empty string
   event.target[0].value = "";
 }
 

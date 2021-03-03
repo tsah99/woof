@@ -58,6 +58,21 @@
   text-align: center;
 }
 
+.notifications-box {
+  width: 20%;
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+}
+
+.notifications-icon:hover {
+  cursor: pointer;
+}
+
+.notifications-list {
+  position: relative;
+}
+
 .right-side {
   display: flex;
   flex-direction: row;
