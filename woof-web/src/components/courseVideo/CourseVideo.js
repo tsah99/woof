@@ -24,12 +24,16 @@ function CourseVideo(props) {
 
   return (
     <div className="CourseVideo">
-      <ReactPlayer
-        style={{ margin: "auto" }}
-        {...props}
-        url={props.videoData.url}
-        ref={player}
-      />
+      <div className="player-wrapper">
+        <ReactPlayer
+          className="react-player"
+          width="100%"
+          height="100%"
+          {...props}
+          url={props.videoData.url}
+          ref={player}
+        />
+      </div>
       <div style={{ width: props.width }}>{props.videoData.title}</div>
     </div>
   );

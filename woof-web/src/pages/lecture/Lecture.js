@@ -49,9 +49,9 @@ function Lecture({ props }) {
             updatePlayer={updatePlayer}
             videoData={videoData}
           />
-          <ReactionBar />
+          {/* <ReactionBar /> */}
         </div>
-        <div className="commentLogAndLiveChat">
+        {/* <div className="commentLogAndLiveChat">
           <div className="commentLog">
             <p className="commentLogTitle"> Comment Log </p>
             <CommentLog courseId={courseId} videoId={videoId} player={player} />
@@ -62,7 +62,7 @@ function Lecture({ props }) {
             <LiveChat courseId={courseId} videoId={videoId} player={player} />
             <LiveChatMessageForm courseId={courseId} videoId={videoId} />
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );
