@@ -1,8 +1,27 @@
 import React, { useContext } from "react";
 import AuthContext from "../../contexts/AuthContext";
+import VideoProgressContext from "../../contexts/VideoProgressContext";
 import firebase from "firebase/app";
 import "./CommentSubmissionForm.css";
 
+/**
+ * Code here inspired from https://stackoverflow.com/questions/1322732/convert-seconds-to-hh-mm-ss-with-javascript.
+ * @param {} totalSeconds
+ */
+function convertSecondsToTimestringFormat(totalSeconds) {
+  let hours = Math.floor(totalSeconds / 3600);
+  totalSeconds %= 3600;
+  let minutes = Math.floor(totalSeconds / 60);
+  let seconds = Math.floor(totalSeconds % 60);
+
+  let timestring = "";
+
+  if (hours) timestring += String(hours).padStart(2, "0") + ":";
+  timestring += String(minutes).padStart(2, "0") + ":";
+  timestring += String(seconds).padStart(2, "0");
+
+  return timestring;
+}
 /**
  * The handler that's called when a user submits a comment.
  * Makes a call to the Firebase API and posts a comment to
@@ -15,7 +34,13 @@ import "./CommentSubmissionForm.css";
  * @param event is the event that is triggered upon hitting
  *            the "comment at" button
  */
-async function submitComment(event, courseId, videoId, authApi) {
+async function submitComment(
+  event,
+  courseId,
+  videoId,
+  authApi,
+  videoProgressApi
+) {
   event.preventDefault();
 
   let comment = event.target[0].value;
@@ -36,6 +61,7 @@ async function submitComment(event, courseId, videoId, authApi) {
     time_posted: firebase.firestore.Timestamp.now(),
     video_id: videoId,
     course_id: courseId,
+    video_time: videoProgressApi.progress.playedSeconds,
   });
 
   event.target[0].value = "";
@@ -52,6 +78,12 @@ async function submitComment(event, courseId, videoId, authApi) {
  */
 function CommentSubmissionForm(props) {
   const authApi = useContext(AuthContext);
+  const videoProgressApi = useContext(VideoProgressContext);
+
+  let seconds = videoProgressApi.progress.playedSeconds
+    ? videoProgressApi.progress.playedSeconds
+    : 0;
+  let timestring = convertSecondsToTimestringFormat(seconds);
 
   return (
     <div className="CommentSubmissionForm">
@@ -60,11 +92,26 @@ function CommentSubmissionForm(props) {
         noValidate
         autoComplete="off"
         onSubmit={(event) =>
-          submitComment(event, props.courseId, props.videoId, authApi)
+          submitComment(
+            event,
+            props.courseId,
+            props.videoId,
+            authApi,
+            videoProgressApi
+          )
         }
       >
-        <input className="comment-field" placeholder="write a comment..." />
-        <input className="post-comment-button" type="submit" value="comment" />
+        <span className="timestamp"> {timestring}</span>
+        <input
+          name="comment-field"
+          className="comment-field"
+          placeholder="write a comment..."
+        />
+        <input
+          className="post-comment-button"
+          type="submit"
+          value={"comment"}
+        />
       </form>
     </div>
   );

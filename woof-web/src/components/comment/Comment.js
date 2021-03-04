@@ -7,6 +7,25 @@ import firebase from "firebase/app";
 import "./Comment.css";
 
 /**
+ * Code here inspired from https://stackoverflow.com/questions/1322732/convert-seconds-to-hh-mm-ss-with-javascript.
+ * @param {} totalSeconds
+ */
+function convertSecondsToTimestringFormat(totalSeconds) {
+  let hours = Math.floor(totalSeconds / 3600);
+  totalSeconds %= 3600;
+  let minutes = Math.floor(totalSeconds / 60);
+  let seconds = Math.floor(totalSeconds % 60);
+
+  let timestring = "";
+
+  if (hours) timestring += String(hours).padStart(2, "0") + ":";
+  timestring += String(minutes).padStart(2, "0") + ":";
+  timestring += String(seconds).padStart(2, "0");
+
+  return timestring;
+}
+
+/**
  * Converts a timestring into seconds and returns it.
  *
  * @param timestring - a string of the format HH:MM:SS, H:MM:SS, MM:SS,
@@ -53,7 +72,7 @@ function linkTimestampsInComment(comment, player) {
               convertTimestringFormatToSeconds(timestampStr)
             )
           }
-          style={{ cursor: "pointer", color: "#2d3edc" }}
+          style={{ cursor: "pointer", color: "lightblue" }}
           className="match"
           key={i}
         >
@@ -128,11 +147,15 @@ function timeSince(seconds) {
  */
 function renderComment(comment, player) {
   return (
-    <Grid justifyContent="left" item xs zeroMinWidth>
-      <h4 className="comment-owner">{comment.username}</h4>
-      <p className="comment-text">{linkTimestampsInComment(comment, player)}</p>
-      <p className="time-posted">{timeSince(comment.time_posted.seconds)}</p>
-    </Grid>
+    <div>
+      <div className="subcomment-owner">{comment.username}</div>
+      <div className="subcomment-text">
+        {linkTimestampsInComment(comment, player)}
+      </div>
+      <div className="time-posted">
+        {timeSince(comment.time_posted.seconds)}
+      </div>
+    </div>
   );
 }
 
@@ -202,11 +225,48 @@ function Comment(props) {
 
   const authApi = useContext(AuthContext);
 
+  const timestring = convertSecondsToTimestringFormat(props.comment.video_time);
   return (
     <div className="Comment">
-      <Grid container wrap="nowrap" spacing={2}>
+      <div className="comment-timestamp-and-owner">
+        <div className="comment-timestamp">{timestring}</div>
+        <div className="comment-owner">{props.comment.username}</div>
+      </div>
+      <div className="comment-text">
+        {linkTimestampsInComment(props.comment, props.player)}
+      </div>
+      <div className="time-posted">
+        {timeSince(props.comment.time_posted.seconds)}
+      </div>
+      <div className="SubComments">
+        {subComments
+          ? subComments.map((subComment) =>
+              renderComment(subComment, props.player)
+            )
+          : []}
+
+        <form
+          className="subcomment-submission-form"
+          noValidate
+          autoComplete="off"
+          onSubmit={(event) =>
+            submitSubComment(
+              event,
+              props.comment.id,
+              props.courseId,
+              props.videoId,
+              authApi
+            )
+          }
+        >
+          <input className="subcomment-field" placeholder="reply..." />
+        </form>
+      </div>
+      {/* <Grid container wrap="nowrap" spacing={2}>
         <Grid justifyContent="left" item xs zeroMinWidth>
-          <h4 className="comment-owner">{props.comment.username}</h4>
+          <h4 className="comment-owner">
+            {timestring + " " + props.comment.username}
+          </h4>
           <div className="commentBorder">
             <p className="comment-text">
               {linkTimestampsInComment(props.comment, props.player)}
@@ -240,7 +300,7 @@ function Comment(props) {
             </div>
           </div>
         </Grid>
-      </Grid>
+      </Grid> */}
     </div>
   );
 }

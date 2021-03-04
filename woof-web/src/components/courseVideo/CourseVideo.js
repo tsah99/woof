@@ -1,6 +1,7 @@
 import React from "react";
 import ReactPlayer from "react-player";
-import { useRef, useEffect } from "react";
+import VideoProgressContext from "../../contexts/VideoProgressContext";
+import { forwardRef, useContext } from "react";
 import "./CourseVideo.css";
 
 /**
@@ -14,29 +15,36 @@ import "./CourseVideo.css";
  *                   which updates the parent's player handle
  *
  */
-function CourseVideo(props) {
-  let player = useRef(null);
-  useEffect(() => {
-    if (props.updatePlayer) {
-      props.updatePlayer(player);
-    }
-  });
-
+const CourseVideo = forwardRef((props, ref) => {
+  let videoProgressApi = useContext(VideoProgressContext);
   return (
-    <div className="CourseVideo">
-      <div className="player-wrapper">
+    <div
+      className="CourseVideo"
+      style={props.light ? {} : { width: "100%", height: "100%" }}
+    >
+      <div
+        className="player-wrapper"
+        style={props.light ? {} : { position: "relative", paddingTop: "35.5%" }}
+      >
         <ReactPlayer
           className="react-player"
-          width="100%"
-          height="100%"
+          style={
+            props.light
+              ? { margin: "auto" }
+              : { position: "absolute", top: 0, left: 0 }
+          }
+          width={props.width ? props.width : "100%"}
+          height={props.height ? props.height : "100%"}
           {...props}
           url={props.videoData.url}
-          ref={player}
+          ref={ref}
+          onProgress={(progress) => {
+            videoProgressApi.setProgress(progress);
+          }}
         />
       </div>
-      <div style={{ width: props.width }}>{props.videoData.title}</div>
     </div>
   );
-}
+});
 
 export default CourseVideo;

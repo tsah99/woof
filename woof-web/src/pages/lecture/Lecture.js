@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CourseVideo from "../../components/courseVideo/CourseVideo.js";
 import CommentSubmissionForm from "../../components/commentSubmissionForm/CommentSubmissionForm.js";
 import CommentLog from "../../components/commentLog/CommentLog.js";
@@ -22,8 +22,7 @@ import "./Lecture.css";
  *  player - a handle on the player for the video being played
  */
 function Lecture({ props }) {
-  let [player, updatePlayer] = useState(null);
-
+  let playerRef = React.createRef();
   let { courseId, videoId } = useParams();
 
   const videoRef = firebase
@@ -37,21 +36,19 @@ function Lecture({ props }) {
 
   // check if data exists before rendering
   if (!videoData) {
-    return <div> </div>;
+    return <></>;
   }
 
   return (
     <div className="Lecture">
-      <div className="row">
-        <div className="video">
-          <CourseVideo
-            controls={true}
-            updatePlayer={updatePlayer}
-            videoData={videoData}
-          />
-          {/* <ReactionBar /> */}
-        </div>
-        {/* <div className="commentLogAndLiveChat">
+      <CourseVideo controls={true} ref={playerRef} videoData={videoData} />
+      <CommentSubmissionForm
+        playerRef={playerRef}
+        courseId={courseId}
+        videoId={videoId}
+      />
+      <CommentLog courseId={courseId} videoId={videoId} player={playerRef} />
+      {/* <div className="commentLogAndLiveChat">
           <div className="commentLog">
             <p className="commentLogTitle"> Comment Log </p>
             <CommentLog courseId={courseId} videoId={videoId} player={player} />
@@ -63,7 +60,6 @@ function Lecture({ props }) {
             <LiveChatMessageForm courseId={courseId} videoId={videoId} />
           </div>
         </div> */}
-      </div>
     </div>
   );
 }

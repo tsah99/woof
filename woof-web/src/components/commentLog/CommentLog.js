@@ -21,12 +21,9 @@ function CommentLog(props) {
     .doc(props.videoId)
     .collection("comments");
 
-  let [comments] = useCollectionData(
-    commentsRef.orderBy("time_posted", "asc"),
-    {
-      idField: "id",
-    }
-  );
+  let [comments] = useCollectionData(commentsRef.orderBy("video_time", "asc"), {
+    idField: "id",
+  });
 
   //used to scroll the view into the most recent comment
   useEffect(() => {
