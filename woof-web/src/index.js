@@ -9,7 +9,6 @@ import "firebase/firestore";
 import "firebase/auth";
 import { AuthProvider } from "./contexts/AuthContext";
 import { SystemProvider } from "./contexts/SystemContext";
-import { VideoProgressProvider } from "./contexts/VideoProgressContext";
 import { BrowserRouter as Router } from "react-router-dom";
 
 // Initialize Firebase
@@ -27,9 +26,7 @@ ReactDOM.render(
     <Router>
       <AuthProvider>
         <SystemProvider>
-          <VideoProgressProvider>
-            <App />
-          </VideoProgressProvider>
+          <App />
         </SystemProvider>
       </AuthProvider>
     </Router>

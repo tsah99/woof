@@ -1,8 +1,8 @@
 import React from "react";
 import ReactPlayer from "react-player";
-import VideoProgressContext from "../../contexts/VideoProgressContext";
-import { forwardRef, useContext } from "react";
+import { useRef, useEffect, useContext } from "react";
 import "./CourseVideo.css";
+import LectureContext from "../../contexts/LectureContext";
 
 /**
  * This component houses the current video being displayed on
@@ -15,8 +15,17 @@ import "./CourseVideo.css";
  *                   which updates the parent's player handle
  *
  */
-const CourseVideo = forwardRef((props, ref) => {
-  let videoProgressApi = useContext(VideoProgressContext);
+function CourseVideo(props) {
+  const lectureApi = useContext(LectureContext);
+  let player = useRef(null);
+  useEffect(() => {
+    if (lectureApi) {
+      lectureApi.setCurrentRef(player);
+    }
+    if (props.updatePlayer) {
+      props.updatePlayer(player);
+    }
+  });
 
   return (
     <div className="CourseVideo">
@@ -36,14 +45,14 @@ const CourseVideo = forwardRef((props, ref) => {
           height={props.height ? props.height : "100%"}
           {...props}
           url={props.videoData.url}
-          ref={ref}
-          onProgress={(progress) => {
-            videoProgressApi.setProgress(progress);
-          }}
+          ref={player}
+          // onProgress={(progress) => {
+          //   videoProgressApi.setProgress(progress);
+          // }}
         />
       </div>
     </div>
   );
-});
+}
 
 export default CourseVideo;

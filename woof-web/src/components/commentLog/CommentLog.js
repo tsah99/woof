@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Comment from "../comment/Comment.js";
 import SearchBar from "../searchBar/searchBar.js";
 import { useCollectionData } from "react-firebase-hooks/firestore";
@@ -26,12 +26,6 @@ function CommentLog(props) {
     idField: "id",
   });
 
-  //used to scroll the view into the most recent comment
-  // useEffect(() => {
-  //   let div = document.getElementsByClassName("CommentLog")[0];
-  //   div.scrollTop = div.scrollHeight;
-  // });
-
   if (!comments) {
     return <></>;
   }
@@ -40,10 +34,6 @@ function CommentLog(props) {
     <div className="CommentLog">
       <CommentCard comments={comments} />
       <SearchBar courseId={props.courseId} videoId={props.videoId}></SearchBar>
-      {/* <InstantSearch searchClient={searchClient} indexName="woof">
-        <SearchBox />
-        <Hits />
-      </InstantSearch> */}
 
       {comments.map((comment) => (
         <Comment
@@ -51,7 +41,7 @@ function CommentLog(props) {
           comment={comment}
           courseId={props.courseId}
           videoId={props.videoId}
-          player={props.player}
+          playerRef={props.playerRef}
         />
       ))}
     </div>

@@ -3,6 +3,7 @@ import AuthContext from "../../contexts/AuthContext";
 import VideoProgressContext from "../../contexts/VideoProgressContext";
 import firebase from "firebase/app";
 import "./CommentSubmissionForm.css";
+import LectureContext from "../../contexts/LectureContext";
 
 /**
  * Code here inspired from https://stackoverflow.com/questions/1322732/convert-seconds-to-hh-mm-ss-with-javascript.
@@ -34,13 +35,7 @@ function convertSecondsToTimestringFormat(totalSeconds) {
  * @param event is the event that is triggered upon hitting
  *            the "comment at" button
  */
-async function submitComment(
-  event,
-  courseId,
-  videoId,
-  authApi,
-  videoProgressApi
-) {
+async function submitComment(event, courseId, videoId, authApi, lectureApi) {
   event.preventDefault();
 
   let comment = event.target[0].value;
@@ -55,13 +50,19 @@ async function submitComment(
     .doc(videoId)
     .collection("comments");
 
+  let videoTime = null;
+
+  if (lectureApi.currentRef) {
+    videoTime = lectureApi.currentRef.current.getCurrentTime();
+  }
+
   await commentsRef.add({
     text: comment,
     username: authApi.user.email,
     time_posted: firebase.firestore.Timestamp.now(),
     video_id: videoId,
     course_id: courseId,
-    video_time: videoProgressApi.progress.playedSeconds,
+    video_time: videoTime,
   });
 
   event.target[0].value = "";
@@ -78,12 +79,7 @@ async function submitComment(
  */
 function CommentSubmissionForm(props) {
   const authApi = useContext(AuthContext);
-  const videoProgressApi = useContext(VideoProgressContext);
-
-  let seconds = videoProgressApi.progress.playedSeconds
-    ? videoProgressApi.progress.playedSeconds
-    : 0;
-  let timestring = convertSecondsToTimestringFormat(seconds);
+  const lectureApi = useContext(LectureContext);
 
   return (
     <div className="CommentSubmissionForm">
@@ -97,11 +93,11 @@ function CommentSubmissionForm(props) {
             props.courseId,
             props.videoId,
             authApi,
-            videoProgressApi
+            lectureApi
           )
         }
       >
-        <span className="timestamp"> {timestring}</span>
+        <span className="timestamp"> {"timestring goes here"}</span>
         <input
           name="comment-field"
           className="comment-field"

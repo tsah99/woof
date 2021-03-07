@@ -54,7 +54,7 @@ function convertTimestringFormatToSeconds(timestring) {
  * @param comment - a comment object as explained in the Comment component
  * @param player - a handle on the current video's player
  */
-function linkTimestampsInComment(comment, player) {
+function linkTimestampsInComment(comment, playerRef) {
   let timestampReg = new RegExp(
     /([0-9]?[0-9]:[0-5][0-9]:[0-5][0-9])|([0-5]?[0-9]:[0-5][0-9])/
   );
@@ -67,7 +67,7 @@ function linkTimestampsInComment(comment, player) {
       parts[i] = (
         <span
           onClick={() =>
-            player.current.seekTo(
+            playerRef.current.seekTo(
               convertTimestringFormatToSeconds(timestampStr)
             )
           }
@@ -142,14 +142,14 @@ function timeSince(seconds) {
 /**
  * Renders a singular sub-comment.
  * @param comment - a comment object, as explained in Comment component
- * @param player - a handle on the current video's player
+ * @param playerRef - a handle on the current video's player
  */
-function renderComment(comment, player) {
+function renderComment(comment, playerRef) {
   return (
     <div>
       <div className="subcomment-owner">{comment.username}</div>
       <div className="subcomment-text">
-        {linkTimestampsInComment(comment, player)}
+        {linkTimestampsInComment(comment, playerRef)}
       </div>
       <div className="time-posted">
         {timeSince(comment.time_posted.seconds)}
@@ -231,7 +231,7 @@ function Comment(props) {
         <div
           className="comment-timestamp"
           onClick={() => {
-            props.player.current.seekTo(
+            props.playerRef.current.seekTo(
               convertTimestringFormatToSeconds(timestring)
             );
           }}
@@ -241,7 +241,7 @@ function Comment(props) {
         <div className="comment-owner">{props.comment.username}</div>
       </div>
       <div className="comment-text">
-        {linkTimestampsInComment(props.comment, props.player)}
+        {linkTimestampsInComment(props.comment, props.playerRef)}
       </div>
       <div className="time-posted">
         {timeSince(props.comment.time_posted.seconds)}
@@ -249,7 +249,7 @@ function Comment(props) {
       <div className="SubComments">
         {subComments
           ? subComments.map((subComment) =>
-              renderComment(subComment, props.player)
+              renderComment(subComment, props.playerRef)
             )
           : []}
 
