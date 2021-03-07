@@ -1,13 +1,17 @@
 import React, { useContext } from "react";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import AuthContext from "../../contexts/AuthContext";
+import LectureContext from "../../contexts/LectureContext";
 import firebase from "firebase/app";
 
 import "./Comment.css";
 
 /**
  * Code here inspired from https://stackoverflow.com/questions/1322732/convert-seconds-to-hh-mm-ss-with-javascript.
- * @param {} totalSeconds
+ *
+ * Converts seconds into a timestring format HH:MM:SS and returns the timestring.
+ *
+ * @param totalSeconds is the number of seconds to convert into timestring format
  */
 function convertSecondsToTimestringFormat(totalSeconds) {
   let hours = Math.floor(totalSeconds / 3600);
@@ -66,11 +70,15 @@ function linkTimestampsInComment(comment, playerRef) {
     if (timestampStr !== undefined && timestampReg.test(timestampStr)) {
       parts[i] = (
         <span
-          onClick={() =>
+          onClick={() => {
             playerRef.current.seekTo(
               convertTimestringFormatToSeconds(timestampStr)
-            )
-          }
+            );
+            document.getElementsByClassName("CourseVideo")[0].scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+          }}
           style={{ cursor: "pointer", color: "lightblue" }}
           className="match"
           key={i}
@@ -223,17 +231,27 @@ function Comment(props) {
   );
 
   const authApi = useContext(AuthContext);
+  const lectureApi = useContext(LectureContext);
 
   const timestring = convertSecondsToTimestringFormat(props.comment.video_time);
+
+  if (!subComments) {
+    return <></>;
+  }
+
   return (
     <div className="Comment" id={props.comment.id}>
       <div className="comment-timestamp-and-owner">
         <div
           className="comment-timestamp"
           onClick={() => {
-            props.playerRef.current.seekTo(
+            lectureApi.currentRef.current.seekTo(
               convertTimestringFormatToSeconds(timestring)
             );
+            document.getElementsByClassName("CourseVideo")[0].scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
           }}
         >
           {timestring}
@@ -241,17 +259,15 @@ function Comment(props) {
         <div className="comment-owner">{props.comment.username}</div>
       </div>
       <div className="comment-text">
-        {linkTimestampsInComment(props.comment, props.playerRef)}
+        {linkTimestampsInComment(props.comment, lectureApi.currentRef)}
       </div>
       <div className="time-posted">
         {timeSince(props.comment.time_posted.seconds)}
       </div>
       <div className="SubComments">
-        {subComments
-          ? subComments.map((subComment) =>
-              renderComment(subComment, props.playerRef)
-            )
-          : []}
+        {subComments.map((subComment) =>
+          renderComment(subComment, lectureApi.currentRef)
+        )}
 
         <form
           className="subcomment-submission-form"

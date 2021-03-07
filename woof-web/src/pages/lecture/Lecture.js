@@ -48,8 +48,6 @@ function Lecture({ props }) {
   gathering.join(authApi.user.uid);
   gathering.onUpdated((count, users) => {
     if (count !== userCount) {
-      console.log(count, userCount);
-      console.log(users);
       updateUserCount(count);
     }
   });

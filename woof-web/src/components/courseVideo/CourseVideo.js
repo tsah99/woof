@@ -20,7 +20,8 @@ function CourseVideo(props) {
   let playerRef = useRef(null);
 
   useEffect(() => {
-    lectureApi.setCurrentRef(playerRef);
+    //don't set the lectureApi unless the controls are displayed
+    if (props.controls) lectureApi.setCurrentRef(playerRef);
   });
 
   return (
