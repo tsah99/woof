@@ -34,6 +34,7 @@ function LiveChat(props) {
       {liveChat
         ? liveChat.map((liveChatMessage, i) => (
             <LiveChatMessage
+              key={liveChatMessage.id}
               liveChatMessage={liveChatMessage}
               videoId={props.videoId}
               firebase={props.firebase}

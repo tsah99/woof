@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import AuthContext from "../../contexts/AuthContext";
 import firebase from "firebase/app";
 import "./CommentSubmissionForm.css";
+import LectureContext from "../../contexts/LectureContext";
 
 /**
  * The handler that's called when a user submits a comment.
@@ -15,7 +16,7 @@ import "./CommentSubmissionForm.css";
  * @param event is the event that is triggered upon hitting
  *            the "comment at" button
  */
-async function submitComment(event, courseId, videoId, authApi) {
+async function submitComment(event, courseId, videoId, authApi, lectureApi) {
   event.preventDefault();
 
   let comment = event.target[0].value;
@@ -30,12 +31,19 @@ async function submitComment(event, courseId, videoId, authApi) {
     .doc(videoId)
     .collection("comments");
 
+  let videoTime = null;
+
+  if (lectureApi.currentRef) {
+    videoTime = lectureApi.currentRef.current.getCurrentTime();
+  }
+
   await commentsRef.add({
     text: comment,
     username: authApi.user.email,
     time_posted: firebase.firestore.Timestamp.now(),
     video_id: videoId,
     course_id: courseId,
+    video_time: videoTime,
   });
 
   event.target[0].value = "";
@@ -52,6 +60,7 @@ async function submitComment(event, courseId, videoId, authApi) {
  */
 function CommentSubmissionForm(props) {
   const authApi = useContext(AuthContext);
+  const lectureApi = useContext(LectureContext);
 
   return (
     <div className="CommentSubmissionForm">
@@ -60,7 +69,13 @@ function CommentSubmissionForm(props) {
         noValidate
         autoComplete="off"
         onSubmit={(event) =>
-          submitComment(event, props.courseId, props.videoId, authApi)
+          submitComment(
+            event,
+            props.courseId,
+            props.videoId,
+            authApi,
+            lectureApi
+          )
         }
       >
         <input className="comment-field" placeholder="write a comment..." />
