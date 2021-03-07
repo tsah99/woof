@@ -1,0 +1,34 @@
+.about-page {
+  color: #ff00b8;
+  text-align: center;
+  font-family: MisterPixel;
+}
+
+.title {
+  font-size: 48px;
+}
+
+.subtitle {
+  margin-top: 42px;
+  font-size: 42px;
+  text-align: left;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.subtitle-symbols {
+  font-size: 28px;
+  text-align: left;
+  display: flex;
+  flex-direction: row;
+  padding-right: 12px;
+  margin-left: 24px;
+  font-family: MisterPixelTools;
+}
+
+.text-item {
+  margin-top: 18px;
+  font-size: 24px;
+  text-align: left;
+}

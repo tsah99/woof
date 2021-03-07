@@ -35,24 +35,27 @@ function CommentLog(props) {
   });
 
   return (
-    <div className="CommentLog">
+    <>
       <SearchBar courseId={props.courseId} videoId={props.videoId}></SearchBar>
-      {/* <InstantSearch searchClient={searchClient} indexName="woof">
+      <div className="CommentLog">
+        {/* <InstantSearch searchClient={searchClient} indexName="woof">
         <SearchBox />
         <Hits />
       </InstantSearch> */}
 
-      {comments
-        ? comments.map((comment) => (
-            <Comment
-              comment={comment}
-              courseId={props.courseId}
-              videoId={props.videoId}
-              player={props.player}
-            />
-          ))
-        : []}
-    </div>
+        {comments
+          ? comments.map((comment) => (
+              <Comment
+                key={comment.id}
+                comment={comment}
+                courseId={props.courseId}
+                videoId={props.videoId}
+                player={props.player}
+              />
+            ))
+          : []}
+      </div>
+    </>
   );
 }
 

@@ -10,6 +10,7 @@ import { useDocumentData } from "react-firebase-hooks/firestore";
 import { useParams } from "react-router-dom";
 import Gathering from "./Gathering.js";
 import "firebase/database";
+import { LectureProvider } from "../../contexts/LectureContext";
 import "./Lecture.css";
 import AuthContext from "../../contexts/AuthContext";
 /*
@@ -64,30 +65,33 @@ function Lecture({ props }) {
   }
 
   return (
-    <div className="Lecture">
-      <div className="row">
-        <div className="video">
-          <CourseVideo
-            controls={true}
-            updatePlayer={updatePlayer}
-            videoData={videoData}
-          />
-          <ReactionBar />
-        </div>
-        <div className="commentLogAndLiveChat">
-          <div className="commentLog">
-            <p className="commentLogTitle"> Comment Log </p>
-            <CommentLog courseId={courseId} videoId={videoId} player={player} />
-            <CommentSubmissionForm courseId={courseId} videoId={videoId} />
+    <LectureProvider>
+      <div className="Lecture">
+        <div className="row">
+          <div className="video">
+            <CourseVideo
+              controls={true}
+              updatePlayer={updatePlayer}
+              videoData={videoData}
+            />
+            <ReactionBar />
           </div>
-          <div className="liveChat">
-            <p className="liveChatTitle"> Live Chat ({userCount})</p>
-            <LiveChat courseId={courseId} videoId={videoId} player={player} />
-            <LiveChatMessageForm courseId={courseId} videoId={videoId} />
+          <div className="commentLogAndLiveChat">
+            <div className="commentLog">
+              <p className="commentLogTitle"> Comment Log </p>
+              <CommentLog courseId={courseId} videoId={videoId} player={player} />
+               <CommentSubmissionForm courseId={courseId} videoId={videoId} />
+             </div>
+             <div className="liveChat">
+               <p className="liveChatTitle"> Live Chat </p>
+               <p className="liveChatTitle"> Live Chat ({userCount})</p>
+               <LiveChat courseId={courseId} videoId={videoId} player={player} />
+               <LiveChatMessageForm courseId={courseId} videoId={videoId} />
+             </div>
           </div>
         </div>
       </div>
-    </div>
+    </LectureProvider>
   );
 }
 
