@@ -1,4 +1,4 @@
-import VideoProgressContext from "../../contexts/VideoProgressContext";
+import LectureContext from "../../contexts/LectureContext";
 import { useState, useContext } from "react";
 import "./CommentCard.css";
 
@@ -26,29 +26,29 @@ function CommentCard(props) {
     props.comments[0]
   );
 
-  let videoProgressApi = useContext(VideoProgressContext);
+  let lectureApi = useContext(LectureContext);
 
-  // for (let i = props.comments.length - 1; i >= 0; --i) {
-  //   if (
-  //     Math.floor(videoProgressApi.progress.playedSeconds) >=
-  //       Math.floor(props.comments[i].video_time) &&
-  //     props.comments[i].id !== mostRecentComment.id &&
-  //     Math.floor(props.comments[i].video_time) !==
-  //       Math.floor(mostRecentComment.video_time)
-  //   ) {
-  //     console.log(props.comments[i]);
-  //     updateMostRecentComment(props.comments[i]);
-  //     break;
-  //   }
+  for (let i = props.comments.length - 1; i >= 0; --i) {
+    if (
+      Math.floor(lectureApi.progress.playedSeconds) >=
+        Math.floor(props.comments[i].video_time) &&
+      props.comments[i].id !== mostRecentComment.id &&
+      Math.floor(props.comments[i].video_time) !==
+        Math.floor(mostRecentComment.video_time)
+    ) {
+      console.log(props.comments[i]);
+      updateMostRecentComment(props.comments[i]);
+      break;
+    }
 
-  //   if (
-  //     Math.floor(videoProgressApi.progress.playedSeconds) >=
-  //       Math.floor(props.comments[i].video_time) &&
-  //     props.comments[i].id === mostRecentComment.id
-  //   ) {
-  //     break;
-  //   }
-  // }
+    if (
+      Math.floor(lectureApi.progress.playedSeconds) >=
+        Math.floor(props.comments[i].video_time) &&
+      props.comments[i].id === mostRecentComment.id
+    ) {
+      break;
+    }
+  }
 
   let timestring = convertSecondsToTimestringFormat(
     mostRecentComment.video_time

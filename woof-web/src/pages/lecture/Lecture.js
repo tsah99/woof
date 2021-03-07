@@ -78,12 +78,15 @@ function Lecture({ props }) {
           playerRef={playerRef}
         />
 
-        {/* <div className="liveChat">
-              <p className="liveChatTitle"> Live Chat </p>
-              <p className="liveChatTitle"> Live Chat ({userCount})</p>
-              <LiveChat courseId={courseId} videoId={videoId} playerRef={playerRef} />
-              <LiveChatMessageForm courseId={courseId} videoId={videoId} />
-            </div> */}
+        <div className="liveChat">
+          <p className="liveChatTitle"> Live Chat ({userCount})</p>
+          <LiveChat
+            courseId={courseId}
+            videoId={videoId}
+            playerRef={playerRef}
+          />
+          <LiveChatMessageForm courseId={courseId} videoId={videoId} />
+        </div>
       </div>
     </LectureProvider>
   );

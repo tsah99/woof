@@ -17,14 +17,10 @@ import LectureContext from "../../contexts/LectureContext";
  */
 function CourseVideo(props) {
   const lectureApi = useContext(LectureContext);
-  let player = useRef(null);
+  let playerRef = useRef(null);
+
   useEffect(() => {
-    if (lectureApi) {
-      lectureApi.setCurrentRef(player);
-    }
-    if (props.updatePlayer) {
-      props.updatePlayer(player);
-    }
+    lectureApi.setCurrentRef(playerRef);
   });
 
   return (
@@ -45,10 +41,10 @@ function CourseVideo(props) {
           height={props.height ? props.height : "100%"}
           {...props}
           url={props.videoData.url}
-          ref={player}
-          // onProgress={(progress) => {
-          //   videoProgressApi.setProgress(progress);
-          // }}
+          ref={playerRef}
+          onProgress={(progress) => {
+            lectureApi.setProgress(progress);
+          }}
         />
       </div>
     </div>

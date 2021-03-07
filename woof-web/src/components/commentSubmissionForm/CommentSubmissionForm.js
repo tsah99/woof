@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import AuthContext from "../../contexts/AuthContext";
-import VideoProgressContext from "../../contexts/VideoProgressContext";
 import firebase from "firebase/app";
 import "./CommentSubmissionForm.css";
 import LectureContext from "../../contexts/LectureContext";
@@ -81,6 +80,10 @@ function CommentSubmissionForm(props) {
   const authApi = useContext(AuthContext);
   const lectureApi = useContext(LectureContext);
 
+  const timestring = convertSecondsToTimestringFormat(
+    lectureApi.progress.playedSeconds
+  );
+
   return (
     <div className="CommentSubmissionForm">
       <form
@@ -97,7 +100,7 @@ function CommentSubmissionForm(props) {
           )
         }
       >
-        <span className="timestamp"> {"timestring goes here"}</span>
+        <span className="timestamp"> {timestring} </span>
         <input
           name="comment-field"
           className="comment-field"
