@@ -6,6 +6,7 @@ import Lecture from "./pages/lecture/Lecture";
 import LandingPage from "./pages/landingPage/LandingPage";
 import LectureDashboard from "./pages/lectureDashboard/LectureDashboard";
 import NotAvailablePage from "./pages/notAvailablePage/NotAvailablePage";
+import About from "./pages/aboutPage/About";
 
 /**
  * Authenticated route
@@ -65,6 +66,7 @@ function Routes({ appProps }) {
         appProps={appProps}
       />
       <Route exact path="/" component={LandingPage} appProps={appProps} />
+      <Route exact path="/about" component={About} appProps={appProps} />
       <Route exact component={NotAvailablePage} appProps={appProps} />
     </Switch>
   );
