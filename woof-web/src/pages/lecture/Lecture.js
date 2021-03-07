@@ -79,15 +79,19 @@ function Lecture({ props }) {
           <div className="commentLogAndLiveChat">
             <div className="commentLog">
               <p className="commentLogTitle"> Comment Log </p>
-              <CommentLog courseId={courseId} videoId={videoId} player={player} />
-               <CommentSubmissionForm courseId={courseId} videoId={videoId} />
-             </div>
-             <div className="liveChat">
-               <p className="liveChatTitle"> Live Chat </p>
-               <p className="liveChatTitle"> Live Chat ({userCount})</p>
-               <LiveChat courseId={courseId} videoId={videoId} player={player} />
-               <LiveChatMessageForm courseId={courseId} videoId={videoId} />
-             </div>
+              <CommentLog
+                courseId={courseId}
+                videoId={videoId}
+                player={player}
+              />
+              <CommentSubmissionForm courseId={courseId} videoId={videoId} />
+            </div>
+            <div className="liveChat">
+              <p className="liveChatTitle"> Live Chat </p>
+              <p className="liveChatTitle"> Live Chat ({userCount})</p>
+              <LiveChat courseId={courseId} videoId={videoId} player={player} />
+              <LiveChatMessageForm courseId={courseId} videoId={videoId} />
+            </div>
           </div>
         </div>
       </div>

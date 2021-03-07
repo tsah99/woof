@@ -19,7 +19,9 @@ function CourseVideo(props) {
   const lectureApi = useContext(LectureContext);
   let player = useRef(null);
   useEffect(() => {
-    lectureApi.setCurrentRef(player);
+    if (lectureApi) {
+      lectureApi.setCurrentRef(player);
+    }
     if (props.updatePlayer) {
       props.updatePlayer(player);
     }
