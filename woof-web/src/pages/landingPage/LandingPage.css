@@ -1,0 +1,40 @@
+.landing-page {
+  color: #ff00b8;
+  text-align: center;
+  font-family: MisterPixel;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 48px;
+}
+
+.title-landing {
+  margin-top: 32px;
+  font-size: 72px;
+  text-align: center;
+}
+
+.subtitle-landing {
+  font-size: 24px;
+  line-height: 24px;
+  text-align: center;
+  color: #ffffff;
+  margin-top: 40px;
+}
+
+.signup-button {
+  margin-top: 86px;
+  font-size: 24px;
+  text-align: center;
+  border-style: solid;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 80px;
+  padding-right: 80px;
+  cursor: pointer;
+}
+
+.signup-button:hover {
+  background-color: #ff00b8;
+  color: black;
+}
