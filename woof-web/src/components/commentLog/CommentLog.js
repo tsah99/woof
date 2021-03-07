@@ -4,6 +4,7 @@ import SearchBar from "../searchBar/searchBar.js";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import "./CommentLog.css";
 import firebase from "firebase/app";
+import CommentCard from "../commentCard/CommentCard.js";
 
 /**
  * This component renders a list of comments to be displayed
@@ -26,29 +27,33 @@ function CommentLog(props) {
   });
 
   //used to scroll the view into the most recent comment
-  useEffect(() => {
-    let div = document.getElementsByClassName("CommentLog")[0];
-    div.scrollTop = div.scrollHeight;
-  });
+  // useEffect(() => {
+  //   let div = document.getElementsByClassName("CommentLog")[0];
+  //   div.scrollTop = div.scrollHeight;
+  // });
+
+  if (!comments) {
+    return <></>;
+  }
 
   return (
     <div className="CommentLog">
+      <CommentCard comments={comments} />
       <SearchBar courseId={props.courseId} videoId={props.videoId}></SearchBar>
       {/* <InstantSearch searchClient={searchClient} indexName="woof">
         <SearchBox />
         <Hits />
       </InstantSearch> */}
 
-      {comments
-        ? comments.map((comment) => (
-            <Comment
-              comment={comment}
-              courseId={props.courseId}
-              videoId={props.videoId}
-              player={props.player}
-            />
-          ))
-        : []}
+      {comments.map((comment) => (
+        <Comment
+          key={comment.id}
+          comment={comment}
+          courseId={props.courseId}
+          videoId={props.videoId}
+          player={props.player}
+        />
+      ))}
     </div>
   );
 }

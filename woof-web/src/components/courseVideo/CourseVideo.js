@@ -17,14 +17,13 @@ import "./CourseVideo.css";
  */
 const CourseVideo = forwardRef((props, ref) => {
   let videoProgressApi = useContext(VideoProgressContext);
+
   return (
-    <div
-      className="CourseVideo"
-      style={props.light ? {} : { width: "100%", height: "100%" }}
-    >
+    <div className="CourseVideo">
       <div
+        onResize={() => console.log("hello")}
         className="player-wrapper"
-        style={props.light ? {} : { position: "relative", paddingTop: "35.5%" }}
+        style={props.light ? {} : { position: "relative", paddingTop: "65vh" }}
       >
         <ReactPlayer
           className="react-player"

@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import { Grid } from "@material-ui/core";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import AuthContext from "../../contexts/AuthContext";
 import firebase from "firebase/app";
@@ -227,9 +226,18 @@ function Comment(props) {
 
   const timestring = convertSecondsToTimestringFormat(props.comment.video_time);
   return (
-    <div className="Comment">
+    <div className="Comment" id={props.comment.id}>
       <div className="comment-timestamp-and-owner">
-        <div className="comment-timestamp">{timestring}</div>
+        <div
+          className="comment-timestamp"
+          onClick={() => {
+            props.player.current.seekTo(
+              convertTimestringFormatToSeconds(timestring)
+            );
+          }}
+        >
+          {timestring}
+        </div>
         <div className="comment-owner">{props.comment.username}</div>
       </div>
       <div className="comment-text">
@@ -262,45 +270,6 @@ function Comment(props) {
           <input className="subcomment-field" placeholder="reply..." />
         </form>
       </div>
-      {/* <Grid container wrap="nowrap" spacing={2}>
-        <Grid justifyContent="left" item xs zeroMinWidth>
-          <h4 className="comment-owner">
-            {timestring + " " + props.comment.username}
-          </h4>
-          <div className="commentBorder">
-            <p className="comment-text">
-              {linkTimestampsInComment(props.comment, props.player)}
-            </p>
-
-            <p className="time-posted">
-              {timeSince(props.comment.time_posted.seconds)}
-            </p>
-            <div className="SubComments">
-              {subComments
-                ? subComments.map((subComment) =>
-                    renderComment(subComment, props.player)
-                  )
-                : []}
-              <form
-                className="subcomment-submission-form"
-                noValidate
-                autoComplete="off"
-                onSubmit={(event) =>
-                  submitSubComment(
-                    event,
-                    props.comment.id,
-                    props.courseId,
-                    props.videoId,
-                    authApi
-                  )
-                }
-              >
-                <input className="subcomment-field" placeholder="reply..." />
-              </form>
-            </div>
-          </div>
-        </Grid>
-      </Grid> */}
     </div>
   );
 }

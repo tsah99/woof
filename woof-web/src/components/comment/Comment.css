@@ -11,6 +11,7 @@
   margin-right: 5px;
   width: 40px;
   font-size: 12px;
+  cursor: pointer;
 }
 
 .comment-owner {
@@ -49,6 +50,7 @@ input.subcomment-field {
   background: transparent;
   border-bottom: 1px solid grey;
   width: 20%;
+  font-family: MisterPixel;
 }
 
 .SubComments {
