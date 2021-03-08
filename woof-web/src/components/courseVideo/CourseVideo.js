@@ -7,12 +7,16 @@ import LectureContext from "../../contexts/LectureContext";
 /**
  * This component houses the current video being displayed on
  * the web app.
+ *
+ * Note: A lot of styling is done inside this component instead of in a
+ * CSS file because we need to implement logic that differentiates what
+ * style should be imposed when this component is being used to watch the
+ * lecture video or just being used as a thumbnail.
+ *
  * @param props is an object that contains any properties that
  * ReactPlayer might take (see react-player documentation) and
  * it also contains
  *    videoData - information about the video to be played
- *    updatePlayer - [optional] a react hook from the parent component,
- *                   which updates the parent's player handle
  *
  */
 function CourseVideo(props) {

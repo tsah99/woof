@@ -56,7 +56,7 @@ function convertTimestringFormatToSeconds(timestring) {
  * to 3:33 and 33:22 respectively
  *
  * @param comment - a comment object as explained in the Comment component
- * @param player - a handle on the current video's player
+ * @param playerRef - a handle on the current video's player
  */
 function linkTimestampsInComment(comment, playerRef) {
   let timestampReg = new RegExp(
@@ -93,7 +93,7 @@ function linkTimestampsInComment(comment, playerRef) {
 
 /**
  * Converts a UNIX timestamp seconds into a "... time ago" format.
- *
+ * Code inspired from https://stackoverflow.com/questions/3177836/how-to-format-time-since-xxx-e-g-4-minutes-ago-similar-to-stack-exchange-site
  * @param seconds - UNIX timestamp seconds
  */
 function timeSince(seconds) {
@@ -170,29 +170,28 @@ function renderComment(comment, playerRef) {
  * The handler which submits a sub-comment.
  *
  * @param event - a handle on the on enter event
- * @param commentId - the parent comment's id
- * @param videoId - the current video's id
+ * @param comment - the comment object
  */
-async function submitSubComment(event, commentId, courseId, videoId, authApi) {
+async function submitSubComment(event, comment, authApi) {
   event.preventDefault();
 
-  let comment = event.target[0].value;
+  let commentText = event.target[0].value;
 
-  if (comment.length === 0) return;
+  if (commentText.length === 0) return;
 
   const firestore = firebase.firestore();
 
   const subCommentsRef = firestore
     .collection("classes")
-    .doc(courseId)
+    .doc(comment.course_id)
     .collection("videos")
-    .doc(videoId)
+    .doc(comment.video_id)
     .collection("comments")
-    .doc(commentId)
+    .doc(comment.id)
     .collection("subComments");
 
   await subCommentsRef.add({
-    text: comment,
+    text: commentText,
     username: authApi.user.email,
     time_posted: firebase.firestore.Timestamp.now(),
   });
@@ -209,16 +208,17 @@ async function submitSubComment(event, commentId, courseId, videoId, authApi) {
  *        text - a string containing the comment's text
  *        time_posted - an object containing these properties
  *          seconds - time posted in UNIX timestamp seconds
- *      videoId - a string containing the current video's id
- *      player - a handle on the player for the current video
+ *        video_id - id of video comment belongs to
+ *        course_id - id of course comment belongs to
+ *        video_time - the timestamp at which this comment was made in the video, in seconds
  */
 function Comment(props) {
   const firestore = firebase.firestore();
   const subCommentsRef = firestore
     .collection("classes")
-    .doc(props.courseId)
+    .doc(props.comment.course_id)
     .collection("videos")
-    .doc(props.videoId)
+    .doc(props.comment.video_id)
     .collection("comments")
     .doc(props.comment.id)
     .collection("subComments");
@@ -273,15 +273,7 @@ function Comment(props) {
           className="subcomment-submission-form"
           noValidate
           autoComplete="off"
-          onSubmit={(event) =>
-            submitSubComment(
-              event,
-              props.comment.id,
-              props.courseId,
-              props.videoId,
-              authApi
-            )
-          }
+          onSubmit={(event) => submitSubComment(event, props.comment, authApi)}
         >
           <input className="subcomment-field" placeholder="reply..." />
         </form>

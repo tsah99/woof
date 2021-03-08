@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import AuthContext from "../../contexts/AuthContext";
 import firebase from "firebase/app";
 import "./CommentSubmissionForm.css";
@@ -6,7 +6,10 @@ import LectureContext from "../../contexts/LectureContext";
 
 /**
  * Code here inspired from https://stackoverflow.com/questions/1322732/convert-seconds-to-hh-mm-ss-with-javascript.
- * @param {} totalSeconds
+ *
+ * Converts seconds into a timestring format HH:MM:SS.
+ *
+ * @param totalSeconds
  */
 function convertSecondsToTimestringFormat(totalSeconds) {
   let hours = Math.floor(totalSeconds / 3600);
@@ -22,6 +25,7 @@ function convertSecondsToTimestringFormat(totalSeconds) {
 
   return timestring;
 }
+
 /**
  * The handler that's called when a user submits a comment.
  * Makes a call to the Firebase API and posts a comment to
@@ -33,6 +37,10 @@ function convertSecondsToTimestringFormat(totalSeconds) {
  *
  * @param event is the event that is triggered upon hitting
  *            the "comment at" button
+ * @param courseId - id of the course
+ * @param videoId - id of the video
+ * @param authApi - authentication api retrieved from AuthContext
+ * @param lectureApi - lecture api retrieved from LectureContext
  */
 async function submitComment(event, courseId, videoId, authApi, lectureApi) {
   event.preventDefault();
@@ -72,14 +80,14 @@ async function submitComment(event, courseId, videoId, authApi, lectureApi) {
  * to submit a comment to Firebase.
  *
  * @param props is an object that has the properties
- *    firebase - a reference to the firebase API
  *    videoId - the videoId of the current YouTube video
- *    seconds - the current number of seconds the video being played is at
+ *    courseId - id of the current course
  */
 function CommentSubmissionForm(props) {
   const authApi = useContext(AuthContext);
   const lectureApi = useContext(LectureContext);
 
+  useEffect(() => {});
   const timestring = convertSecondsToTimestringFormat(
     lectureApi.progress.playedSeconds
   );

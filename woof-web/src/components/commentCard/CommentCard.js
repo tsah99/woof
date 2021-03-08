@@ -4,7 +4,10 @@ import "./CommentCard.css";
 
 /**
  * Code here inspired from https://stackoverflow.com/questions/1322732/convert-seconds-to-hh-mm-ss-with-javascript.
- * @param {} totalSeconds
+ *
+ * Converts seconds to timestring format HH:MM:SS.
+ *
+ * @param totalSeconds
  */
 function convertSecondsToTimestringFormat(totalSeconds) {
   let hours = Math.floor(totalSeconds / 3600);
@@ -21,22 +24,26 @@ function convertSecondsToTimestringFormat(totalSeconds) {
   return timestring;
 }
 
+/**
+ * Displays a comment card, showing the most recent comment.
+ * @param props an object that contains
+ *          comments - a list of comments to display
+ */
 function CommentCard(props) {
-  let [mostRecentComment, updateMostRecentComment] = useState(
-    props.comments[0]
-  );
+  let [mostRecentComment, updateMostRecentComment] = useState(null);
 
   let lectureApi = useContext(LectureContext);
 
+  //logic that determines the most recent card to display
   for (let i = props.comments.length - 1; i >= 0; --i) {
     if (
-      Math.floor(lectureApi.progress.playedSeconds) >=
+      !mostRecentComment ||
+      (Math.floor(lectureApi.progress.playedSeconds) >=
         Math.floor(props.comments[i].video_time) &&
-      props.comments[i].id !== mostRecentComment.id &&
-      Math.floor(props.comments[i].video_time) !==
-        Math.floor(mostRecentComment.video_time)
+        props.comments[i].id !== mostRecentComment.id &&
+        Math.floor(props.comments[i].video_time) !==
+          Math.floor(mostRecentComment.video_time))
     ) {
-      console.log(props.comments[i]);
       updateMostRecentComment(props.comments[i]);
       break;
     }
@@ -48,6 +55,10 @@ function CommentCard(props) {
     ) {
       break;
     }
+  }
+
+  if (!mostRecentComment) {
+    return <></>;
   }
 
   let timestring = convertSecondsToTimestringFormat(

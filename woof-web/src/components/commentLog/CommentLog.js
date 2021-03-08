@@ -11,7 +11,7 @@ import CommentCard from "../commentCard/CommentCard.js";
  * on the web page for the current video.
  * @param props is an object that contains these properties
  *    videoId - id of the YouTube video for which we should get comments from
- *    player - a handle on the player for the video being played
+ *    courseId - id of the current course
  */
 function CommentLog(props) {
   const firestore = firebase.firestore();
@@ -36,13 +36,7 @@ function CommentLog(props) {
       <SearchBar courseId={props.courseId} videoId={props.videoId}></SearchBar>
 
       {comments.map((comment) => (
-        <Comment
-          key={comment.id}
-          comment={comment}
-          courseId={props.courseId}
-          videoId={props.videoId}
-          playerRef={props.playerRef}
-        />
+        <Comment key={comment.id} comment={comment} />
       ))}
     </div>
   );
