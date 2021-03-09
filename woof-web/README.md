@@ -2,7 +2,7 @@
 
 ## Set up
 
-Begin by cloning this repo onto your local machine. First, run `npm install` in the directory which your app was installed into. Onced cloned and after npm is finished installing the necessary dependencies, you can get started by running `npm start` to run the app in development mode (see below in "Availible Scripts" section for more details).
+Begin by cloning this repo onto your local machine. First, run `npm install` in the directory which your app was installed into. Onced cloned and after npm is finished installing the necessary dependencies, you can get started by running `npm start` to run the app in development mode (see below in "Availible Scripts" section for more details). Open [http://localhost:3000](http://localhost:3000) to view it in the browser (Chrome recommended). In Chrome, press Option + ⌘ + J (on macOS) or Shift + CTRL + J (on Windows/Linux) to open up developer to see prints and errors.
 
 ## Code, style, structure
 
