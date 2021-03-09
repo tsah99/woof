@@ -2,7 +2,7 @@
 
 ## Set up
 
-Begin by cloning this repo onto your local machine. Onced cloned, you can get started by running `npm start` to run the app in development mode (see below in "Availible Scripts" section for more details).
+Begin by cloning this repo onto your local machine. First, run `npm install` in the directory which your app was installed into. Onced cloned and after npm is finished installing the necessary dependencies, you can get started by running `npm start` to run the app in development mode (see below in "Availible Scripts" section for more details).
 
 ## Firebase
 
