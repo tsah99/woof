@@ -4,6 +4,18 @@
 
 Begin by cloning this repo onto your local machine. First, run `npm install` in the directory which your app was installed into. Onced cloned and after npm is finished installing the necessary dependencies, you can get started by running `npm start` to run the app in development mode (see below in "Availible Scripts" section for more details).
 
+## Code, style, structure
+
+This app was created using [React](https://reactjs.org). We soley use functional components and React Hooks, to learn more click [here](https://reactjs.org/docs/hooks-intro.html). We recommend developing using [VSCode](https://code.visualstudio.com) with the [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) extension installed to keep proper and consistent styling. 
+
+We control routes in the `Routes.js` page using [React Router](https://reactrouter.com). When adding a new page, ensure that it is added into this file. Here you will find the components for Auth and NonAuth pages and the controller for these. 
+
+Our tree works as follows: App -> Route -> Pages -> Components. Each page and component has its own CSS styling file. For access to our [contexts](https://reactjs.org/docs/context.html), go to the `contexts` folder where you will find example skeletons which you can use for creating your own context (or adding to an existing one). 
+
+If you would like to import your own font (not from a webfont source like google fonts), place it in the `fonts` folder.
+
+For any utilities/libraries which you would like to create for this application, we have provided a `libs` folder.
+
 ## Firebase
 
 When you first clone this repository, our personal Firebase credentials are in place. If you wish to connect your own Firebase instance, replace our credentials with yours in the `src/firebaseConfig.js` file. For more info on where to find these configurations, click [here](https://support.google.com/firebase/answer/7015592?hl=en).
