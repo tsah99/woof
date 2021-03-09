@@ -1,10 +1,22 @@
-# Getting Started with Create React App
+# Hi! Welcome to WOOF
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Set up
+
+Begin by cloning this repo onto your local machine. Onced cloned, you can get started by running `npm start` to run the app in development mode (see below in "Availible Scripts" section for more details).
+
+## Firebase
+
+When you first clone this repository, our personal Firebase credentials are in place. If you wish to connect your own Firebase instance, replace our credentials with yours in the `src/firebaseConfig.js` file. For more info on where to find these configurations, click [here](https://support.google.com/firebase/answer/7015592?hl=en).
+
+## Deployment
+
+After cloning your repository, you may deploy this app using the process of your choice ([AWS Amplify](https://aws.amazon.com/amplify/), [Heroku](https://www.heroku.com), etc). We recommend using AWS for best performance, and connecting your Main branch to AWS to keep your deployed site up to the most recent version. To learn more about this, read [here](https://docs.aws.amazon.com/amplify/latest/userguide/getting-started.html). Or, you can manually build your application and drop in your build folder to one of the above services by running `npm run build`.
+
+# React specific commands
 
 ## Available Scripts
 
-In the project directory, you can run:
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). Thus, the following commands are all availible to run:
 
 ### `npm start`
 
