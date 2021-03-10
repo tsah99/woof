@@ -33,6 +33,7 @@ function CommentLog(props) {
   return (
     <div className="CommentLog">
       <CommentCard comments={comments} />
+      <div className="CommentLog-title">Course Log</div>
       <SearchBar courseId={props.courseId} videoId={props.videoId}></SearchBar>
 
       {comments.map((comment) => (

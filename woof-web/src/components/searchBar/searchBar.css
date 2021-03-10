@@ -8,6 +8,7 @@
 
 .ais-SearchBox {
   color: red;
+  margin-bottom: 3%;
 }
 
 .ais-SearchBox-form {
@@ -22,7 +23,7 @@
 .ais-SearchBox-input {
   padding-right: 40%;
   background-color: #1f1f1f;
-  font-size: 18px;
+  font-size: 16px;
   color: white;
   padding-top: 1%;
   padding-bottom: 1%;
