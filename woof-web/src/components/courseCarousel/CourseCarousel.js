@@ -125,6 +125,7 @@ function CourseCarousel(props) {
               light={true}
               videoData={videoData}
             ></CourseVideo>
+            <div className="video-title">{videoData.title}</div>
           </div>
         ))}
       </Carousel>

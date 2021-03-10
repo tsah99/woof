@@ -11,11 +11,14 @@ const LectureContext = React.createContext();
 
 export function LectureProvider(props) {
   const [currentRef, _setCurrentRef] = useState(null);
+  const [progress, _setProgress] = useState({});
   const setCurrentRef = useCallback(_setCurrentRef, []);
+  const setProgress = useCallback(_setProgress, []);
 
   const getMemoizedSetters = useMemo(() => {
     return {
       setCurrentRef,
+      setProgress,
     };
   }, []);
 
@@ -23,6 +26,7 @@ export function LectureProvider(props) {
   const getApi = () => {
     return {
       currentRef,
+      progress,
       ...getMemoizedSetters,
     };
   };

@@ -29,8 +29,7 @@ var OnlineCount = require("react-count").OnlineCount;
  */
 
 function Lecture({ props }) {
-  let [player, updatePlayer] = useState(null);
-
+  let playerRef = React.createRef();
   let { courseId, videoId } = useParams();
 
   let [userCount, updateUserCount] = useState(0);
@@ -49,8 +48,6 @@ function Lecture({ props }) {
   gathering.join(authApi.user.uid);
   gathering.onUpdated((count, users) => {
     if (count !== userCount) {
-      console.log(count, userCount);
-      console.log(users);
       updateUserCount(count);
     }
   });
@@ -61,38 +58,32 @@ function Lecture({ props }) {
   }, []);
   // check if data exists before rendering
   if (!videoData) {
-    return <div> </div>;
+    return <></>;
   }
 
   return (
     <LectureProvider>
       <div className="Lecture">
-        <div className="row">
-          <div className="video">
-            <CourseVideo
-              controls={true}
-              updatePlayer={updatePlayer}
-              videoData={videoData}
-            />
-            <ReactionBar />
-          </div>
-          <div className="commentLogAndLiveChat">
-            <div className="commentLog">
-              <p className="commentLogTitle"> Comment Log </p>
-              <CommentLog
-                courseId={courseId}
-                videoId={videoId}
-                player={player}
-              />
-              <CommentSubmissionForm courseId={courseId} videoId={videoId} />
-            </div>
-            <div className="liveChat">
-              <p className="liveChatTitle"> Live Chat </p>
-              <p className="liveChatTitle"> Live Chat ({userCount})</p>
-              <LiveChat courseId={courseId} videoId={videoId} player={player} />
-              <LiveChatMessageForm courseId={courseId} videoId={videoId} />
-            </div>
-          </div>
+        <CourseVideo
+          controls={true}
+          //updatePlayer={updatePlayer}
+          videoData={videoData}
+        />
+        <CommentSubmissionForm courseId={courseId} videoId={videoId} />
+        <CommentLog
+          courseId={courseId}
+          videoId={videoId}
+          playerRef={playerRef}
+        />
+
+        <div className="liveChat">
+          <p className="liveChatTitle"> Live Chat ({userCount})</p>
+          <LiveChat
+            courseId={courseId}
+            videoId={videoId}
+            playerRef={playerRef}
+          />
+          <LiveChatMessageForm courseId={courseId} videoId={videoId} />
         </div>
       </div>
     </LectureProvider>

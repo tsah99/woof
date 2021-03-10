@@ -1,8 +1,30 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import AuthContext from "../../contexts/AuthContext";
 import firebase from "firebase/app";
 import "./CommentSubmissionForm.css";
 import LectureContext from "../../contexts/LectureContext";
+
+/**
+ * Code here inspired from https://stackoverflow.com/questions/1322732/convert-seconds-to-hh-mm-ss-with-javascript.
+ *
+ * Converts seconds into a timestring format HH:MM:SS.
+ *
+ * @param totalSeconds
+ */
+function convertSecondsToTimestringFormat(totalSeconds) {
+  let hours = Math.floor(totalSeconds / 3600);
+  totalSeconds %= 3600;
+  let minutes = Math.floor(totalSeconds / 60);
+  let seconds = Math.floor(totalSeconds % 60);
+
+  let timestring = "";
+
+  if (hours) timestring += String(hours).padStart(2, "0") + ":";
+  timestring += String(minutes).padStart(2, "0") + ":";
+  timestring += String(seconds).padStart(2, "0");
+
+  return timestring;
+}
 
 /**
  * The handler that's called when a user submits a comment.
@@ -15,6 +37,10 @@ import LectureContext from "../../contexts/LectureContext";
  *
  * @param event is the event that is triggered upon hitting
  *            the "comment at" button
+ * @param courseId - id of the course
+ * @param videoId - id of the video
+ * @param authApi - authentication api retrieved from AuthContext
+ * @param lectureApi - lecture api retrieved from LectureContext
  */
 async function submitComment(event, courseId, videoId, authApi, lectureApi) {
   event.preventDefault();
@@ -54,13 +80,17 @@ async function submitComment(event, courseId, videoId, authApi, lectureApi) {
  * to submit a comment to Firebase.
  *
  * @param props is an object that has the properties
- *    firebase - a reference to the firebase API
  *    videoId - the videoId of the current YouTube video
- *    seconds - the current number of seconds the video being played is at
+ *    courseId - id of the current course
  */
 function CommentSubmissionForm(props) {
   const authApi = useContext(AuthContext);
   const lectureApi = useContext(LectureContext);
+
+  useEffect(() => {});
+  const timestring = convertSecondsToTimestringFormat(
+    lectureApi.progress.playedSeconds
+  );
 
   return (
     <div className="CommentSubmissionForm">
@@ -78,8 +108,17 @@ function CommentSubmissionForm(props) {
           )
         }
       >
-        <input className="comment-field" placeholder="write a comment..." />
-        <input className="post-comment-button" type="submit" value="comment" />
+        <span className="timestamp"> {timestring} </span>
+        <input
+          name="comment-field"
+          className="comment-field"
+          placeholder="write a comment..."
+        />
+        <input
+          className="post-comment-button"
+          type="submit"
+          value={"comment"}
+        />
       </form>
     </div>
   );

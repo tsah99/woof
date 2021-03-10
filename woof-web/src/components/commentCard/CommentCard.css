@@ -1,0 +1,29 @@
+.CommentCard {
+  background-color: #1f1f1f;
+  border: solid #aeacff 1px;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+
+.comment-card-timestamp-and-owner {
+  display: flex;
+}
+.comment-card-timestamp {
+  color: white;
+  margin-right: 5px;
+  font-size: 14px;
+}
+
+.comment-card-owner {
+  margin-bottom: 0px;
+  font-size: 12px;
+  color: #b9b9b9;
+}
+
+.comment-card-text {
+  color: white;
+  font-size: 14px;
+  word-wrap: break-word;
+}

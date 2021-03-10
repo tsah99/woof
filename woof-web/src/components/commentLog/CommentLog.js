@@ -1,16 +1,17 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Comment from "../comment/Comment.js";
 import SearchBar from "../searchBar/searchBar.js";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import "./CommentLog.css";
 import firebase from "firebase/app";
+import CommentCard from "../commentCard/CommentCard.js";
 
 /**
  * This component renders a list of comments to be displayed
  * on the web page for the current video.
  * @param props is an object that contains these properties
  *    videoId - id of the YouTube video for which we should get comments from
- *    player - a handle on the player for the video being played
+ *    courseId - id of the current course
  */
 function CommentLog(props) {
   const firestore = firebase.firestore();
@@ -21,41 +22,23 @@ function CommentLog(props) {
     .doc(props.videoId)
     .collection("comments");
 
-  let [comments] = useCollectionData(
-    commentsRef.orderBy("time_posted", "asc"),
-    {
-      idField: "id",
-    }
-  );
-
-  //used to scroll the view into the most recent comment
-  useEffect(() => {
-    let div = document.getElementsByClassName("CommentLog")[0];
-    div.scrollTop = div.scrollHeight;
+  let [comments] = useCollectionData(commentsRef.orderBy("video_time", "asc"), {
+    idField: "id",
   });
 
-  return (
-    <>
-      <SearchBar courseId={props.courseId} videoId={props.videoId}></SearchBar>
-      <div className="CommentLog">
-        {/* <InstantSearch searchClient={searchClient} indexName="woof">
-        <SearchBox />
-        <Hits />
-      </InstantSearch> */}
+  if (!comments) {
+    return <></>;
+  }
 
-        {comments
-          ? comments.map((comment) => (
-              <Comment
-                key={comment.id}
-                comment={comment}
-                courseId={props.courseId}
-                videoId={props.videoId}
-                player={props.player}
-              />
-            ))
-          : []}
-      </div>
-    </>
+  return (
+    <div className="CommentLog">
+      <CommentCard comments={comments} />
+      <SearchBar courseId={props.courseId} videoId={props.videoId}></SearchBar>
+
+      {comments.map((comment) => (
+        <Comment key={comment.id} comment={comment} />
+      ))}
+    </div>
   );
 }
 
