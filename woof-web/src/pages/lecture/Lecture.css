@@ -48,4 +48,8 @@
 .liveChat {
   border: 2px solid white;
   border-radius: 5px;
+  width: 20%;
+  position: fixed;
+  bottom: 0;
+  right: 0;
 }

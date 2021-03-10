@@ -16,6 +16,7 @@ form.comment-submission-form {
 
 input.comment-field {
   font-family: MisterPixel;
+  font-size: 18px;
   background-color: #1f1f1f;
   border: 2px solid #ff00b8;
   outline: none;
@@ -23,6 +24,7 @@ input.comment-field {
   margin-right: 3px;
   flex-grow: 1;
   min-width: 0;
+  padding-left: 2%;
 }
 
 input.post-comment-button {
@@ -35,6 +37,7 @@ input.post-comment-button {
   outline: none;
   color: #ff00b8;
   width: 100px;
+  font-size: 18px;
 }
 
 span.timestamp {
@@ -43,4 +46,6 @@ span.timestamp {
   color: white;
   padding-left: 5px;
   padding-right: 5px;
+  font-size: 18px;
+  padding: 1%;
 }

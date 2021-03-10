@@ -112,12 +112,12 @@ function CommentSubmissionForm(props) {
         <input
           name="comment-field"
           className="comment-field"
-          placeholder="write a comment..."
+          placeholder="Write a comment..."
         />
         <input
           className="post-comment-button"
           type="submit"
-          value={"comment"}
+          value={"Comment"}
         />
       </form>
     </div>
