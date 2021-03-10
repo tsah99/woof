@@ -1,4 +1,6 @@
 .Comment {
+  padding-top: 0.5%;
+  padding-bottom: 0.5%;
 }
 
 .comment-timestamp-and-owner {
@@ -10,35 +12,39 @@
   color: #ff882e;
   margin-right: 5px;
   width: 40px;
-  font-size: 12px;
+  font-size: 16px;
   cursor: pointer;
 }
 
 .comment-owner {
-  font-size: 12px;
+  font-size: 16px;
   color: #b9b9b9;
 }
 
 .comment-text {
   color: white;
-  font-size: 14px;
+  font-size: 18px;
   word-wrap: break-word;
+  padding-top: 1%;
+  padding-bottom: 1%;
 }
 
 .subcomment-owner {
   margin-bottom: 0px;
-  font-size: 12px;
+  font-size: 16px;
   color: #b9b9b9;
 }
 
 .subcomment-text {
   color: white;
-  font-size: 14px;
+  font-size: 18px;
   word-wrap: break-word;
+  padding-top: 1%;
+  padding-bottom: 1%;
 }
 
 .time-posted {
-  font-size: 10px;
+  font-size: 14px;
   color: #b9b9b9;
   margin-bottom: 10px;
 }
@@ -48,9 +54,10 @@ input.subcomment-field {
   border: 0;
   outline: 0;
   background: transparent;
-  border-bottom: 1px solid grey;
+  /* border-bottom: 1px solid grey; */
   width: 20%;
   font-family: MisterPixel;
+  font-size: 16px;
 }
 
 .SubComments {

@@ -52,17 +52,6 @@ const Hit = ({ hit }) => (
   //   </p>
 );
 
-// const SearchBar = (videoId) => (
-//   <InstantSearch searchClient={searchClient} indexName={videoId}>
-//     <SearchBox />
-//     {/* <CustomStateResults> */}
-//     <Results></Results>
-//     {/* <Hits hitComponent={Hit} /> */}
-//     {/* </CustomStateResults> */}
-//   </InstantSearch>
-// );
-// export default SearchBar;
-
 function SearchBar(props) {
   return (
     <InstantSearch
