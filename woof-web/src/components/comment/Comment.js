@@ -275,7 +275,7 @@ function Comment(props) {
           autoComplete="off"
           onSubmit={(event) => submitSubComment(event, props.comment, authApi)}
         >
-          <input className="subcomment-field" placeholder="reply..." />
+          <input className="subcomment-field" placeholder="Reply..." />
         </form>
       </div>
     </div>
