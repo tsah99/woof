@@ -181,18 +181,21 @@ async function submitSubComment(event, commentId, courseId, videoId, authApi) {
   const parentCommentInfo = await parentCommentRef.get();
   const parentCommentId = parentCommentInfo.data().user_id;
 
-  const notifsRef = firestore
-    .collection("users")
-    .doc(parentCommentId)
-    .collection("notifications");
+  // Only add the notification if the subComment user is DIFFERENT than the logged-in user.
+  if (parentCommentId !== authApi.user.uid) {
+    const notifsRef = firestore
+      .collection("users")
+      .doc(parentCommentId)
+      .collection("notifications");
 
-  await notifsRef.add({
-    comment_reply: comment,
-    comment_reply_uid: authApi.user.uid,
-    courseId: courseId,
-    videoId: videoId,
-    time_replied: time_posted,
-  });
+    await notifsRef.add({
+      comment_reply: comment,
+      comment_reply_uid: authApi.user.uid,
+      courseId: courseId,
+      videoId: videoId,
+      time_replied: time_posted,
+    });
+  }
 
   // Reset target value to empty string
   event.target[0].value = "";
