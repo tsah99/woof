@@ -2,13 +2,11 @@
 }
 
 .row {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
 }
 
 .video {
-  margin-right: 20px;
+  width: 100%;
+  height: 100%;
 }
 .commentLogAndLiveChat {
   flex-grow: 1;
@@ -50,4 +48,8 @@
 .liveChat {
   border: 2px solid white;
   border-radius: 5px;
+  width: 20%;
+  position: fixed;
+  bottom: 0;
+  right: 0;
 }

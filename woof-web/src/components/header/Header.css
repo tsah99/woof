@@ -5,6 +5,8 @@
   justify-content: space-between;
   align-items: center;
   font-family: MisterPixel;
+  margin-left: 10%;
+  margin-right: 10%;
 }
 
 .logo {
@@ -16,6 +18,7 @@
   text-align: left;
   margin-top: 25px;
   margin-bottom: 25px;
+  cursor: pointer;
 }
 
 .sign-in-out,
@@ -61,8 +64,11 @@
 .notifications-box {
   width: 20%;
   height: 50%;
+  /* position: absolute;
+  top: 109px; */
   display: flex;
   flex-direction: column;
+  z-index: -1;
 }
 
 .notifications-icon:hover {
@@ -91,6 +97,7 @@
   line-height: 24px;
   letter-spacing: 0em;
   text-align: center;
+  cursor: pointer;
 }
 
 .symbols-lightdark-auth {
@@ -102,4 +109,5 @@
   margin-left: 32px;
   letter-spacing: 0em;
   text-align: center;
+  cursor: pointer;
 }

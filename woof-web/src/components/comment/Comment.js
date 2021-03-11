@@ -1,10 +1,32 @@
 import React, { useContext } from "react";
-import { Grid } from "@material-ui/core";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import AuthContext from "../../contexts/AuthContext";
+import LectureContext from "../../contexts/LectureContext";
 import firebase from "firebase/app";
 
 import "./Comment.css";
+
+/**
+ * Code here inspired from https://stackoverflow.com/questions/1322732/convert-seconds-to-hh-mm-ss-with-javascript.
+ *
+ * Converts seconds into a timestring format HH:MM:SS and returns the timestring.
+ *
+ * @param totalSeconds is the number of seconds to convert into timestring format
+ */
+function convertSecondsToTimestringFormat(totalSeconds) {
+  let hours = Math.floor(totalSeconds / 3600);
+  totalSeconds %= 3600;
+  let minutes = Math.floor(totalSeconds / 60);
+  let seconds = Math.floor(totalSeconds % 60);
+
+  let timestring = "";
+
+  if (hours) timestring += String(hours).padStart(2, "0") + ":";
+  timestring += String(minutes).padStart(2, "0") + ":";
+  timestring += String(seconds).padStart(2, "0");
+
+  return timestring;
+}
 
 /**
  * Converts a timestring into seconds and returns it.
@@ -34,9 +56,9 @@ function convertTimestringFormatToSeconds(timestring) {
  * to 3:33 and 33:22 respectively
  *
  * @param comment - a comment object as explained in the Comment component
- * @param player - a handle on the current video's player
+ * @param playerRef - a handle on the current video's player
  */
-function linkTimestampsInComment(comment, player) {
+function linkTimestampsInComment(comment, playerRef) {
   let timestampReg = new RegExp(
     /([0-9]?[0-9]:[0-5][0-9]:[0-5][0-9])|([0-5]?[0-9]:[0-5][0-9])/
   );
@@ -48,12 +70,16 @@ function linkTimestampsInComment(comment, player) {
     if (timestampStr !== undefined && timestampReg.test(timestampStr)) {
       parts[i] = (
         <span
-          onClick={() =>
-            player.current.seekTo(
+          onClick={() => {
+            playerRef.current.seekTo(
               convertTimestringFormatToSeconds(timestampStr)
-            )
-          }
-          style={{ cursor: "pointer", color: "#2d3edc" }}
+            );
+            document.getElementsByClassName("CourseVideo")[0].scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+          }}
+          style={{ cursor: "pointer", color: "lightblue" }}
           className="match"
           key={i}
         >
@@ -67,7 +93,7 @@ function linkTimestampsInComment(comment, player) {
 
 /**
  * Converts a UNIX timestamp seconds into a "... time ago" format.
- *
+ * Code inspired from https://stackoverflow.com/questions/3177836/how-to-format-time-since-xxx-e-g-4-minutes-ago-similar-to-stack-exchange-site
  * @param seconds - UNIX timestamp seconds
  */
 function timeSince(seconds) {
@@ -124,15 +150,19 @@ function timeSince(seconds) {
 /**
  * Renders a singular sub-comment.
  * @param comment - a comment object, as explained in Comment component
- * @param player - a handle on the current video's player
+ * @param playerRef - a handle on the current video's player
  */
-function renderComment(comment, player) {
+function renderComment(comment, playerRef) {
   return (
-    <Grid justifyContent="left" item xs zeroMinWidth>
-      <h4 className="comment-owner">{comment.username}</h4>
-      <p className="comment-text">{linkTimestampsInComment(comment, player)}</p>
-      <p className="time-posted">{timeSince(comment.time_posted.seconds)}</p>
-    </Grid>
+    <div>
+      <div className="subcomment-owner">{comment.username}</div>
+      <div className="subcomment-text">
+        {linkTimestampsInComment(comment, playerRef)}
+      </div>
+      <div className="time-posted">
+        {timeSince(comment.time_posted.seconds)}
+      </div>
+    </div>
   );
 }
 
@@ -140,32 +170,30 @@ function renderComment(comment, player) {
  * The handler which submits a sub-comment.
  *
  * @param event - a handle on the on enter event
- * @param commentId - the parent comment's id
- * @param videoId - the current video's id
+ * @param comment - the comment object
  */
-async function submitSubComment(event, commentId, courseId, videoId, authApi) {
+async function submitSubComment(event, comment, authApi) {
   event.preventDefault();
 
-  // Add the subcomment to firestore
-  let comment = event.target[0].value;
+  let commentText = event.target[0].value;
 
-  if (comment.length === 0) return;
+  if (commentText.length === 0) return;
 
   const firestore = firebase.firestore();
 
   const subCommentsRef = firestore
     .collection("classes")
-    .doc(courseId)
+    .doc(comment.course_id)
     .collection("videos")
-    .doc(videoId)
+    .doc(comment.video_id)
     .collection("comments")
-    .doc(commentId)
+    .doc(comment.id)
     .collection("subComments");
 
   const time_posted = firebase.firestore.Timestamp.now();
 
   await subCommentsRef.add({
-    text: comment,
+    text: commentText,
     username: authApi.user.email,
     time_posted: time_posted,
   });
@@ -173,11 +201,11 @@ async function submitSubComment(event, commentId, courseId, videoId, authApi) {
   // Add the subcomment (comment reply) to parent comment owner's "notifications" firestore collection
   const parentCommentRef = firestore
     .collection("classes")
-    .doc(courseId)
+    .doc(comment.course_id)
     .collection("videos")
-    .doc(videoId)
+    .doc(comment.video_id)
     .collection("comments")
-    .doc(commentId);
+    .doc(comment.id);
   const parentCommentInfo = await parentCommentRef.get();
   const parentCommentId = parentCommentInfo.data().user_id;
 
@@ -189,10 +217,10 @@ async function submitSubComment(event, commentId, courseId, videoId, authApi) {
       .collection("notifications");
 
     await notifsRef.add({
-      comment_reply: comment,
+      comment_reply: commentText,
       comment_reply_uid: authApi.user.uid,
-      courseId: courseId,
-      videoId: videoId,
+      courseId: comment.course_id,
+      videoId: comment.video_id,
       time_replied: time_posted,
     });
   }
@@ -210,16 +238,17 @@ async function submitSubComment(event, commentId, courseId, videoId, authApi) {
  *        text - a string containing the comment's text
  *        time_posted - an object containing these properties
  *          seconds - time posted in UNIX timestamp seconds
- *      videoId - a string containing the current video's id
- *      player - a handle on the player for the current video
+ *        video_id - id of video comment belongs to
+ *        course_id - id of course comment belongs to
+ *        video_time - the timestamp at which this comment was made in the video, in seconds
  */
 function Comment(props) {
   const firestore = firebase.firestore();
   const subCommentsRef = firestore
     .collection("classes")
-    .doc(props.courseId)
+    .doc(props.comment.course_id)
     .collection("videos")
-    .doc(props.videoId)
+    .doc(props.comment.video_id)
     .collection("comments")
     .doc(props.comment.id)
     .collection("subComments");
@@ -232,46 +261,53 @@ function Comment(props) {
   );
 
   const authApi = useContext(AuthContext);
+  const lectureApi = useContext(LectureContext);
+
+  const timestring = convertSecondsToTimestringFormat(props.comment.video_time);
+
+  if (!subComments) {
+    return <></>;
+  }
 
   return (
-    <div className="Comment">
-      <Grid container wrap="nowrap" spacing={2}>
-        <Grid justifyContent="left" item xs zeroMinWidth>
-          <h4 className="comment-owner">{props.comment.username}</h4>
-          <div className="commentBorder">
-            <p className="comment-text">
-              {linkTimestampsInComment(props.comment, props.player)}
-            </p>
+    <div className="Comment" id={props.comment.id}>
+      <div className="comment-timestamp-and-owner">
+        <div
+          className="comment-timestamp"
+          onClick={() => {
+            lectureApi.currentRef.current.seekTo(
+              convertTimestringFormatToSeconds(timestring)
+            );
+            document.getElementsByClassName("CourseVideo")[0].scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+          }}
+        >
+          {timestring}
+        </div>
+        <div className="comment-owner">{props.comment.username}</div>
+      </div>
+      <div className="comment-text">
+        {linkTimestampsInComment(props.comment, lectureApi.currentRef)}
+      </div>
+      <div className="time-posted">
+        {timeSince(props.comment.time_posted.seconds)}
+      </div>
+      <div className="SubComments">
+        {subComments.map((subComment) =>
+          renderComment(subComment, lectureApi.currentRef)
+        )}
 
-            <p className="time-posted">
-              {timeSince(props.comment.time_posted.seconds)}
-            </p>
-            <div className="SubComments">
-              {subComments
-                ? subComments.map((subComment) =>
-                    renderComment(subComment, props.player)
-                  )
-                : []}
-              <form
-                className="subcomment-submission-form"
-                noValidate
-                autoComplete="off"
-                onSubmit={(event) =>
-                  submitSubComment(
-                    event,
-                    props.comment.id,
-                    props.courseId,
-                    props.videoId,
-                    authApi
-                  )
-                }
-              >
-                <input className="subcomment-field" placeholder="reply..." />
-              </form>
-            </div>
-          </div>
-        </Grid>
-      </Grid>
+        <form
+          className="subcomment-submission-form"
+          noValidate
+          autoComplete="off"
+          onSubmit={(event) => submitSubComment(event, props.comment, authApi)}
+        >
+          <input className="subcomment-field" placeholder="Reply..." />
+        </form>
+      </div>
     </div>
   );
 }

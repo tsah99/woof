@@ -1,6 +1,11 @@
 .CommentLog {
-  padding-left: 10px;
-  height: 48vh;
-  overflow-y: scroll;
-  overflow-x: hidden;
+  padding-left: 10%;
+  padding-right: 10%;
+}
+
+.CommentLog-title {
+  color: white;
+  font-size: 24px;
+  padding-top: 1%;
+  padding-bottom: 1%;
 }

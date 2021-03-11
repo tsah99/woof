@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import CourseVideo from "../../components/courseVideo/CourseVideo.js";
 import CommentSubmissionForm from "../../components/commentSubmissionForm/CommentSubmissionForm.js";
 import CommentLog from "../../components/commentLog/CommentLog.js";
@@ -8,8 +8,14 @@ import LiveChat from "../../components/liveChat/LiveChat.js";
 import firebase from "firebase/app";
 import { useDocumentData } from "react-firebase-hooks/firestore";
 import { useParams } from "react-router-dom";
-
+import Gathering from "./Gathering.js";
+import "firebase/database";
+import { LectureProvider } from "../../contexts/LectureContext";
 import "./Lecture.css";
+import AuthContext from "../../contexts/AuthContext";
+/*
+var OnlineCount = require("react-count").OnlineCount;
+*/
 
 /**
  * This component houses the lecture watching page of our app.
@@ -21,11 +27,15 @@ import "./Lecture.css";
  * It maintains the state
  *  player - a handle on the player for the video being played
  */
-function Lecture({ props }) {
-  let [player, updatePlayer] = useState(null);
 
+function Lecture({ props }) {
+  let playerRef = React.createRef();
   let { courseId, videoId } = useParams();
 
+  let [userCount, updateUserCount] = useState(0);
+  let [gathering, updateGathering] = useState(
+    new Gathering(firebase.database(), videoId)
+  );
   const videoRef = firebase
     .firestore()
     .collection("classes")
@@ -34,37 +44,49 @@ function Lecture({ props }) {
     .doc(videoId);
 
   const [videoData] = useDocumentData(videoRef);
-
+  let authApi = useContext(AuthContext);
+  gathering.join(authApi.user.uid);
+  gathering.onUpdated((count, users) => {
+    if (count !== userCount) {
+      updateUserCount(count);
+    }
+  });
+  useEffect(() => {
+    return () => {
+      gathering.leave();
+    };
+  }, []);
   // check if data exists before rendering
   if (!videoData) {
-    return <div> </div>;
+    return <></>;
   }
 
   return (
-    <div className="Lecture">
-      <div className="row">
-        <div className="video">
-          <CourseVideo
-            controls={true}
-            updatePlayer={updatePlayer}
-            videoData={videoData}
+    <LectureProvider>
+      <div className="Lecture">
+        <CourseVideo
+          controls={true}
+          //updatePlayer={updatePlayer}
+          videoData={videoData}
+        />
+        <CommentSubmissionForm courseId={courseId} videoId={videoId} />
+        <CommentLog
+          courseId={courseId}
+          videoId={videoId}
+          playerRef={playerRef}
+        />
+
+        <div className="liveChat">
+          <p className="liveChatTitle"> Live Chat ({userCount})</p>
+          <LiveChat
+            courseId={courseId}
+            videoId={videoId}
+            playerRef={playerRef}
           />
-          <ReactionBar />
-        </div>
-        <div className="commentLogAndLiveChat">
-          <div className="commentLog">
-            <p className="commentLogTitle"> Comment Log </p>
-            <CommentLog courseId={courseId} videoId={videoId} player={player} />
-            <CommentSubmissionForm courseId={courseId} videoId={videoId} />
-          </div>
-          <div className="liveChat">
-            <p className="liveChatTitle"> Live Chat </p>
-            <LiveChat courseId={courseId} videoId={videoId} player={player} />
-            <LiveChatMessageForm courseId={courseId} videoId={videoId} />
-          </div>
+          <LiveChatMessageForm courseId={courseId} videoId={videoId} />
         </div>
       </div>
-    </div>
+    </LectureProvider>
   );
 }
 

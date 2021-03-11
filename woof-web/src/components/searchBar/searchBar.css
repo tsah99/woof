@@ -5,3 +5,36 @@
 .SearchState {
   color: white;
 }
+
+.ais-SearchBox {
+  color: red;
+  margin-bottom: 3%;
+}
+
+.ais-SearchBox-form {
+  color: red;
+}
+
+.ais-SearchBox-submit {
+  color: red;
+  padding: 1%;
+}
+
+.ais-SearchBox-input {
+  padding-right: 40%;
+  background-color: #1f1f1f;
+  font-size: 16px;
+  color: white;
+  padding-top: 1%;
+  padding-bottom: 1%;
+  padding-left: 1%;
+}
+
+.ais-SearchBox-reset {
+  color: red;
+}
+
+.ais-SearchBox-submitIcon {
+  width: 15px;
+  height: 15px;
+}

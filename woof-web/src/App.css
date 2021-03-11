@@ -1,13 +1,9 @@
 .App-dark {
   background-color: black;
-  padding-left: 5%;
-  padding-right: 5%;
   font-family: MisterPixel;
 }
 
 .App-light {
   background-color: thistle;
-  padding-left: 5%;
-  padding-right: 5%;
   font-family: MisterPixel;
 }

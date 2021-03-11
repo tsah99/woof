@@ -1,27 +1,51 @@
 .CommentSubmissionForm {
   margin-bottom: 0px;
   background-color: #2c2c2c;
-  padding: 15px;
+  display: flex;
+  padding-left: 10%;
+  padding-right: 10%;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+form.comment-submission-form {
+  display: flex;
+  width: 80%;
+  flex-grow: 1;
 }
 
 input.comment-field {
-  background-color: #484848;
-  border: 2px solid#2ef2ff;
-  color: white;
-  overflow: hidden;
+  font-family: MisterPixel;
+  font-size: 18px;
+  background-color: #1f1f1f;
+  border: 2px solid #ff00b8;
   outline: none;
-  width: 75%;
-  font-size: 12px;
-  border-radius: 5px;
+  color: white;
+  margin-right: 3px;
+  flex-grow: 1;
+  min-width: 0;
+  padding-left: 2%;
 }
 
 input.post-comment-button {
+  font-family: MisterPixel;
   cursor: pointer;
   overflow: hidden;
   outline: none;
-  background-color: #2ef2ff;
-  border: 2px solid #2ef2ff;
-  font-size: 12px;
-  border-radius: 5px;
-  width: 20%;
+  background-color: #1f1f1f;
+  border: 2px solid #ff00b8;
+  outline: none;
+  color: #ff00b8;
+  width: 100px;
+  font-size: 18px;
+}
+
+span.timestamp {
+  background-color: #1f1f1f;
+  border: 2px solid #ff00b8;
+  color: white;
+  padding-left: 5px;
+  padding-right: 5px;
+  font-size: 18px;
+  padding: 1%;
 }
