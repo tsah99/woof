@@ -6,7 +6,7 @@
 
 .UserAndText {
   border-radius: 10px;
-  background-color: #449238;
+  /* background-color: #449238; */
   flex-grow: 2;
   flex-shrink: 2;
   flex-basis: 2;

@@ -141,9 +141,9 @@ function LiveChatMessage(props) {
             <p className="message-text">
               {linkTimestampsInComment(props.liveChatMessage, props.player)}
             </p>
-            <p className="message-time">
+            {/* <p className="message-time">
               {timeSince(props.liveChatMessage.time_sent.seconds)}
-            </p>
+            </p> */}
           </div>
         </Grid>
       </Grid>
