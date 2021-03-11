@@ -14,13 +14,21 @@
   cursor: pointer;
 }
 
+.comment-card-title-container {
+  display: flex;
+  flex-direction: row;
+  height: 30px;
+}
+
 .comment-card-timestamp-and-owner {
   display: flex;
+  margin-left: 24px;
 }
 .comment-card-timestamp {
   color: white;
   margin-right: 5px;
   font-size: 14px;
+  margin-top: 2px;
 }
 
 .comment-card-owner {
@@ -29,8 +37,15 @@
   color: #b9b9b9;
 }
 
+.comment-card-title {
+  color: white;
+  font-size: 14px;
+}
+
 .comment-card-text {
   color: white;
   font-size: 16px;
   word-wrap: break-word;
+  margin-top: 1%;
+  /* margin-bottom: 1%; */
 }
