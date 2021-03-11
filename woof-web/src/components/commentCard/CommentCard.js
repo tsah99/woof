@@ -78,10 +78,16 @@ function CommentCard(props) {
       className="CommentCard"
       onClick={() => scrollCommentIntoView(mostRecentComment)}
     >
-      <div className="comment-card-timestamp-and-owner">
-        <div className="comment-card-timestamp">{timestring}</div>
-        <div className="comment-card-owner">{mostRecentComment.username}</div>
+      <div className="comment-card-title-container">
+        <div className="comment-card-title">
+          <ion-icon name="star"></ion-icon> Current Comment
+        </div>
+        <div className="comment-card-timestamp-and-owner">
+          <div className="comment-card-timestamp">{timestring}</div>
+          <div className="comment-card-owner">{mostRecentComment.username}</div>
+        </div>
       </div>
+
       <div className="comment-card-text">{mostRecentComment.text}</div>
     </div>
   );

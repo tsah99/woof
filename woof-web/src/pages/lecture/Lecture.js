@@ -27,8 +27,19 @@ var OnlineCount = require("react-count").OnlineCount;
  * It maintains the state
  *  player - a handle on the player for the video being played
  */
+// toggle for livecchat
+function useToggle(initialValue = false) {
+  const [value, setValue] = React.useState(initialValue);
+
+  const toggle = React.useCallback(() => {
+    setValue((v) => !v);
+  }, []);
+  return [value, toggle];
+}
 
 function Lecture({ props }) {
+  const [isOn, toggleIsOn] = useToggle();
+
   let playerRef = React.createRef();
   let { courseId, videoId } = useParams();
 
@@ -77,13 +88,29 @@ function Lecture({ props }) {
         />
 
         <div className="liveChat">
-          <p className="liveChatTitle"> Live Chat ({userCount})</p>
-          <LiveChat
-            courseId={courseId}
-            videoId={videoId}
-            playerRef={playerRef}
-          />
-          <LiveChatMessageForm courseId={courseId} videoId={videoId} />
+          <div className="liveChatTitleContainer">
+            <p className="liveChatTitle"> Live Chat ({userCount})</p>
+            <button className="livechatToggle" onClick={toggleIsOn}>
+              {isOn ? (
+                <ion-icon name="close-outline" size="large"></ion-icon>
+              ) : (
+                <ion-icon name="caret-up" size="large"></ion-icon>
+              )}
+            </button>
+          </div>
+
+          {isOn ? (
+            <React.Fragment>
+              <LiveChat
+                courseId={courseId}
+                videoId={videoId}
+                playerRef={playerRef}
+              />
+              <LiveChatMessageForm courseId={courseId} videoId={videoId} />
+            </React.Fragment>
+          ) : (
+            <div></div>
+          )}
         </div>
       </div>
     </LectureProvider>

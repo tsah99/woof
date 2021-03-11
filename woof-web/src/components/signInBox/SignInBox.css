@@ -34,6 +34,8 @@
 
 .SignInBox-InputTable {
   display: table;
+  font-size: 16px;
+  padding: 10px;
 }
 
 .SignInBox-InputRow {
@@ -49,6 +51,8 @@
   display: inline-block;
   background-color: #ff00b8;
   margin: 5px 0 8px 0;
+  height: 36px;
+  width: 84px;
 }
 
 .SignInBox-SignInButton:hover {

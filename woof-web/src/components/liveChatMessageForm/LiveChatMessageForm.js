@@ -2,6 +2,13 @@ import React, { useContext } from "react";
 import AuthContext from "../../contexts/AuthContext";
 import firebase from "firebase/app";
 import "./LiveChatMessageForm.css";
+import useSound from "use-sound";
+import aol from "../../sounds/aol.mp3";
+
+const BoopButton = () => {
+  const [play] = useSound(aol);
+  return <div onClick={play}>Test me </div>;
+};
 
 async function sendMessage(event, courseId, videoId, authApi) {
   event.preventDefault();
@@ -29,6 +36,7 @@ async function sendMessage(event, courseId, videoId, authApi) {
 
 function LiveChatMessageForm(props) {
   const authApi = useContext(AuthContext);
+
   return (
     <div className="LiveChatMessageForm">
       <form
@@ -39,8 +47,8 @@ function LiveChatMessageForm(props) {
           sendMessage(event, props.courseId, props.videoId, authApi)
         }
       >
-        <input className="chat-field" placeholder="chat in live..." />
-        <input className="send-chat-button" type="submit" value="send" />
+        <input className="chat-field" placeholder="Send a message..." />
+        <input className="send-chat-button" type="submit" value="Send" />
       </form>
     </div>
   );
