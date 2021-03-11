@@ -91,7 +91,11 @@ function Lecture({ props }) {
           <div className="liveChatTitleContainer">
             <p className="liveChatTitle"> Live Chat ({userCount})</p>
             <button className="livechatToggle" onClick={toggleIsOn}>
-              <ion-icon name="close-outline" size="large"></ion-icon>
+              {isOn ? (
+                <ion-icon name="close-outline" size="large"></ion-icon>
+              ) : (
+                <ion-icon name="caret-up" size="large"></ion-icon>
+              )}
             </button>
           </div>
 
