@@ -39,8 +39,8 @@ function LiveChatMessageForm(props) {
           sendMessage(event, props.courseId, props.videoId, authApi)
         }
       >
-        <input className="chat-field" placeholder="chat in live..." />
-        <input className="send-chat-button" type="submit" value="send" />
+        <input className="chat-field" placeholder="Send a message..." />
+        <input className="send-chat-button" type="submit" value="Send" />
       </form>
     </div>
   );
