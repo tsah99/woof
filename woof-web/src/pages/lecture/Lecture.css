@@ -32,7 +32,13 @@
 }
 
 .liveChatTitle {
+  /* display: flex; */
+  margin-right: 45%;
+}
+
+.liveChatTitleContainer {
   display: flex;
+  flex-direction: row;
   background-color: #2c2c2c;
   justify-content: center;
   align-items: center;
@@ -52,4 +58,18 @@
   position: fixed;
   bottom: 0;
   right: 0;
+}
+
+.close-outline {
+  right: 0;
+}
+
+.livechatToggle {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
 }

@@ -10,7 +10,7 @@
 
 .title-landing {
   margin-top: 32px;
-  font-size: 72px;
+  font-size: 96px;
   text-align: center;
 }
 
@@ -37,4 +37,14 @@
 .signup-button:hover {
   background-color: #ff00b8;
   color: black;
+}
+
+.left-border {
+  position: absolute;
+  left: 0;
+}
+
+.right-border {
+  position: absolute;
+  right: 0;
 }

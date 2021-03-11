@@ -14,6 +14,8 @@ input.chat-field {
   width: 75%;
   font-size: 12px;
   border-radius: 5px;
+  color: white;
+  height: 24px;
 }
 
 input.send-chat-button {
@@ -25,4 +27,6 @@ input.send-chat-button {
   font-size: 12px;
   border-radius: 5px;
   width: 20%;
+  color: white;
+  height: 30px;
 }
