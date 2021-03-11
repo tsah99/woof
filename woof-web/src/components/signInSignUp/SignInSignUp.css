@@ -25,7 +25,7 @@
 
 .SignInSignUp-Clickables {
   display: flex;
-  width: inherit;
+  width: 200px;
   margin: 20px 0;
   flex-direction: row;
   justify-content: space-between;
@@ -35,6 +35,8 @@
   font-family: MisterPixel;
   display: inline-block;
   background-color: #ff00b8;
+  width: 72px;
+  height: 36px;
 }
 
 .SignInSignUp-Button:hover {
