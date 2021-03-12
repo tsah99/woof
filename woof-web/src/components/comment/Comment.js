@@ -211,6 +211,14 @@ async function submitSubComment(event, comment, authApi) {
 
   // Only add the notification if the subComment user is DIFFERENT than the logged-in user.
   if (parentCommentId !== authApi.user.uid) {
+    const userRef = firestore.collection("users").doc(authApi.user.uid);
+    const courseRef = firestore.collection("classes").doc(comment.course_id);
+    const videoRef = courseRef.collection("videos").doc(comment.video_id);
+
+    let userInfo = await (await userRef.get()).data();
+    let courseInfo = await (await courseRef.get()).data();
+    let videoInfo = await (await videoRef.get()).data();
+
     const notifsRef = firestore
       .collection("users")
       .doc(parentCommentId)
@@ -219,8 +227,12 @@ async function submitSubComment(event, comment, authApi) {
     await notifsRef.add({
       comment_reply: commentText,
       comment_reply_uid: authApi.user.uid,
-      courseId: comment.course_id,
-      videoId: comment.video_id,
+      comment_reply_username: userInfo.username,
+      course_id: comment.course_id,
+      course_code: courseInfo.course_code,
+      course_title: courseInfo.course_title,
+      video_id: comment.video_id,
+      video_name: videoInfo.title,
       time_replied: time_posted,
     });
   }

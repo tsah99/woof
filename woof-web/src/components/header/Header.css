@@ -9,7 +9,7 @@
   margin-right: 10%;
 }
 
-.logo {
+.header-logo {
   font-size: 36px;
   font-style: normal;
   font-weight: 700;
@@ -21,9 +21,9 @@
   cursor: pointer;
 }
 
-.sign-in-out,
-.home,
-.dashboard {
+.header-sign-in-out,
+.header-home,
+.header-dashboard {
   font-size: 18px;
   font-style: normal;
   font-weight: 700;
@@ -35,12 +35,12 @@
   margin-left: auto;
 }
 
-.home,
-.dashboard {
+.header-home,
+.header-dashboard {
   padding-left: 20px;
 }
 
-.symbols-auth {
+.header-symbols-auth {
   font-family: MisterPixelTools;
   font-size: 24px;
   font-style: normal;
@@ -51,7 +51,7 @@
   margin-right: 48px;
 }
 
-.symbols {
+.header-symbols {
   font-family: MisterPixelTools;
   font-size: 24px;
   font-style: normal;
@@ -61,35 +61,47 @@
   text-align: center;
 }
 
-.notifications-box {
+.header-notifications-menu {
   width: 20%;
   height: 50%;
-  /* position: absolute;
-  top: 109px; */
-  display: flex;
-  flex-direction: column;
-  z-index: -1;
+  position: absolute;
+  top: 109px;
+  background-color: #2c2c2c;
+
+  word-wrap: break-word;
+  overflow-y: scroll;
+  z-index: 999;
 }
 
-.notifications-icon:hover {
+.header-notifications-menu-dark {
+  border: 3px solid white;
+  border-top: 0px;
+}
+
+.header-notifications-menu-light {
+  border: 3px solid black;
+  border-top: 0px;
+}
+
+.header-notifications-icon:hover {
   cursor: pointer;
 }
 
-.notifications-list {
+.header-notifications-list {
   position: relative;
 }
 
-.right-side {
+.header-right-side {
   display: flex;
   flex-direction: row;
 }
 
-.left-side {
+.header-left-side {
   display: flex;
   margin-right: auto;
 }
 
-.symbols-lightdark-nonauth {
+.header-symbols-lightdark-nonauth {
   font-family: MisterPixelTools;
   font-size: 24px;
   font-style: normal;
@@ -100,7 +112,7 @@
   cursor: pointer;
 }
 
-.symbols-lightdark-auth {
+.header-symbols-lightdark-auth {
   font-family: MisterPixelTools;
   font-size: 24px;
   font-style: normal;
