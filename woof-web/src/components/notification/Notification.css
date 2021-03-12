@@ -12,7 +12,7 @@
   margin-bottom: 5px;
   font-size: 12px;
   padding-bottom: 2px;
-  border-bottom: 1px solid white;
+  border-bottom: 1px dashed #b9b9b9;
 }
 
 .notification-course-details {
