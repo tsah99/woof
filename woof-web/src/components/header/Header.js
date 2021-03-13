@@ -62,17 +62,11 @@ function AuthHeader() {
   const systemApi = useContext(SystemContext);
   const history = useHistory();
   const [displayNotifications, toggleDisplayNotifications] = useState(false);
-  const [notificationsList, setNotificationsList] = useState([]);
-  const [individualNotifications, setIndividualNotifications] = useState([]);
 
   function logOut() {
     firebase.auth().signOut();
     authApi.setUser();
     history.push("/signin");
-  }
-
-  function goHome() {
-    history.push("/");
   }
 
   function goLectureDashboard() {
@@ -91,9 +85,6 @@ function AuthHeader() {
     <div className="header">
       <div className="header-logo">WOOF</div>
       <div className="header-left-side">
-        {/* <div className="header-home" onClick={goHome}>
-          HOME
-        </div> */}
         <div className="header-home" onClick={goLectureDashboard}>
           DASHBOARD
         </div>

@@ -1,7 +1,5 @@
 import React, { useContext, useState } from "react";
-import AuthContext from "../../contexts/AuthContext";
 import SystemContext from "../../contexts/SystemContext";
-import firebase from "firebase/app";
 import "./Notification.css";
 
 /**
@@ -60,6 +58,33 @@ function timeSince(seconds) {
   }
 }
 
+/**
+ * This function is responsible for deleting the notification data from the
+ * firestore after an onClick to do so.
+ * @param props is an object, as described in the Notification component
+ *              description.
+ */
+function deleteNotification(props) {
+  props.notifsRef.doc(props.notification.id).delete();
+}
+
+/**
+ * This component is responsible for rendering an individual notification within
+ * the NotificationsMenu.
+ * @param props is an object that contains these properties:
+ *    notifsRef - a firestore reference to props.notification
+ *    notification - an object containing information about each individual notification,
+ *                   with the following fields:
+ *                      - comment_reply
+ *                      - comment_reply_uid
+ *                      - comment_reply_username
+ *                      - coures_code
+ *                      - course_id
+ *                      - course_title
+ *                      - time_replied
+ *                      - video_id
+ *                      - video_name
+ */
 function Notification(props) {
   const systemApi = useContext(SystemContext);
 
@@ -71,14 +96,18 @@ function Notification(props) {
   let videoName = props.notification.video_name;
   let timeReplied = timeSince(props.notification.time_replied.seconds);
 
-  let lightStyle = systemApi.darkMode ? "-dark" : "-light";
-
   return (
     <div className={`notification-container`}>
       <div className="notification-nodisplay">
         {JSON.stringify(props.notification)}
       </div>
       <div className={`notification-header`}>
+        <div
+          className="notification-clear"
+          onClick={() => deleteNotification(props)}
+        >
+          X
+        </div>
         <div className="notification-course-details">{`${courseCode}: ${courseTitle}`}</div>
         <div className="notification-video-details">{`${videoName}`}</div>
       </div>
