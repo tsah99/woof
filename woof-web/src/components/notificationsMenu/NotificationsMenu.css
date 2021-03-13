@@ -1,7 +1,25 @@
-.notificationsMenu-header {
+.notificationsmenu-header {
   text-align: center;
-  padding: 8px;
+  padding: 8px 8px 12px 8px;
   font-size: 24px;
   border-bottom: 2px solid white;
   background-color: #b9b9b9;
+}
+
+.notificationsmenu-clearall {
+  position: relative;
+  float: right;
+  color: #2c2c2c;
+  font-size: 10px;
+}
+
+.notificationsmenu-clearall:hover {
+  cursor: pointer;
+  color: red;
+}
+
+.notificationsmenu-empty {
+  margin: 10px auto;
+  text-align: center;
+  color: #b9b9b9;
 }
