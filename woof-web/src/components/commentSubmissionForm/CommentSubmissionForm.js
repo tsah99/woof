@@ -66,6 +66,7 @@ async function submitComment(event, courseId, videoId, authApi, lectureApi) {
   await commentsRef.add({
     text: comment,
     username: authApi.user.email,
+    user_id: authApi.user.uid,
     time_posted: firebase.firestore.Timestamp.now(),
     video_id: videoId,
     course_id: courseId,

@@ -1,0 +1,52 @@
+.notification-container {
+  padding: 8px 8px 8px 8px;
+  border-bottom: 2px solid #aeacff;
+}
+
+.notification-container:last-child {
+  border-bottom: 0px;
+}
+
+.notification-header {
+  text-align: center;
+  margin-bottom: 5px;
+  font-size: 12px;
+  padding-bottom: 2px;
+  border-bottom: 1px dashed #b9b9b9;
+}
+
+.notification-course-details {
+  color: #ff00b8;
+}
+
+.notification-video-details {
+  color: white;
+}
+
+.notification-description {
+  color: #b9b9b9;
+  font-size: 14px;
+}
+
+.notification-username {
+  color: #ff00b8;
+}
+
+.notification-detail {
+  padding: 5px 0 5px 0;
+  color: white;
+}
+
+.notification-time {
+  padding-top: 2px;
+  font-size: 12px;
+  color: #b9b9b9;
+}
+
+.notification-nodisplay {
+  position: absolute;
+  visibility: hidden;
+  overflow: hidden;
+  height: 0px;
+  width: 0px;
+}

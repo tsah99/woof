@@ -1,9 +1,11 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import "./Header.css";
 import firebase from "firebase/app";
 import AuthContext from "../../contexts/AuthContext";
 import SystemContext from "../../contexts/SystemContext";
+import NotificationsMenu from "../notificationsMenu/NotificationsMenu.js";
+import { clearConfigCache } from "prettier";
 
 /**
  * Non auth header
@@ -28,18 +30,20 @@ function NonAuthHeader() {
 
   return (
     <div className="header">
-      <div className="logo" onClick={goLanding}>
+      <div className="header-logo" onClick={goLanding}>
         WOOF
       </div>
-      <div className="home" onClick={goAbout}>
+      <div className="header-home" onClick={goAbout}>
         ABOUT
       </div>
-      <div className="symbols">123450124254112345012425411234501242541</div>
-      <div className="sign-in-out" onClick={logIn}>
+      <div className="header-symbols">
+        123450124254112345012425411234501242541
+      </div>
+      <div className="header-sign-in-out" onClick={logIn}>
         SIGN IN / UP
       </div>
       <div
-        className="symbols-lightdark-nonauth"
+        className="header-symbols-lightdark-nonauth"
         onClick={() => systemApi.setDarkMode(!systemApi.darkMode)}
       >
         {systemApi.darkMode ? "K" : "X"}
@@ -57,6 +61,9 @@ function AuthHeader() {
   const authApi = useContext(AuthContext);
   const systemApi = useContext(SystemContext);
   const history = useHistory();
+  const [displayNotifications, toggleDisplayNotifications] = useState(false);
+  const [notificationsList, setNotificationsList] = useState([]);
+  const [individualNotifications, setIndividualNotifications] = useState([]);
 
   function logOut() {
     firebase.auth().signOut();
@@ -72,24 +79,42 @@ function AuthHeader() {
     history.push("/lectureDashboard");
   }
 
+  function handleNotificationClick() {
+    toggleDisplayNotifications(!displayNotifications);
+  }
+
+  let notificationMenuStyle = systemApi.darkMode
+    ? "header-notifications-menu header-notifications-menu-dark"
+    : "header-notifications-menu header-notifications-menu-light";
+
   return (
     <div className="header">
-      <div className="logo">WOOF</div>
-      <div className="left-side">
-        {/* <div className="home" onClick={goHome}>
+      <div className="header-logo">WOOF</div>
+      <div className="header-left-side">
+        {/* <div className="header-home" onClick={goHome}>
           HOME
         </div> */}
-        <div className="home" onClick={goLectureDashboard}>
+        <div className="header-home" onClick={goLectureDashboard}>
           DASHBOARD
         </div>
       </div>
-      <div className="right-side">
-        <div className="symbols-auth">T</div>
-        <div className="sign-in-out" onClick={logOut}>
+      <div className="header-right-side">
+        <div
+          className="header-symbols-auth header-notifications-icon"
+          onClick={handleNotificationClick}
+        >
+          T
+        </div>
+        {displayNotifications ? (
+          <div className={notificationMenuStyle}>{<NotificationsMenu />}</div>
+        ) : (
+          <></>
+        )}
+        <div className="header-sign-in-out" onClick={logOut}>
           LOG OUT
         </div>
         <div
-          className="symbols-lightdark-auth"
+          className="header-symbols-lightdark-auth"
           onClick={() => systemApi.setDarkMode(!systemApi.darkMode)}
         >
           {systemApi.darkMode ? "K" : "X"}
