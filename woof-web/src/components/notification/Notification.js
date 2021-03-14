@@ -101,6 +101,7 @@ function Notification(props) {
   let lightStyle = systemApi.darkMode ? "-dark" : "-light";
 
   let history = useHistory();
+
   return (
     <div
       className={`notification-container`}
