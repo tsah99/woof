@@ -231,6 +231,7 @@ async function submitSubComment(event, comment, authApi) {
       course_id: comment.course_id,
       course_code: courseInfo.course_code,
       course_title: courseInfo.course_title,
+      parent_comment_id: comment.id,
       video_id: comment.video_id,
       video_name: videoInfo.title,
       time_replied: time_posted,

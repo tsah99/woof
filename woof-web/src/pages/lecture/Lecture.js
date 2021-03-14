@@ -7,7 +7,7 @@ import LiveChatMessageForm from "../../components/liveChatMessageForm/LiveChatMe
 import LiveChat from "../../components/liveChat/LiveChat.js";
 import firebase from "firebase/app";
 import { useDocumentData } from "react-firebase-hooks/firestore";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import Gathering from "./Gathering.js";
 import "firebase/database";
 import { LectureProvider } from "../../contexts/LectureContext";
@@ -62,7 +62,22 @@ function Lecture({ props }) {
       updateUserCount(count);
     }
   });
+
+  let location = useLocation();
+
   useEffect(() => {
+    let commentId = location.hash;
+
+    if (commentId) {
+      commentId = commentId.substr(1);
+    }
+
+    let commentElement = document.getElementById(commentId);
+    commentElement.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+    //logic to scroll to comment if clicking from notifications
     return () => {
       gathering.leave();
     };
