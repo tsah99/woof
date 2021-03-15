@@ -2,7 +2,6 @@ import React, { useState, useContext, useEffect } from "react";
 import CourseVideo from "../../components/courseVideo/CourseVideo.js";
 import CommentSubmissionForm from "../../components/commentSubmissionForm/CommentSubmissionForm.js";
 import CommentLog from "../../components/commentLog/CommentLog.js";
-import ReactionBar from "../../components/reactionBar/ReactionBar.js";
 import LiveChatMessageForm from "../../components/liveChatMessageForm/LiveChatMessageForm.js";
 import LiveChat from "../../components/liveChat/LiveChat.js";
 import firebase from "firebase/app";
@@ -62,11 +61,13 @@ function Lecture({ props }) {
       updateUserCount(count);
     }
   });
+
   useEffect(() => {
     return () => {
       gathering.leave();
     };
   }, []);
+
   // check if data exists before rendering
   if (!videoData) {
     return <></>;

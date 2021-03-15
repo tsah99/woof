@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
+import React, { useContext, useCallback } from "react";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import AuthContext from "../../contexts/AuthContext";
 import LectureContext from "../../contexts/LectureContext";
 import firebase from "firebase/app";
-
+import { useLocation } from "react-router-dom";
 import "./Comment.css";
 
 /**
@@ -231,6 +231,7 @@ async function submitSubComment(event, comment, authApi) {
       course_id: comment.course_id,
       course_code: courseInfo.course_code,
       course_title: courseInfo.course_title,
+      parent_comment_id: comment.id,
       video_id: comment.video_id,
       video_name: videoInfo.title,
       time_replied: time_posted,
@@ -277,12 +278,29 @@ function Comment(props) {
 
   const timestring = convertSecondsToTimestringFormat(props.comment.video_time);
 
+  //logic for scrolling comment into view if arriving by notification click
+  let location = useLocation();
+  let commentRefCallback = useCallback(
+    (commentRef) => {
+      let commentId = location.hash;
+      if (!commentId || commentId === "#undefined" || !commentRef) return;
+      commentId = commentId.substr(1);
+      if (commentRef.id === commentId) {
+        commentRef.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+    },
+    [location.hash]
+  );
+
   if (!subComments) {
     return <></>;
   }
 
   return (
-    <div className="Comment" id={props.comment.id}>
+    <div className="Comment" id={props.comment.id} ref={commentRefCallback}>
       <div className="comment-timestamp-and-owner">
         <div
           className="comment-timestamp"

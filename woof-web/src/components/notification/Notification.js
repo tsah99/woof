@@ -1,5 +1,7 @@
 import React, { useContext, useState } from "react";
 import SystemContext from "../../contexts/SystemContext";
+import { useHistory } from "react-router-dom";
+import firebase from "firebase/app";
 import "./Notification.css";
 
 /**
@@ -96,8 +98,24 @@ function Notification(props) {
   let videoName = props.notification.video_name;
   let timeReplied = timeSince(props.notification.time_replied.seconds);
 
+  let lightStyle = systemApi.darkMode ? "-dark" : "-light";
+
+  let history = useHistory();
+
   return (
-    <div className={`notification-container`}>
+    <div
+      className={`notification-container`}
+      onClick={() =>
+        history.push(
+          "/lecture/" +
+            props.notification.course_id +
+            "/" +
+            props.notification.video_id +
+            "#" +
+            props.notification.parent_comment_id
+        )
+      }
+    >
       <div className="notification-nodisplay">
         {JSON.stringify(props.notification)}
       </div>
