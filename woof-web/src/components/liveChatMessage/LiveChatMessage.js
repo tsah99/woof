@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import LectureContext from "../../contexts/LectureContext";
 import { Grid } from "@material-ui/core";
 import "./LiveChatMessage.css";
 
@@ -132,6 +133,7 @@ function timeSince(seconds) {
  */
 
 function LiveChatMessage(props) {
+  let lectureApi = useContext(LectureContext);
   return (
     <div className="LiveChatMessage">
       <Grid container wrap="nowrap" spacing={2}>
@@ -139,11 +141,11 @@ function LiveChatMessage(props) {
           <h4 className="message-owner">{props.liveChatMessage.username}</h4>
           <div className="UserAndText">
             <p className="message-text">
-              {linkTimestampsInComment(props.liveChatMessage, props.player)}
+              {linkTimestampsInComment(
+                props.liveChatMessage,
+                lectureApi.currentRef
+              )}
             </p>
-            {/* <p className="message-time">
-              {timeSince(props.liveChatMessage.time_sent.seconds)}
-            </p> */}
           </div>
         </Grid>
       </Grid>
