@@ -36,6 +36,7 @@ function CommentCard(props) {
 
   //logic that determines the most recent card to display
   for (let i = props.comments.length - 1; i >= 0; --i) {
+    //determine the most recent comment and update most recent comment to it
     if (
       !mostRecentComment ||
       (Math.floor(lectureApi.progress.playedSeconds) >=
@@ -48,6 +49,7 @@ function CommentCard(props) {
       break;
     }
 
+    //if we've encounterd the same comment, don't re render, simply break
     if (
       Math.floor(lectureApi.progress.playedSeconds) >=
         Math.floor(props.comments[i].video_time) &&

@@ -9,16 +9,19 @@ import "./LiveChat.css";
  * on the web page for the current video.
  * @param props is an object that contains these properties
  *    videoId - id of the YouTube video for which we should get comments from
- *    player - a handle on the player for the video being played
  */
+//yesterday constant used to retrieve messages in live chat only from the day before
+const YESTERDAY = new Date(Date.now() - 24 * 60 * 60 * 1000);
 function LiveChat(props) {
   const firestore = firebase.firestore();
+
   const messagesRef = firestore
     .collection("classes")
     .doc(props.courseId)
     .collection("videos")
     .doc(props.videoId)
-    .collection("liveChat");
+    .collection("liveChat")
+    .where("time_sent", ">", YESTERDAY);
 
   let [liveChat] = useCollectionData(messagesRef.orderBy("time_sent", "asc"), {
     idField: "id",
@@ -37,8 +40,6 @@ function LiveChat(props) {
               key={liveChatMessage.id}
               liveChatMessage={liveChatMessage}
               videoId={props.videoId}
-              firebase={props.firebase}
-              player={props.player}
             />
           ))
         : []}
