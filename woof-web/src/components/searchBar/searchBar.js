@@ -10,27 +10,14 @@ import {
   Highlight,
 } from "react-instantsearch-dom";
 
+//handle on search client
+//TODO: probably want to make this information private later on
 const searchClient = algoliasearch(
   "SVXVZO2ZW8",
   "9b17a4ec23a796d3bf7496e73fd930be"
 );
 
-// const StateResults = ({ searchResults }) => {
-//   const hasResults = searchResults && searchResults.nbHits !== 0;
-//   const nbHits = searchResults && searchResults.nbHits;
-
-//   return (
-//     <div>
-//       <div hidden={!hasResults}>There are {nbHits} results</div>
-//       <div hidden={hasResults}>There is no results</div>
-//     </div>
-//   );
-// };
-
-// const CustomStateResults = connectStateResults(StateResults);
-
-// const CustomStateResults = connectStateResults(StateResults);
-
+//component renders search results
 const Results = connectStateResults(({ searchState, searchResults }) =>
   searchState && searchState.query ? (
     <React.Fragment>
@@ -46,12 +33,17 @@ const Results = connectStateResults(({ searchState, searchResults }) =>
   )
 );
 
+//renders highlight on substrings in search result
 const Hit = ({ hit }) => (
-  //   <p>
   <Highlight attribute="text" hit={hit} tagName="mark" />
-  //   </p>
 );
 
+/**
+ * Renders the SearchBar component used to search for comments on a video.
+ * @param props an object that contains
+ *    courseId - the id of the course
+ *    videoId - the id of the video
+ */
 function SearchBar(props) {
   return (
     <InstantSearch
@@ -61,10 +53,7 @@ function SearchBar(props) {
       }
     >
       <SearchBox />
-      {/* <CustomStateResults> */}
       <Results></Results>
-      {/* <Hits hitComponent={Hit} /> */}
-      {/* </CustomStateResults> */}
     </InstantSearch>
   );
 }

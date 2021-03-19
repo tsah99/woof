@@ -1,11 +1,10 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import "./Header.css";
 import firebase from "firebase/app";
 import AuthContext from "../../contexts/AuthContext";
 import SystemContext from "../../contexts/SystemContext";
 import NotificationsMenu from "../notificationsMenu/NotificationsMenu.js";
-import { clearConfigCache } from "prettier";
 
 /**
  * Non auth header

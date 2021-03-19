@@ -1,7 +1,6 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import SystemContext from "../../contexts/SystemContext";
 import { useHistory } from "react-router-dom";
-import firebase from "firebase/app";
 import "./Notification.css";
 
 /**

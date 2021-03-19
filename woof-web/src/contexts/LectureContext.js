@@ -5,7 +5,9 @@ const LectureContext = React.createContext();
 /**
  * Lecture Context
  *
- * Handles state between different components of lecture page
+ * Keeps track of a DOM reference to the current lecture video if any,
+ * also keeps track of where the lecture video is in a progress object, which
+ * contains the number of seconds the video is at.
  *
  * */
 

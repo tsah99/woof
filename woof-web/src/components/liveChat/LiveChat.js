@@ -9,6 +9,7 @@ import "./LiveChat.css";
  * on the web page for the current video.
  * @param props is an object that contains these properties
  *    videoId - id of the YouTube video for which we should get comments from
+ *    courseId - id of the course
  */
 //yesterday constant used to retrieve messages in live chat only from the day before
 const YESTERDAY = new Date(Date.now() - 24 * 60 * 60 * 1000);
