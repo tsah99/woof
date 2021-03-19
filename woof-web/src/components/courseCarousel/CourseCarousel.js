@@ -67,6 +67,7 @@ function removeClass(classData, authApi) {
 function CourseCarousel(props) {
   // used to dynamically control how many lectures should be
   // displayed in the carousel when window resized.
+  // object copied from documentation for Carousel component
   const breakPoints = [
     { width: 1, itemsToShow: 1 },
     { width: 550, itemsToShow: 2 },

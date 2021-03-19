@@ -2,14 +2,15 @@ import React, { useContext } from "react";
 import AuthContext from "../../contexts/AuthContext";
 import firebase from "firebase/app";
 import "./LiveChatMessageForm.css";
-import useSound from "use-sound";
-import aol from "../../sounds/aol.mp3";
 
-const BoopButton = () => {
-  const [play] = useSound(aol);
-  return <div onClick={play}>Test me </div>;
-};
-
+/**
+ * Event handler for when user sends a message. Sends a message to Firestore
+ * and stores it.
+ * @param event - event object triggered when user sends a message
+ * @param courseId - id of the course their sending a message on
+ * @param videoId - id of the video their watching
+ * @param authApi - authApi retrieved from AuthContext
+ */
 async function sendMessage(event, courseId, videoId, authApi) {
   event.preventDefault();
 
@@ -34,6 +35,13 @@ async function sendMessage(event, courseId, videoId, authApi) {
   event.target[0].value = "";
 }
 
+/**
+ * Renders the live chat message form located at the bottom of live chat
+ * on the lecture page. Allows the user to send a message to the live chat.
+ * @param props an object that contains
+ *    courseId - id of course currently on
+ *    videoId - id of video being watched
+ */
 function LiveChatMessageForm(props) {
   const authApi = useContext(AuthContext);
 

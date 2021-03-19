@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import AuthContext from "../../contexts/AuthContext";
-import SystemContext from "../../contexts/SystemContext";
 import firebase from "firebase/app";
 import Notification from "../notification/Notification.js";
 import "./NotificationsMenu.css";

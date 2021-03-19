@@ -5,7 +5,7 @@ import "./LiveChatMessage.css";
 
 /**
  * Converts a timestring into seconds and returns it.
- *
+ * Code inspired from https://stackoverflow.com/questions/9640266/convert-hhmmss-string-to-seconds-only-in-javascript.
  * @param timestring - a string of the format HH:MM:SS, H:MM:SS, MM:SS,
  *                     or M:SS
  */
@@ -131,7 +131,6 @@ function timeSince(seconds) {
  *      videoId - a string containing the current video's id
  *      player - a handle on the player for the current video
  */
-
 function LiveChatMessage(props) {
   let lectureApi = useContext(LectureContext);
   return (
