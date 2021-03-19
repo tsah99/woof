@@ -2,7 +2,7 @@
 
 ### Our Product
 
-Woof is the next generation of online learning. We are committed to making the online lecture experience more engaging, collaborative, social, and fun for students everywhere. 
+Woof is the next generation of online learning. We are committed to making the online lecture experience more engaging, collaborative, social, and fun for students everywhere. Check out Woof <a href="https://dev7728.drwxt430ph9q8.amplifyapp.com">here</a>.
 
 ### Team Matrix
 
